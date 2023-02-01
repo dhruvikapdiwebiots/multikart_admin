@@ -1,5 +1,8 @@
 
 
 class Fonts{
-  final multiKartAdmin = "MultiKart Admin";
+  final multiKartAdmin = "multiKartAdmin";
+  final selectLanguage = "selectLanguage";
+  final lightMode = "lightMode";
+  final darkMode = "darkMode";
 }

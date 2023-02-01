@@ -48,9 +48,9 @@ class CommonTextBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     InputBorder inputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(AppRadius.r10),
+      borderRadius: BorderRadius.circular(AppRadius.r5),
       borderSide: BorderSide(
-          style: BorderStyle.solid, color: appCtrl.appTheme.gray),
+          style: BorderStyle.solid, color: appCtrl.appTheme.gray.withOpacity(.5)),
     );
     return GetBuilder<AppController>(builder: (appCtrl) {
       return TextFormField(
@@ -73,7 +73,7 @@ class CommonTextBox extends StatelessWidget {
               errorText: errorText,
               counterText: "",
               hintStyle:
-              AppCss.nunitoMedium12.textColor(appCtrl.appTheme.blackColor),
+              AppCss.nunitoSemiBold12.textColor(appCtrl.appTheme.contentColor).letterSpace(.2),
 
               border: border ?? inputBorder,
               focusedBorder: border ?? inputBorder,

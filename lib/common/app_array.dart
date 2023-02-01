@@ -1,4 +1,6 @@
 
+import 'package:flutter/cupertino.dart';
+
 import '../config.dart';
 
 class AppArray{
@@ -11,17 +13,20 @@ class AppArray{
   ];
 
   //bottom list
-  var bottomList = [
-    {'icon': Icons.message, 'title': "chats"},
-    {'icon': Icons.image, 'title': "status"},
-    {'icon': Icons.image, 'title': "calls"},
+  var drawerList = [
+    {'icon': svgAssets.dashboard, 'title': "dashboard"},
+    {'icon': svgAssets.banner, 'title': "banners"},
+    {'icon': svgAssets.page, 'title': "staticPage"},
+    {'icon': svgAssets.bell, 'title': "notification"},
+    {'icon': svgAssets.logout, 'title': "logout"},
   ];
 
   //action list
   var actionList = [
-    {'title': "newBroadCast"},
-    {'title': "newGroup"},
-    {'title': "setting"},
+    {'title': "english"},
+    {'title': "hindi"},
+    {'title': "korean"},
+    {'title': "arabic"},
   ];
 
 

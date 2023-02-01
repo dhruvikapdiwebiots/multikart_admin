@@ -33,6 +33,7 @@ class AppTheme {
   Color whiteColor;
   Color blackText;
   Color blackColor;
+  Color black12Color;
   Color textColor;
   Color contentColor;
   Color borderColor;
@@ -66,6 +67,7 @@ class AppTheme {
     required this.whiteColor,
     required this.blackText,
     required this.blackColor,
+    required this.black12Color,
     required this.textColor,
     required this.contentColor,
     required this.borderColor,
@@ -103,6 +105,7 @@ class AppTheme {
           whiteColor: Colors.white,
           blackText: const Color(0xFF222222),
           blackColor: Colors.black,
+          black12Color: Colors.black12,
           contentColor: const Color(0xFF777777),
           borderColor: const Color(0xFFDDDDDD),
           greenColor: const Color(0xFF198754),
@@ -137,6 +140,7 @@ class AppTheme {
           whiteColor: Colors.black,
           blackText: const Color(0xFF262626),
           blackColor: Colors.white,
+          black12Color: Colors.white12,
           contentColor: const Color(0xFF777777),
           borderColor: const Color(0xFFDDDDDD),
           greenColor: const Color(0xFF198754),
