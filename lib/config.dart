@@ -5,7 +5,7 @@ export 'package:get_storage/get_storage.dart';
 
 
 export '../../common/config.dart';
-
+export '../../controllers/pages_controller/index.dart';
 export '../pages/index.dart';
 export '../extensions/text_style_extensions.dart';
 export '../controllers/common_controllers/app_controller.dart';

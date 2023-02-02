@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.webiots.multikartAdmin.multikart_admin">
+
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
    <application
         android:label="multikart_admin"
         android:name="${applicationName}"
