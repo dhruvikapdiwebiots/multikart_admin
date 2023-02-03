@@ -1,6 +1,8 @@
 
 import 'package:multikart_admin/pages/banner/banner.dart';
 import 'package:multikart_admin/pages/dashboard/dashboard.dart';
+import 'package:multikart_admin/pages/notification/notification.dart';
+import 'package:multikart_admin/pages/static_page/static_page.dart';
 
 import '../../config.dart';
 
@@ -10,7 +12,7 @@ class IndexController extends GetxController{
   GlobalKey<ScaffoldState>();
   final GlobalKey<ScaffoldState> scaffoldKey =
   GlobalKey<ScaffoldState>();
-  int selectedIndex = 1;
+  int selectedIndex = 3;
   String pageName ="dashboard";
   bool isHover = false;
   int isSelectedHover = 0;
@@ -22,8 +24,8 @@ class IndexController extends GetxController{
   List<Widget> widgetOptions = <Widget>[
     Dashboard(),
     BannerPage(),
-    Text("Static"),
-    Text("Notification"),
+    StaticPage(),
+    NotificationPage(),
     Text("Logout")
   ];
 }

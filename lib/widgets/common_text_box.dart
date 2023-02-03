@@ -1,5 +1,4 @@
 import '../../../../config.dart';
-import '../common/theme/app_css.dart';
 
 class CommonTextBox extends StatelessWidget {
   final TextEditingController? controller;
@@ -19,6 +18,7 @@ class CommonTextBox extends StatelessWidget {
   final ValueChanged<String>? onFieldSubmitted;
   final String? errorText;
   final int? maxLength;
+  final int? maxLines;
   final GestureTapCallback? onTap;
   final ValueChanged<String>? onChanged;
 
@@ -39,6 +39,7 @@ class CommonTextBox extends StatelessWidget {
         this.keyboardType,
         this.textInputAction,
         this.maxLength,
+        this.maxLines,
         this.onTap,
         this.onFieldSubmitted,
         this.onChanged,
@@ -59,6 +60,7 @@ class CommonTextBox extends StatelessWidget {
           validator: validator,
           focusNode: focusNode,
           keyboardType: keyboardType,
+          maxLines: maxLines,
           textInputAction: textInputAction,
           obscureText: obscureText,
           onFieldSubmitted: onFieldSubmitted,

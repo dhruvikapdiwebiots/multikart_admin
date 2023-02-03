@@ -1,17 +1,14 @@
+import 'dart:io';
 import 'dart:math';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multikart_admin/common/theme/app_css.dart';
 import 'package:multikart_admin/controllers/pages_controller/banner_controller.dart';
-import 'package:multikart_admin/extensions/spacing.dart';
-import 'package:multikart_admin/extensions/widget_extension.dart';
-import 'package:multikart_admin/widgets/common_button.dart';
-import 'package:multikart_admin/widgets/common_text_box.dart';
 import 'package:responsive_table/responsive_table.dart';
 
 import '../../config.dart';
-import '../../responsive.dart';
 
 class BannerPage extends StatelessWidget {
   final bannerCtrl = Get.put(BannerController());
@@ -26,584 +23,392 @@ class BannerPage extends StatelessWidget {
       {"Sdfsdf"}
     ];
     return GetBuilder<BannerController>(builder: (_) {
-      /*  return DataTable(
-            decoration: BoxDecoration(
-
-                border: Border.all(color:Colors.white,width:2),
-                borderRadius: BorderRadius.circular(16)
-            ),
-            onSelectAll: (b) {},
-            //sortColumnIndex: 1,
-            sortAscending: true,
-            columnSpacing: 12,
-            horizontalMargin: 0,
-            //headingRowColor: MaterialStateColor.resolveWith((states) {return ColorUtils.greenlabelColor;},),
-            dataRowColor: MaterialStateColor.resolveWith((states) {return Colors.white;},),
-            headingRowHeight: 30,
-            columns: <DataColumn>[
-              DataColumn(
-                label: Text("Khasra No.", textAlign: TextAlign.center),
-                numeric: false,
-                // onSort: (i, b) {
-                //   print("$i $b");
-                //   setState(() {
-                //     //names.sort((a, b) => a.firstName.compareTo(b.firstName));
-                //   });
-                // },
-                tooltip: "To display Khasra No",
-              ),
-              DataColumn(
-                label: Text("Plot No.", textAlign: TextAlign.center,),
-                numeric: false,
-                // onSort: (i, b) {
-                //   //print("$i $b");
-                //   setState(() {
-                //     //names.sort((a, b) => a.lastName.compareTo(b.lastName));
-                //   });
-                // },
-                tooltip: "To display Plot No",
-              ),
-              DataColumn(
-                label: Text("Area (In ha).", textAlign: TextAlign.center,),
-                numeric: false,
-                onSort: (i, b) {
-                  //print("$i $b");
-                },
-                tooltip: "To display Plot No",
-              ),
-            ],
-            rows: lstLandInfo
-                .map(
-                  (name) => DataRow(
-                cells: [
-                  DataCell(
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("name.khasrano"),
-                        Text('Latitude:'),
-                      ],
-                    ),
-                    showEditIcon: false,
-                    placeholder: false,
-                  ),
-                  DataCell(
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("name.plotno"),
-                        Text('0.23587'),
-                      ],
-                    ),
-                    showEditIcon: false,
-                    placeholder: false,
-                  ),
-                  DataCell(
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("name.area"),
-                        Text('Longitude:' + " 0.25845"),
-                      ],
-                    ),
-                    showEditIcon: false,
-                    placeholder: false,
-                  )
-                ],
-              ),
-            )
-                .toList());*/
-      return DataPage();
-    });
-  }
-}
-
-class DataPage extends StatefulWidget {
-  DataPage({Key? key}) : super(key: key);
-
-  @override
-  _DataPageState createState() => _DataPageState();
-}
-
-class _DataPageState extends State<DataPage> {
-  late List<DatatableHeader> _headers;
-
-  List<int> _perPages = [10, 20, 50, 100];
-  int _total = 100;
-  int? _currentPerPage = 10;
-  List<bool>? _expanded;
-  String? _searchKey = "id";
-  XFile? imageFile;
-  int _currentPage = 1;
-  bool _isSearch = false;
-  List<Map<String, dynamic>> _sourceOriginal = [];
-  List<Map<String, dynamic>> _sourceFiltered = [];
-  List<Map<String, dynamic>> _source = [];
-  List<Map<String, dynamic>> _selecteds = [];
-
-  // ignore: unused_field
-  String _selectableKey = "id";
-
-  String? _sortColumn;
-  bool _sortAscending = true;
-  bool _isLoading = true;
-  bool _showSelect = true;
-  var random = new Random();
-
-  List<Map<String, dynamic>> _generateData({int n: 100}) {
-    final List source = List.filled(n, Random.secure());
-    List<Map<String, dynamic>> temps = [];
-    var i = 1;
-    print(i);
-    // ignore: unused_local_variable
-    for (var data in source) {
-      temps.add({
-        "id": i + 1,
-        "image": imageAssets.logo1,
-        "name": "Product $i",
-        "isActive": true,
-        "action": i
-      });
-      i++;
-    }
-    return temps;
-  }
-
-  _initializeData() async {
-    _mockPullData();
-  }
-
-  _mockPullData() async {
-    _expanded = List.generate(_currentPerPage!, (index) => false);
-
-    setState(() => _isLoading = true);
-    Future.delayed(const Duration(seconds: 3)).then((value) {
-      _sourceOriginal.clear();
-      _sourceOriginal.addAll(_generateData(n: random.nextInt(10000)));
-      _sourceFiltered = _sourceOriginal;
-      _total = _sourceFiltered.length;
-      _source = _sourceFiltered.getRange(0, _currentPerPage!).toList();
-      setState(() => _isLoading = false);
-    });
-  }
-
-  _resetData({start = 0}) async {
-    setState(() => _isLoading = true);
-    var _expandedLen =
-        _total - start < _currentPerPage! ? _total - start : _currentPerPage;
-    Future.delayed(const Duration(seconds: 0)).then((value) {
-      _expanded = List.generate(_expandedLen as int, (index) => false);
-      _source.clear();
-      _source = _sourceFiltered.getRange(start, start + _expandedLen).toList();
-      setState(() => _isLoading = false);
-    });
-  }
-
-  _filterData(value) {
-    setState(() => _isLoading = true);
-
-    try {
-      if (value == "" || value == null) {
-        _sourceFiltered = _sourceOriginal;
-      } else {
-        _sourceFiltered = _sourceOriginal
-            .where((data) => data[_searchKey!]
-                .toString()
-                .toLowerCase()
-                .contains(value.toString().toLowerCase()))
-            .toList();
-      }
-
-      _total = _sourceFiltered.length;
-      var _rangeTop = _total < _currentPerPage! ? _total : _currentPerPage!;
-      _expanded = List.generate(_rangeTop, (index) => false);
-      _source = _sourceFiltered.getRange(0, _rangeTop).toList();
-    } catch (e) {
-      print(e);
-    }
-    setState(() => _isLoading = false);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    /// set headers
-    _headers = [
-      DatatableHeader(
-          text: "ID",
-          value: "id",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.center),
-      DatatableHeader(
-          text: "Image",
-          value: "image",
-          show: true,
-          sortable: false,
-          sourceBuilder: (value, row) {
-            return Image.asset(value, height: Sizes.s60);
-          },
-          textAlign: TextAlign.center),
-      DatatableHeader(
-          text: "Name",
-          value: "name",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.left),
-      DatatableHeader(
-          text: "Is Active",
-          value: "isActive",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.center),
-      DatatableHeader(
-          text: "Received",
-          value: "action",
-          show: true,
-          sortable: false,
-          sourceBuilder: (value, row) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
+      return SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: OutlinedButton(
-                    onPressed: () {
-                      print("caa : #$value");
-                      print("caa : #$row");
-                    },
-                    child: const Icon(
-                      Icons.edit,
-                      size: Sizes.s18,
-                    ),
+                Container(
+                  margin: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(0),
+                  constraints: const BoxConstraints(
+                    maxHeight: 700,
                   ),
-                ),
-                OutlinedButton(
-                  onPressed: () {},
-                  child: const Icon(
-                    Icons.delete,
-                    size: Sizes.s18,
-                  ),
-                ),
-              ],
-            );
-          },
-          textAlign: TextAlign.center),
-    ];
-
-    _initializeData();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-          Container(
-            margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.all(0),
-            constraints: const BoxConstraints(
-              maxHeight: 700,
-            ),
-            child: Card(
-              elevation: 1,
-              shadowColor: Colors.black,
-              clipBehavior: Clip.none,
-              child: ResponsiveDatatable(
-                title: TextButton.icon(
-                  onPressed: () {
-                    Get.defaultDialog(
-                        title: "Add Banner",
-                        radius: AppRadius.r10,
-                        content: Column(children: [
-                          const CommonTextBox(
-                            hinText: "Name",
-                          ),
-                          const VSpace(Sizes.s15),
-                          Row(children: [
-                            const Icon(Icons.add)
-                                .paddingAll(Insets.i10)
-                                .decorated(
-                                    color: appCtrl.appTheme.primary,
-                                    borderRadius:
-                                        BorderRadius.circular(AppRadius.r10))
-                                .inkWell(onTap: () => imagePickerOption()),
-                            const HSpace(Sizes.s5),
-                            const Text("Add Image")
-                          ])
-                        ]));
-                  },
-                  icon: const Icon(Icons.add),
-                  label: const Text("new item"),
-                ),
-                reponseScreenSizes: [ScreenSize.xs],
-                actions: [
-                  if (_isSearch)
-                    Expanded(
-                        child: TextField(
-                      decoration: InputDecoration(
-                          hintText: 'Enter search term based on ' +
-                              _searchKey!
-                                  .replaceAll(new RegExp('[\\W_]+'), ' ')
-                                  .toUpperCase(),
-                          prefixIcon: IconButton(
-                              icon: const Icon(Icons.cancel),
-                              onPressed: () {
-                                setState(() {
-                                  _isSearch = false;
-                                });
-                                _initializeData();
-                              }),
-                          suffixIcon: IconButton(
-                              icon: const Icon(Icons.search),
-                              onPressed: () {})),
-                      onSubmitted: (value) {
-                        _filterData(value);
-                      },
-                    )),
-                  if (!_isSearch)
-                    IconButton(
-                        icon: const Icon(Icons.search),
+                  child: Card(
+                    elevation: 1,
+                    shadowColor: Colors.black,
+                    clipBehavior: Clip.none,
+                    child: ResponsiveDatatable(
+                      title: TextButton.icon(
                         onPressed: () {
-                          setState(() {
-                            _isSearch = true;
-                          });
-                        })
-                ],
-                headers: _headers,
-                source: _source,
-                selecteds: _selecteds,
-                autoHeight: false,
-                onChangedRow: (value, header) {
-                  /// print(value);
-                  /// print(header);
-                },
-                onSubmittedRow: (value, header) {
-                  /// print(value);
-                  /// print(header);
-                },
-                onTabRow: (data) {
-                  print(" dhfgdf : $data");
-                },
-                onSort: (value) {
-                  setState(() => _isLoading = true);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return StatefulBuilder(builder:
+                                    (BuildContext context, StateSetter setState) {
 
-                  setState(() {
-                    _sortColumn = value;
-                    _sortAscending = !_sortAscending;
-                    if (_sortAscending) {
-                      _sourceFiltered.sort((a, b) =>
-                          b["$_sortColumn"].compareTo(a["$_sortColumn"]));
-                    } else {
-                      _sourceFiltered.sort((a, b) =>
-                          a["$_sortColumn"].compareTo(b["$_sortColumn"]));
-                    }
-                    var _rangeTop = _currentPerPage! < _sourceFiltered.length
-                        ? _currentPerPage!
-                        : _sourceFiltered.length;
-                    _source = _sourceFiltered.getRange(0, _rangeTop).toList();
-                    _searchKey = value;
+                                  return AlertDialog(
+                                    contentPadding: EdgeInsets.zero,
+                                    content: SizedBox(
+                                      width: Sizes.s400,
+                                      child: Stack(
+                                        alignment: Alignment.topRight,
+                                        children: <Widget>[
+                                          Column(
 
-                    _isLoading = false;
-                  });
-                },
-                expanded: _expanded,
-                sortAscending: _sortAscending,
-                sortColumn: _sortColumn,
-                isLoading: _isLoading,
-                onSelect: (value, item) {
-                  print("$value  $item ");
-                  if (value!) {
-                    setState(() => _selecteds.add(item));
-                  } else {
-                    setState(
-                        () => _selecteds.removeAt(_selecteds.indexOf(item)));
-                  }
-                },
-                onSelectAll: (value) {
-                  if (value!) {
-                    setState(() => _selecteds =
-                        _source.map((entry) => entry).toList().cast());
-                  } else {
-                    setState(() => _selecteds.clear());
-                  }
-                },
-                footers: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: const Text("Rows per page:"),
-                  ),
-                  if (_perPages.isNotEmpty)
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: DropdownButton<int>(
-                        value: _currentPerPage,
-                        items: _perPages
-                            .map((e) => DropdownMenuItem<int>(
-                                  child: Text("$e"),
-                                  value: e,
-                                ))
-                            .toList(),
-                        onChanged: (dynamic value) {
-                          setState(() {
-                            _currentPerPage = value;
-                            _currentPage = 1;
-                            _resetData();
-                          });
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              Container(
+                                                height: Sizes.s50,
+                                                width: Sizes.s400,
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                    appCtrl.appTheme.whiteColor,
+                                                    border: Border(
+                                                        bottom: BorderSide(
+                                                            color: appCtrl
+                                                                .appTheme.gray
+                                                                .withOpacity(0.3)))),
+                                                child: const Center(
+                                                    child: Text("Add Banner",
+                                                        style: TextStyle(
+                                                            color: Colors.black54,
+                                                            fontWeight:
+                                                            FontWeight.w700,
+                                                            fontSize: 20,
+                                                            fontStyle:
+                                                            FontStyle.italic,
+                                                            fontFamily:
+                                                            "Helvetica"))),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(20.0),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  children: [
+                                                    const CommonTextBox(
+                                                      hinText: "Name",
+                                                    ),
+                                                    const VSpace(Sizes.s15),
+                                                    const CommonTextBox(
+                                                      hinText: "Product Id",
+                                                    ),
+                                                    const VSpace(Sizes.s15),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        Expanded(
+                                                          child: RadioListTile(
+                                                            contentPadding: EdgeInsets.zero,
+                                                            title: Text("Product"),
+                                                            value: "product",
+                                                            dense: true,
+                                                            visualDensity: VisualDensity(horizontal: 0),
+                                                            groupValue:bannerCtrl.idType,
+                                                            activeColor: appCtrl
+                                                                .appTheme.primary,
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                bannerCtrl.idType = value!;
+                                                              });
+                                                            },
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: RadioListTile(
+                                                            contentPadding: EdgeInsets.zero,
+                                                            title: Text("Collection"),
+                                                            dense: true,
+                                                            visualDensity: VisualDensity(horizontal: 0),
+                                                            value: "collection",
+                                                            groupValue: bannerCtrl.idType,
+                                                            activeColor: appCtrl
+                                                                .appTheme.primary,
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                bannerCtrl.idType = value!;
+                                                              });
+                                                            },
+                                                          ),
+                                                        )
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              bannerCtrl.pickImage == null
+                                                  ? DottedBorder(
+                                                padding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: Sizes.s15,
+                                                    vertical: Insets.i10),
+                                                color: appCtrl.appTheme.gray
+                                                    .withOpacity(.5),
+                                                radius: const Radius.circular(
+                                                    AppRadius.r5),
+                                                dashPattern: const [8, 10],
+                                                strokeWidth: 1.5,
+                                                strokeCap: StrokeCap.round,
+                                                borderType: BorderType.RRect,
+                                                child: Row(children: const [
+                                                  Icon(Icons.image),
+                                                  HSpace(Sizes.s10),
+                                                  Text("Add Image")
+                                                ]),
+                                              )
+                                                  .paddingSymmetric(
+                                                  horizontal: Insets.i20)
+                                                  .inkWell(onTap: () {
+                                                if (kIsWeb) {
+                                                  bannerCtrl.getImage(ImageSource.gallery,
+                                                      setState: setState);
+                                                }else{
+                                                  bannerCtrl.imagePickerOption(setState);
+                                                }
+                                              })
+                                                  : kIsWeb
+                                                  ? DottedBorder(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: Sizes.s15,
+                                                      vertical: Insets.i10),
+                                                  color: appCtrl.appTheme.gray
+                                                      .withOpacity(.5),
+                                                  radius:
+                                                  const Radius.circular(
+                                                      AppRadius.r5),
+                                                  dashPattern: const [8, 10],
+                                                  strokeWidth: 1.5,
+                                                  strokeCap: StrokeCap.round,
+                                                  borderType:
+                                                  BorderType.RRect,
+                                                  child:
+                                                  bannerCtrl.imageFile!.name.contains("png") ?  Image.memory(bannerCtrl.webImage,fit: BoxFit.fill,) : SvgPicture.memory(bannerCtrl.webImage)).inkWell(onTap: ()=> bannerCtrl.getImage(ImageSource.gallery,setState:setState))
+                                                  :  DottedBorder(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: Sizes.s15,
+                                                      vertical: Insets.i10),
+                                                  color: appCtrl.appTheme.gray
+                                                      .withOpacity(.5),
+                                                  radius:
+                                                  const Radius.circular(
+                                                      AppRadius.r5),
+                                                  dashPattern: const [8, 10],
+                                                  strokeWidth: 1.5,
+                                                  strokeCap: StrokeCap.round,
+                                                  borderType:
+                                                  BorderType.RRect,child: Image.file(bannerCtrl.pickImage!,fit: BoxFit.fill,height: Sizes.s100,)).inkWell(onTap: ()=>  bannerCtrl.imagePickerOption(setState)),
+                                              const VSpace(Sizes.s25),
+                                              CommonButton(
+                                                title: "Submit",
+                                                style: AppCss.nunitoblack14.textColor(
+                                                    appCtrl.appTheme.white),
+                                              ),
+                                              const VSpace(Sizes.s15)
+                                            ],
+                                          ),
+                                          Positioned(
+                                            right: 15.0,
+                                            top: 15.0,
+                                            child: InkResponse(
+                                              onTap: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: CircleAvatar(
+                                                radius: 12,
+                                                backgroundColor:
+                                                appCtrl.appTheme.primary,
+                                                child: Icon(
+                                                  Icons.close,
+                                                  size: 18,
+                                                  color: appCtrl.appTheme.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
+                              });
                         },
-                        isExpanded: false,
+                        icon: const Icon(Icons.add),
+                        label: const Text("new item"),
                       ),
+                      reponseScreenSizes: const [ScreenSize.xs],
+                      actions: [
+                        if (bannerCtrl.isSearch)
+                          Expanded(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                    hintText:
+                                    'Enter search term based on ${bannerCtrl.searchKey!.replaceAll(RegExp('[\\W_]+'), ' ').toUpperCase()}',
+                                    prefixIcon: IconButton(
+                                        icon: const Icon(Icons.cancel),
+                                        onPressed: () {
+                                            bannerCtrl.isSearch = false;
+                                          bannerCtrl.initializeData();
+                                          bannerCtrl.update();
+                                        }),
+                                    suffixIcon: IconButton(
+                                        icon: const Icon(Icons.search),
+                                        onPressed: () {})),
+                                onSubmitted: (value) {
+                                  bannerCtrl.filterData(value);
+                                },
+                              )),
+                        if (!bannerCtrl.isSearch)
+                          IconButton(
+                              icon: const Icon(Icons.search),
+                              onPressed: () {
+                                  bannerCtrl.isSearch = true;
+                                  bannerCtrl.update();
+                              })
+                      ],
+                      headers: bannerCtrl.headers,
+                      source: bannerCtrl.source,
+                      selecteds: bannerCtrl.selecteds,
+                      autoHeight: false,
+                      onChangedRow: (value, header) {
+                        /// print(value);
+                        /// print(header);
+                      },
+                      onSubmittedRow: (value, header) {
+                        /// print(value);
+                        /// print(header);
+                      },
+                      onTabRow: (data) {
+                        if (kDebugMode) {
+                          print(" dhfgdf : $data");
+                        }
+                      },
+                      onSort: (value) {
+                        bannerCtrl.isLoading = true;
+                        bannerCtrl.update();
+
+                          bannerCtrl.sortColumn = value;
+                          bannerCtrl.sortAscending = !bannerCtrl.sortAscending;
+                          if (bannerCtrl.sortAscending) {
+                            bannerCtrl.sourceFiltered.sort((a, b) =>
+                                b["${bannerCtrl.sortColumn}"].compareTo(a["${bannerCtrl.sortColumn}"]));
+                          } else {
+                            bannerCtrl.sourceFiltered.sort((a, b) =>
+                                a["${bannerCtrl.sortColumn}"].compareTo(b["${bannerCtrl.sortColumn}"]));
+                          }
+                          var rangeTop = bannerCtrl.currentPerPage! < bannerCtrl.sourceFiltered.length
+                              ? bannerCtrl.currentPerPage!
+                              : bannerCtrl.sourceFiltered.length;
+                          bannerCtrl.source = bannerCtrl.sourceFiltered.getRange(0, rangeTop).toList();
+                          bannerCtrl.searchKey = value;
+
+                          bannerCtrl.isLoading = false;
+                        bannerCtrl.update();
+                      },
+                      expanded: bannerCtrl.expanded,
+                      sortAscending: bannerCtrl.sortAscending,
+                      sortColumn: bannerCtrl.sortColumn,
+                      isLoading: bannerCtrl.isLoading,
+                      onSelect: (value, item) {
+                        if (kDebugMode) {
+                          print("$value  $item ");
+                        }
+                        if (value!) {
+                           bannerCtrl.selecteds.add(item);
+                           bannerCtrl.update();
+                        } else {
+                          bannerCtrl.selecteds.removeAt(bannerCtrl.selecteds.indexOf(item));
+                          bannerCtrl.update();
+                        }
+                      },
+                      onSelectAll: (value) {
+                        if (value!) {
+                          bannerCtrl.selecteds =
+                              bannerCtrl.source.map((entry) => entry).toList().cast();
+                          bannerCtrl.update();
+                        } else {
+                           bannerCtrl.selecteds.clear();
+                           bannerCtrl.update();
+                        }
+                      },
+                      footers: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: const Text("Rows per page:"),
+                        ),
+                        if (bannerCtrl.perPages.isNotEmpty)
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: DropdownButton<int>(
+                              value: bannerCtrl.currentPerPage,
+                              items: bannerCtrl.perPages
+                                  .map((e) => DropdownMenuItem<int>(
+                                value: e,
+                                child: Text("$e"),
+                              ))
+                                  .toList(),
+                              onChanged: (dynamic value) {
+                                  bannerCtrl.currentPerPage = value;
+                                  bannerCtrl.currentPage = 1;
+                                  bannerCtrl.resetData();
+                                  bannerCtrl.update();
+                              },
+                              isExpanded: false,
+                            ),
+                          ),
+                        Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child:
+                            Text("${bannerCtrl.currentPage} - ${bannerCtrl.currentPerPage} of ${bannerCtrl.total}")),
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios, size: 16),
+                          onPressed: bannerCtrl.currentPage == 1
+                              ? null
+                              : () {
+                            var nextSet = bannerCtrl.currentPage - bannerCtrl.currentPerPage!;
+                              bannerCtrl.currentPage = nextSet > 1 ? nextSet : 1;
+                              bannerCtrl.resetData(start: bannerCtrl.currentPage - 1);
+                              bannerCtrl.update();
+                          },
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.arrow_forward_ios, size: 16),
+                          onPressed: bannerCtrl.currentPage + bannerCtrl.currentPerPage! - 1 > bannerCtrl.total
+                              ? null
+                              : () {
+                            var nextSet = bannerCtrl.currentPage + bannerCtrl.currentPerPage!;
+                              bannerCtrl.currentPage = nextSet < bannerCtrl.total
+                                  ? nextSet
+                                  : bannerCtrl.total - bannerCtrl.currentPerPage!;
+                              bannerCtrl.resetData(start: nextSet - 1);
+                            bannerCtrl.update();
+                          },
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                        )
+                      ],
+                      headerDecoration: BoxDecoration(
+                          color: appCtrl.appTheme.gray,
+                          border: const Border(
+                              bottom: BorderSide(color: Colors.red, width: 1))),
+                      selectedDecoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(color: Colors.green[300]!, width: 1)),
+                        color: Colors.green,
+                      ),
+                      headerTextStyle: const TextStyle(color: Colors.white),
+                      rowTextStyle: const TextStyle(color: Colors.green),
+                      selectedTextStyle: const TextStyle(color: Colors.white),
                     ),
-                  Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child:
-                          Text("$_currentPage - $_currentPerPage of $_total")),
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back_ios, size: 16),
-                    onPressed: _currentPage == 1
-                        ? null
-                        : () {
-                            var _nextSet = _currentPage - _currentPerPage!;
-                            setState(() {
-                              _currentPage = _nextSet > 1 ? _nextSet : 1;
-                              _resetData(start: _currentPage - 1);
-                            });
-                          },
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios, size: 16),
-                    onPressed: _currentPage + _currentPerPage! - 1 > _total
-                        ? null
-                        : () {
-                            var _nextSet = _currentPage + _currentPerPage!;
-
-                            setState(() {
-                              _currentPage = _nextSet < _total
-                                  ? _nextSet
-                                  : _total - _currentPerPage!;
-                              _resetData(start: _nextSet - 1);
-                            });
-                          },
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                  )
-                ],
-                headerDecoration: const BoxDecoration(
-                    color: Colors.grey,
-                    border: Border(
-                        bottom: BorderSide(color: Colors.red, width: 1))),
-                selectedDecoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: Colors.green[300]!, width: 1)),
-                  color: Colors.green,
                 ),
-                headerTextStyle: const TextStyle(color: Colors.white),
-                rowTextStyle: const TextStyle(color: Colors.green),
-                selectedTextStyle: const TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        ]));
-  }
-
-// GET IMAGE FROM GALLERY
-  Future getImage(source) async {
-    final ImagePicker picker = ImagePicker();
-    imageFile = (await picker.pickImage(source: source))!;
-    print("imageFile : $imageFile");
-  }
-
-  //image picker option
-  imagePickerOption() {
-    showModalBottomSheet(
-        context: context,
-        shape: const RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.vertical(top: Radius.circular(AppRadius.r25)),
-        ),
-        builder: (BuildContext context) {
-          // return your layout
-          return Container(
-            padding: const EdgeInsets.all(12),
-            height: Sizes.s150,
-            color: appCtrl.appTheme.whiteColor,
-            alignment: Alignment.bottomCenter,
-            child: Column(children: [
-              const VSpace(Sizes.s20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconCreation(
-                      icons: Icons.camera,
-                      color: appCtrl.isTheme
-                          ? appCtrl.appTheme.white
-                          : appCtrl.appTheme.primary,
-                      text: "camera",
-                      onTap: () {
-                        getImage(ImageSource.camera);
-                        Get.back();
-                      }),
-                  IconCreation(
-                      icons: Icons.image,
-                      color: appCtrl.isTheme
-                          ? appCtrl.appTheme.white
-                          : appCtrl.appTheme.primary,
-                      text: "gallery",
-                      onTap: () {
-
-                        getImage(ImageSource.camera);
-                        Get.back();
-                      }),
-                ],
-              ),
-            ]),
-          );
-        });
+              ]));
+    });
   }
 }
 
-class IconCreation extends StatelessWidget {
-  final IconData? icons;
-  final Color? color;
-  final String? text;
-  final GestureTapCallback? onTap;
 
-  const IconCreation({Key? key, this.text, this.color, this.icons, this.onTap})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Column(
-        children: [
-          CircleAvatar(
-            radius: AppRadius.r30,
-            backgroundColor: color,
-            child: Icon(
-              icons,
-              // semanticLabel: "Help",
-              size: Sizes.s30,
-              color: appCtrl.appTheme.whiteColor,
-            ),
-          ),
-          const VSpace(Sizes.s8),
-          Text(
-            text!,
-            style: AppCss.nunitoblack14.textColor(appCtrl.appTheme.blackColor),
-          )
-        ],
-      ),
-    );
-  }
-}
