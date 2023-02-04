@@ -34,5 +34,13 @@ final dynamic en = {
   "product": "Product",
   "collection": "Collection",
   "update": "Update",
+  "aboutUsLink": "About Us Link",
+  "contactUsLink": "Contact Us Link",
+  "termsConditionLink": "Terms & Condition Link",
+  "privacyPolicyLink": "Privacy Policy Link",
+  "aboutUs": "About Us",
+  "contactUs": "Contact Us",
+  "termsCondition": "Terms & Condition",
+  "privacyPolicy": "Privacy Policy",
 
 };

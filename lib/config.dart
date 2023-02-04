@@ -15,7 +15,9 @@ export '../extensions/spacing.dart';
 export '../extensions/widget_extension.dart';
 export '../widgets/common_button.dart';
 export '../widgets/common_text_box.dart';
+export '../../controllers/index.dart';
 
+export '../../../../routes/index.dart';
 export '../responsive.dart';
 import 'config.dart';
 

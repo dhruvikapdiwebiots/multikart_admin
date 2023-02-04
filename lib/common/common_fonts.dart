@@ -28,5 +28,13 @@ class Fonts{
   final productCollection = "productCollection";
   final product = "product";
   final collection = "collection";
-  final update = "update  ";
+  final update = "update";
+  final aboutUsLink = "aboutUsLink";
+  final contactUsLink = "contactUsLink";
+  final termsConditionLink = "termsConditionLink";
+  final privacyPolicyLink = "privacyPolicyLink";
+  final aboutUs = "aboutUs";
+  final contactUs = "contactUs";
+  final termsCondition = "termsCondition";
+  final privacyPolicy = "privacyPolicy";
 }

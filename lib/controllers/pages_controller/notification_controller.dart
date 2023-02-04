@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multikart_admin/config.dart';
 
@@ -9,23 +11,87 @@ import '../../widgets/icon_creation.dart';
 class NotificationController extends GetxController {
   File? pickImage;
   XFile? imageFile;
+  bool isUploadSize = false;
+  Uint8List uploadWebImage = Uint8List(8);
   Uint8List webImage = Uint8List(8);
   String idType = "";
+  late DropzoneViewController? controller1;
 
 // GET IMAGE FROM GALLERY
   Future getImage(source) async {
     final ImagePicker picker = ImagePicker();
     imageFile = (await picker.pickImage(source: source))!;
     if (kDebugMode) {
-      print("imageFile : $imageFile");
+      if (imageFile!.name.contains("png") ||
+          imageFile!.name.contains("jpg") ||
+          imageFile!.name.contains("jpeg")) {
+        var image = await imageFile!.readAsBytes();
+        uploadWebImage = image;
+        print("info 1: $pickImage");
 
-      var image = await imageFile!.readAsBytes();
-      webImage = image;
-      pickImage = File(imageFile!.path);
-      update();
-      print("pickImage : $pickImage");
-      print("webImage : $webImage");
+        Image image1 = Image.memory(uploadWebImage);
+
+        ImageInfo info = await getImageInfo(image1);
+        print("info : ${info.image.width}");
+        print("info : ${info.image.width}");
+        if(info.image.width > 300 && info.image.height > 50){
+          webImage = uploadWebImage;
+          pickImage = File(imageFile!.path);
+          isUploadSize = false;
+        }else{
+          isUploadSize = true;
+        }
+
+        update();
+      } else {
+        ScaffoldMessenger.of(Get.context!)
+            .showSnackBar(SnackBar(content: Text("No Svg Allow")));
+      }
     }
+  }
+
+  dragImage(image)async{
+    print("imagee : ${image.name}");
+    dynamic images = File(image);
+    print("object : $images");
+
+ /*   if (kDebugMode) {
+      if (imageFile!.name.contains("png") ||
+          imageFile!.name.contains("jpg") ||
+          imageFile!.name.contains("jpeg")) {
+        var image = await imageFile!.readAsBytes();
+        uploadWebImage = image;
+        print("info 1: $pickImage");
+
+        Image image1 = Image.memory(uploadWebImage);
+
+        ImageInfo info = await getImageInfo(image1);
+        print("info : ${info.image.width}");
+        print("info : ${info.image.width}");
+        if(info.image.width > 300 && info.image.height > 50){
+          webImage = uploadWebImage;
+          pickImage = File(imageFile!.path);
+          isUploadSize = false;
+        }else{
+          isUploadSize = true;
+        }
+
+        update();
+      } else {
+        ScaffoldMessenger.of(Get.context!)
+            .showSnackBar(SnackBar(content: Text("No Svg Allow")));
+      }
+    }*/
+  }
+
+  Future<ImageInfo> getImageInfo(Image img) async {
+    final c = new Completer<ImageInfo>();
+    img.image
+        .resolve(new ImageConfiguration())
+        .addListener(new ImageStreamListener((ImageInfo i, bool _) {
+      c.complete(i);
+    }));
+    return c.future;
   }
 
   //image picker option

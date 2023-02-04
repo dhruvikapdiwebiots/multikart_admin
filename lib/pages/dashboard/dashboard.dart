@@ -76,8 +76,8 @@ class Dashboard extends StatelessWidget {
                             color: ColorConst.white,
                             fontWeight: FontWeight.bold,
                           ),*/
-                        ],
-                      ),
+                        ]
+                      )
                     ),
                     Positioned(
                       right: -75.0,
@@ -88,8 +88,8 @@ class Dashboard extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: appCtrl.appTheme.whiteColor.withOpacity(0.15),
-                        ),
-                      ),
+                        )
+                      )
                     ),
                     Positioned(
                       bottom: -87.5,
@@ -100,14 +100,14 @@ class Dashboard extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: appCtrl.appTheme.whiteColor.withOpacity(0.15),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                        )
+                      )
+                    )
+                  ]
+                )
               );
-            },
-          ),
+            }
+          )
         );
       }
     );

@@ -45,6 +45,9 @@ dependencies:
   image_picker: ^0.8.6+1
   image_picker_for_web: ^2.1.10
   dotted_border: ^2.0.0+3
+  flutter_dropzone: ^3.0.5
+  flutter_dropzone_platform_interface: ^2.0.5
+  flutter_dropzone_web: ^3.0.8
 
 
 
@@ -54,6 +57,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  plugin_platform_interface: ^2.0.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -65,8 +69,19 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
+dev_dependency_overrides:
+  flutter_dropzone:
+    path: ../flutter_dropzone/
+  flutter_dropzone_platform_interface:
+    path: ../flutter_dropzone_platform_interface/
+  flutter_dropzone_web:
+    path: ../flutter_dropzone_web/
 # The following section is specific to Flutter packages.
 flutter:
+  plugin:
+    platforms:
+      web:
+        default_package: flutter_dropzone_web
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

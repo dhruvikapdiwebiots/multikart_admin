@@ -1,8 +1,9 @@
 
-import 'package:multikart_admin/controllers/pages_controller/banner_controller.dart';
+
 import 'package:multikart_admin/pages/banner/layouts/banner_list.dart';
 
 import '../../config.dart';
+
 
 class BannerPage extends StatelessWidget {
   final bannerCtrl = Get.put(BannerController());
