@@ -1,16 +1,17 @@
-
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multikart_admin/pages/banner/layouts/add_banner.dart';
 import 'package:responsive_table/responsive_table.dart';
 
 import '../../config.dart';
 import '../../pages/banner/banner.dart';
 import '../../pages/notification/notification.dart';
+import '../../widgets/icon_creation.dart';
 
-class BannerController extends GetxController{
+class BannerController extends GetxController {
   late List<DatatableHeader> headers;
 
   final List<int> perPages = [10, 20, 50, 100];
@@ -78,11 +79,23 @@ class BannerController extends GetxController{
     });
   }
 
+//add banner dialog
+  addBannerDialog() async {
+    showDialog(
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return const AddBanner();
+          });
+        });
+  }
+
   resetData({start = 0}) async {
     isLoading = true;
     update();
     var expandedLen =
-    total - start < currentPerPage! ? total - start : currentPerPage;
+        total - start < currentPerPage! ? total - start : currentPerPage;
     Future.delayed(const Duration(seconds: 0)).then((value) {
       expanded = List.generate(expandedLen as int, (index) => false);
       source.clear();
@@ -102,9 +115,9 @@ class BannerController extends GetxController{
       } else {
         sourceFiltered = sourceOriginal
             .where((data) => data[searchKey!]
-            .toString()
-            .toLowerCase()
-            .contains(value.toString().toLowerCase()))
+                .toString()
+                .toLowerCase()
+                .contains(value.toString().toLowerCase()))
             .toList();
       }
 
@@ -157,35 +170,25 @@ class BannerController extends GetxController{
           sortable: false,
           sourceBuilder: (value, row) {
             return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: OutlinedButton(
-                    onPressed: () {
-                      if (kDebugMode) {
-                        print("caa : #$value");
-                      }
-                      if (kDebugMode) {
-                        print("caa : #$row");
-                      }
-                    },
-                    child: const Icon(
-                      Icons.edit,
-                      size: Sizes.s18,
-                    ),
-                  ),
-                ),
-                OutlinedButton(
-                  onPressed: () {},
-                  child: const Icon(
-                    Icons.delete,
-                    size: Sizes.s18,
-                  ),
-                ),
-              ],
-            );
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: OutlinedButton(
+                          onPressed: () {
+                            if (kDebugMode) {
+                              print("caa : #$value");
+                            }
+                            if (kDebugMode) {
+                              print("caa : #$row");
+                            }
+                          },
+                          child: const Icon(Icons.edit, size: Sizes.s18))),
+                  OutlinedButton(
+                      onPressed: () {},
+                      child: const Icon(Icons.delete, size: Sizes.s18))
+                ]);
           },
           textAlign: TextAlign.center),
     ];
@@ -193,8 +196,6 @@ class BannerController extends GetxController{
     initializeData();
     super.onReady();
   }
-
-
 
 // GET IMAGE FROM GALLERY
   Future getImage(source, {StateSetter? setState}) async {
@@ -218,7 +219,7 @@ class BannerController extends GetxController{
         context: Get.context!,
         shape: const RoundedRectangleBorder(
           borderRadius:
-          BorderRadius.vertical(top: Radius.circular(AppRadius.r25)),
+              BorderRadius.vertical(top: Radius.circular(AppRadius.r25)),
         ),
         builder: (BuildContext context) {
           // return your layout
@@ -240,7 +241,7 @@ class BannerController extends GetxController{
                           : appCtrl.appTheme.primary,
                       text: "camera",
                       onTap: () {
-                        getImage(ImageSource.camera,setState: setState);
+                        getImage(ImageSource.camera, setState: setState);
                         Get.back();
                       }),
                   IconCreation(
@@ -250,7 +251,7 @@ class BannerController extends GetxController{
                           : appCtrl.appTheme.primary,
                       text: "gallery",
                       onTap: () {
-                        getImage(ImageSource.gallery,setState: setState);
+                        getImage(ImageSource.gallery, setState: setState);
                         Get.back();
                       }),
                 ],
@@ -284,33 +285,29 @@ class DataSource extends DataTableSource {
   DataRow? getRow(int index) {
     final data = _data[index];
 
-    return DataRow( cells: [
-      DataCell(Text(data['image'].toString()).decorated(color: appCtrl.appTheme.gray)),
-      DataCell(Text(data['no'].toString()).decorated(color: appCtrl.appTheme.gray)),
+    return DataRow(cells: [
+      DataCell(Text(data['image'].toString())
+          .decorated(color: appCtrl.appTheme.gray)),
+      DataCell(
+          Text(data['no'].toString()).decorated(color: appCtrl.appTheme.gray)),
       DataCell(Text(data['item'].toString())),
       DataCell(Text(data['price'].toString())),
       DataCell(Text(data['date'].toString())),
-      DataCell(Builder(
-        builder: (context) {
-          return Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: OutlinedButton(
-                  onPressed: () => onDetailButtonPressed.call(data),
-
-                  child: Text("crudDetail"),
-                ),
-              ),
-              OutlinedButton(
-                onPressed: () => onDeleteButtonPressed.call(data),
-                child: Text("crudDelete"),
-              ),
-            ],
-          );
-        },
-      )),
+      DataCell(Builder(builder: (context) {
+        return Row(mainAxisSize: MainAxisSize.min, children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: OutlinedButton(
+              onPressed: () => onDetailButtonPressed.call(data),
+              child: Text("crudDetail"),
+            ),
+          ),
+          OutlinedButton(
+            onPressed: () => onDeleteButtonPressed.call(data),
+            child: Text("crudDelete"),
+          )
+        ]);
+      }))
     ]);
   }
 

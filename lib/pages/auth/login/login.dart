@@ -3,13 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:glassmorphism/glassmorphism.dart';
-import 'package:multikart_admin/common/theme/app_css.dart';
 import 'package:multikart_admin/config.dart';
-import 'package:multikart_admin/extensions/spacing.dart';
-import 'package:multikart_admin/extensions/widget_extension.dart';
 import 'package:multikart_admin/routes/index.dart';
-import 'package:multikart_admin/widgets/common_button.dart';
-import 'package:multikart_admin/widgets/common_text_box.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -19,14 +14,8 @@ class Login extends StatelessWidget {
     return Scaffold(
         backgroundColor: appCtrl.appTheme.whiteColor,
         body: GlassmorphicContainer(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             borderRadius: 20,
             blur: 20,
             alignment: Alignment.bottomCenter,
@@ -35,30 +24,23 @@ class Login extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  const Color(0xFFffffff).withOpacity(0.1),
-                  const Color(0xFFFFFFFF).withOpacity(0.05),
+                  appCtrl.appTheme.whiteColor.withOpacity(0.1),
+                  appCtrl.appTheme.whiteColor.withOpacity(0.05)
                 ],
                 stops: const [
                   0.1,
-                  1,
+                  1
                 ]),
             borderGradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                const Color(0xFFffffff).withOpacity(0.5),
-                const Color((0xFFFFFFFF)).withOpacity(0.5),
-              ],
-            ),
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  appCtrl.appTheme.whiteColor.withOpacity(0.5),
+                  appCtrl.appTheme.whiteColor.withOpacity(0.5)
+                ]),
             child: GlassmorphicContainer(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
                 borderRadius: 20,
                 blur: 20,
                 alignment: Alignment.bottomCenter,
@@ -133,18 +115,15 @@ class Login extends StatelessWidget {
                                 SvgPicture.asset(svgAssets.language,
                                     height: Sizes.s25),
                                 Visibility(
-                                  visible: (MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width >
+                                  visible: (MediaQuery.of(context).size.width >
                                       768.0),
                                   child: Padding(
                                     padding:
-                                    const EdgeInsets.only(left: 16 * 0.5),
+                                        const EdgeInsets.only(left: 16 * 0.5),
                                     child: Text(fonts.selectLanguage.tr,
                                         style: AppCss.nunitoSemiBold14
                                             .textColor(
-                                            appCtrl.appTheme.blackColor)),
+                                                appCtrl.appTheme.blackColor)),
                                   ),
                                 ),
                               ],
@@ -155,21 +134,18 @@ class Login extends StatelessWidget {
                               ...appArray.actionList
                                   .asMap()
                                   .entries
-                                  .map((e) =>
-                                  PopupMenuItem<int>(
-                                    value: 0,
-                                    onTap: () {
-                                      log("message : ${e.key}");
-                                    },
-                                    child: Text(
-                                      e.value["title"]
-                                          .toString()
-                                          .tr,
-                                      style: AppCss.nunitoMedium14
-                                          .textColor(
-                                          appCtrl.appTheme.blackColor),
-                                    ).inkWell(onTap: () {}),
-                                  ))
+                                  .map((e) => PopupMenuItem<int>(
+                                        value: 0,
+                                        onTap: () {
+                                          log("message : ${e.key}");
+                                        },
+                                        child: Text(
+                                          e.value["title"].toString().tr,
+                                          style: AppCss.nunitoMedium14
+                                              .textColor(
+                                                  appCtrl.appTheme.blackColor),
+                                        ).inkWell(onTap: () {}),
+                                      ))
                                   .toList(),
                             ];
                           },
@@ -201,7 +177,7 @@ class Login extends StatelessWidget {
                                           maxWidth: 450, maxHeight: 700),
                                       decoration: BoxDecoration(
                                         borderRadius:
-                                        BorderRadius.circular(16.0),
+                                            BorderRadius.circular(16.0),
                                         color: appCtrl.appTheme.whiteColor,
                                       ),
                                       child: Padding(
@@ -209,136 +185,125 @@ class Login extends StatelessWidget {
                                           child: SingleChildScrollView(
                                               child: Column(
                                                   mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                                      MainAxisAlignment.center,
                                                   children: [
-                                                    const VSpace(Sizes.s20),
-                                                    Image.asset(
-                                                        imageAssets.logo1,
-                                                        height: Sizes.s50,
-                                                        width: Sizes.s50,
-                                                        fit: BoxFit.fill),
-                                                    const VSpace(Sizes.s20),
-                                                    Text(fonts.welcomeBack.tr,
-                                                        style: AppCss
-                                                            .nunitoblack28
-                                                            .textColor(appCtrl
+                                                const VSpace(Sizes.s20),
+                                                Image.asset(imageAssets.logo1,
+                                                    height: Sizes.s50,
+                                                    width: Sizes.s50,
+                                                    fit: BoxFit.fill),
+                                                const VSpace(Sizes.s20),
+                                                Text(fonts.welcomeBack.tr,
+                                                    style: AppCss.nunitoblack28
+                                                        .textColor(appCtrl
                                                             .appTheme
                                                             .blackColor)),
-                                                    const VSpace(Sizes.s10),
-                                                    Text(
-                                                        fonts.helloAgain.tr,
+                                                const VSpace(Sizes.s10),
+                                                Text(fonts.helloAgain.tr,
                                                         textAlign:
-                                                        TextAlign.center,
+                                                            TextAlign.center,
                                                         style: AppCss
                                                             .nunitoSemiBold14
                                                             .textColor(appCtrl
-                                                            .appTheme
-                                                            .contentColor))
-                                                        .paddingSymmetric(
+                                                                .appTheme
+                                                                .contentColor))
+                                                    .paddingSymmetric(
                                                         horizontal: Insets.i25),
-                                                    const VSpace(Sizes.s25),
-                                                    Text(fonts.email.tr,
+                                                const VSpace(Sizes.s25),
+                                                Text(fonts.email.tr,
                                                         style: AppCss
                                                             .nunitoBold16
                                                             .textColor(appCtrl
-                                                            .appTheme
-                                                            .contentColor))
-                                                        .alignment(
+                                                                .appTheme
+                                                                .contentColor))
+                                                    .alignment(
                                                         Alignment.centerLeft),
-                                                    const VSpace(Sizes.s8),
-                                                     SizedBox(
-                                                        height: Sizes.s35,
-                                                        child: CommonTextBox(
-                                                            hinText:
-                                                            fonts.enterYourEmail.tr,
-                                                            labelText: fonts.email.tr)),
-                                                    const VSpace(Sizes.s22),
-                                                    Text(fonts.password.tr,
+                                                const VSpace(Sizes.s8),
+                                                SizedBox(
+                                                    height: Sizes.s35,
+                                                    child: CommonTextBox(
+                                                        hinText: fonts
+                                                            .enterYourEmail.tr,
+                                                        labelText:
+                                                            fonts.email.tr)),
+                                                const VSpace(Sizes.s22),
+                                                Text(fonts.password.tr,
                                                         style: AppCss
                                                             .nunitoBold16
                                                             .textColor(appCtrl
-                                                            .appTheme
-                                                            .contentColor))
-                                                        .alignment(
+                                                                .appTheme
+                                                                .contentColor))
+                                                    .alignment(
                                                         Alignment.centerLeft),
-                                                    const VSpace(Sizes.s8),
-                                                     SizedBox(
-                                                        height: Sizes.s35,
-                                                        child: CommonTextBox(
-                                                            hinText:
-                                                            fonts.enterPassword.tr,
-                                                            labelText: fonts.password.tr)),
-                                                    const VSpace(Sizes.s30),
-                                                    CommonButton(
-                                                        title: fonts.signIn.tr,
-                                                        margin: 0,
-                                                        onTap: () =>
-                                                            Get.toNamed(
-                                                                routeName
-                                                                    .index),
-                                                        padding: 0,
-                                                        height: Sizes.s35,
-                                                        style: AppCss
-                                                            .nunitoMedium14
-                                                            .textColor(appCtrl
+                                                const VSpace(Sizes.s8),
+                                                SizedBox(
+                                                    height: Sizes.s35,
+                                                    child: CommonTextBox(
+                                                        hinText: fonts
+                                                            .enterPassword.tr,
+                                                        labelText:
+                                                            fonts.password.tr)),
+                                                const VSpace(Sizes.s30),
+                                                CommonButton(
+                                                    title: fonts.signIn.tr,
+                                                    margin: 0,
+                                                    onTap: () => Get.toNamed(
+                                                        routeName.index),
+                                                    padding: 0,
+                                                    height: Sizes.s35,
+                                                    style: AppCss.nunitoMedium14
+                                                        .textColor(appCtrl
                                                             .appTheme.white)),
-                                                    const VSpace(Sizes.s12),
-                                                    IntrinsicHeight(
-                                                        child: Row(
-                                                            mainAxisAlignment:
+                                                const VSpace(Sizes.s12),
+                                                IntrinsicHeight(
+                                                    child: Row(
+                                                        mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .end,
-                                                            crossAxisAlignment:
+                                                        crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start,
-                                                            children: [
-                                                              Icon(Icons.lock,
-                                                                  size: Sizes
-                                                                      .s15,
-                                                                  color: appCtrl
-                                                                      .appTheme
-                                                                      .blackColor),
-                                                              const HSpace(
-                                                                  Sizes.s5),
-                                                              Text(
-                                                                  fonts.forgotPassword.tr,
-                                                                  style: AppCss
-                                                                      .nunitoblack16
-                                                                      .textColor(
-                                                                      appCtrl
-                                                                          .appTheme
-                                                                          .blackColor))
-                                                            ]
-                                                        )
-                                                    ),
-                                                    const VSpace(Sizes.s25),
-                                                    RichText(
-                                                        text: TextSpan(
-                                                            children: [
-                                                              TextSpan(
-                                                                  text:
-                                                        fonts.doNotHaveAccount.tr,
-                                                                  style: AppCss
-                                                                      .nunitoMedium16
-                                                                      .textColor(
-                                                                      appCtrl
-                                                                          .appTheme
-                                                                          .blackColor)
-                                                                      .letterSpace(
-                                                                      .2)),
-                                                              TextSpan(
-                                                                  text: fonts.signUp.tr,
-                                                                  style: AppCss
-                                                                      .nunitoblack16
-                                                                      .textColor(
-                                                                      appCtrl
-                                                                          .appTheme
-                                                                          .primary)
-                                                                      .letterSpace(
-                                                                      .2).textDecoration(TextDecoration.underline))
-                                                            ])),
-                                                    const VSpace(Sizes.s30)
-                                                  ]))))))))
+                                                        children: [
+                                                      Icon(Icons.lock,
+                                                          size: Sizes.s15,
+                                                          color: appCtrl
+                                                              .appTheme
+                                                              .blackColor),
+                                                      const HSpace(Sizes.s5),
+                                                      Text(
+                                                          fonts.forgotPassword
+                                                              .tr,
+                                                          style: AppCss
+                                                              .nunitoblack16
+                                                              .textColor(appCtrl
+                                                                  .appTheme
+                                                                  .blackColor))
+                                                    ])),
+                                                const VSpace(Sizes.s25),
+                                                RichText(
+                                                    text: TextSpan(children: [
+                                                  TextSpan(
+                                                      text: fonts
+                                                          .doNotHaveAccount.tr,
+                                                      style: AppCss
+                                                          .nunitoMedium16
+                                                          .textColor(appCtrl
+                                                              .appTheme
+                                                              .blackColor)
+                                                          .letterSpace(.2)),
+                                                  TextSpan(
+                                                      text: fonts.signUp.tr,
+                                                      style: AppCss
+                                                          .nunitoblack16
+                                                          .textColor(appCtrl
+                                                              .appTheme.primary)
+                                                          .letterSpace(.2)
+                                                          .textDecoration(
+                                                              TextDecoration
+                                                                  .underline))
+                                                ])),
+                                                const VSpace(Sizes.s30)
+                                              ]))))))))
                 ]))));
   }
 }

@@ -21,5 +21,18 @@ final dynamic en = {
   "darkMode": "Dark Mode",
   "helloAgain": "Hello Again! Please enter your details",
   "showLanguage": "Show Language",
+  "addBanner": "Add Banner",
+  "rowPerPage": "Rows per page:",
+  "title": "Title",
+  "enterNotificationTitle": "Enter notification Title",
+  "content": "Content",
+  "enterNotificationContent": "Enter notification Content",
+  "image": "Image",
+  "addImage": "Add Image",
+  "productCollectionId": "Product/ Collection Id",
+  "productCollection": "Product/ Collection",
+  "product": "Product",
+  "collection": "Collection",
+  "update": "Update",
 
 };

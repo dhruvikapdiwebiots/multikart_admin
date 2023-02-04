@@ -38,6 +38,7 @@ class AppTheme {
   Color contentColor;
   Color borderColor;
   Color greenColor;
+  Color redColor;
   Color darkContentColor;
   Color ratingColor;
   Color homeCategoryColor;
@@ -72,6 +73,7 @@ class AppTheme {
     required this.contentColor,
     required this.borderColor,
     required this.greenColor,
+    required this.redColor,
     required this.darkContentColor,
     required this.ratingColor,
     required this.homeCategoryColor,
@@ -109,6 +111,7 @@ class AppTheme {
           contentColor: const Color(0xFF777777),
           borderColor: const Color(0xFFDDDDDD),
           greenColor: const Color(0xFF198754),
+          redColor:Colors.red,
           darkContentColor: const Color(0xFFBABABA),
           ratingColor: const Color(0xFFFFBA49),
           homeCategoryColor: const Color(0xFFEAEDF2),
@@ -144,6 +147,7 @@ class AppTheme {
           contentColor: const Color(0xFF777777),
           borderColor: const Color(0xFFDDDDDD),
           greenColor: const Color(0xFF198754),
+          redColor:Colors.red,
           darkContentColor: const Color(0xFFBABABA),
           ratingColor: const Color(0xFFFFBA49),
           textColor: const Color(0xFF636363),

@@ -15,5 +15,18 @@ class Fonts{
   final enterYourEmail = "enterYourEmail";
   final welcomeBack = "welcomeBack";
   final helloAgain = "helloAgain";
+  final addBanner = "addBanner";
   final showLanguage = "showLanguage";
+  final rowPerPage = "rowPerPage";
+  final title = "title";
+  final enterNotificationTitle = "enterNotificationTitle";
+  final content = "content";
+  final enterNotificationContent = "enterNotificationContent";
+  final image = "image";
+  final addImage = "addImage";
+  final productCollectionId = "productCollectionId";
+  final productCollection = "productCollection";
+  final product = "product";
+  final collection = "collection";
+  final update = "update  ";
 }
