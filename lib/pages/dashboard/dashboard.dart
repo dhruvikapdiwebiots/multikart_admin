@@ -68,14 +68,7 @@ class Dashboard extends StatelessWidget {
                           ),
                           const HSpace(Sizes.s12),
                           Text(dashboardCtrl.listItem[index]["value"]),
-                          const Spacer(),
-                          /*ConstText.lightText(
-                            text: percentage > 0
-                                ? 'Increased by ${percentage.abs()}%'
-                                : 'Decreased by ${percentage.abs()}%',
-                            color: ColorConst.white,
-                            fontWeight: FontWeight.bold,
-                          ),*/
+                          const Spacer()
                         ]
                       )
                     ),

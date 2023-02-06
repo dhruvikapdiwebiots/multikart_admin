@@ -12,7 +12,7 @@ class IndexController extends GetxController{
   GlobalKey<ScaffoldState>();
   final GlobalKey<ScaffoldState> scaffoldKey =
   GlobalKey<ScaffoldState>();
-  int selectedIndex = 3;
+  int selectedIndex = 1;
   String pageName ="dashboard";
   bool isHover = false;
   int isSelectedHover = 0;

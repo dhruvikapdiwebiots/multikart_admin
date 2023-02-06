@@ -1,19 +1,19 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
+import 'dart:developer' as log;
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multikart_admin/pages/banner/layouts/add_banner.dart';
+import 'package:multikart_admin/widgets/helper_function.dart';
 import 'package:responsive_table/responsive_table.dart';
 
 import '../../config.dart';
-import '../../pages/banner/banner.dart';
-import '../../pages/notification/notification.dart';
 import '../../widgets/icon_creation.dart';
 
 class BannerController extends GetxController {
-  late List<DatatableHeader> headers;
-
+  List<DatatableHeader>? headers;
+  late DropzoneViewController? controller1;
   final List<int> perPages = [10, 20, 50, 100];
   int total = 100;
   int? currentPerPage = 10;
@@ -21,17 +21,20 @@ class BannerController extends GetxController {
   String? searchKey = "id";
   XFile? imageFile;
   int currentPage = 1;
-  bool isSearch = false;
+  bool isSearch = false, isUploadSize = false;
   final List<Map<String, dynamic>> sourceOriginal = [];
   List<Map<String, dynamic>> sourceFiltered = [];
   List<Map<String, dynamic>> source = [];
-  List<Map<String, dynamic>> selecteds = [];
+  List<Map<String, dynamic>> selected = [];
+  String imageName = "";
   Uint8List webImage = Uint8List(8);
 
   // ignore: unused_field
   final String selectableKey = "id";
   String idType = "product";
   String? sortColumn;
+  Uint8List uploadWebImage = Uint8List(8);
+
   bool sortAscending = true;
   bool isLoading = true;
   final bool showSelect = true;
@@ -63,11 +66,13 @@ class BannerController extends GetxController {
     mockPullData();
   }
 
+
+  //list data
   mockPullData() async {
     expanded = List.generate(currentPerPage!, (index) => false);
 
     isLoading = true;
-    update();
+
     Future.delayed(const Duration(seconds: 3)).then((value) {
       sourceOriginal.clear();
       sourceOriginal.addAll(_generateData(n: random.nextInt(10000)));
@@ -91,6 +96,7 @@ class BannerController extends GetxController {
         });
   }
 
+  //reset data
   resetData({start = 0}) async {
     isLoading = true;
     update();
@@ -105,6 +111,7 @@ class BannerController extends GetxController {
     });
   }
 
+  //filter data
   filterData(value) {
     isLoading = true;
     update();
@@ -126,15 +133,35 @@ class BannerController extends GetxController {
       expanded = List.generate(rangeTop, (index) => false);
       source = sourceFiltered.getRange(0, rangeTop).toList();
     } catch (e) {
-      print(e);
+      log.log("filter error : $e");
     }
     isLoading = false;
     update();
   }
 
+  //on click Image
+  onImagePickUp(setState) {
+    if (kIsWeb) {
+      getImage(source: ImageSource.gallery);
+    } else {
+      imagePickerOption(
+          setState: setState,
+          cameraTap: () {
+            getImage(
+                source: ImageSource.camera, setState: setState);
+            Get.back();
+          },
+          galleryTap: () {
+            getImage(
+                source: ImageSource.gallery, setState: setState);
+            Get.back();
+          });
+    }
+  }
+
   @override
-  void onReady() {
-    // TODO: implement onReady
+  void onInit() {
+    // TODO: implement onInit
     headers = [
       DatatableHeader(
           text: "ID",
@@ -192,74 +219,69 @@ class BannerController extends GetxController {
           },
           textAlign: TextAlign.center),
     ];
-
+    update();
     initializeData();
-    super.onReady();
+
+    super.onInit();
   }
 
 // GET IMAGE FROM GALLERY
-  Future getImage(source, {StateSetter? setState}) async {
-    final ImagePicker picker = ImagePicker();
-    imageFile = (await picker.pickImage(source: source))!;
+  Future getImage({source, StateSetter? setState, dropImage}) async {
     if (kDebugMode) {
-      print("imageFile : $imageFile");
+      if (dropImage != null) {
+        if (imageName.contains("png") ||
+            imageName.contains("jpg") ||
+            imageName.contains("jpeg")) {
+          var image = dropImage;
+          uploadWebImage = image;
+          Image image1 = Image.memory(uploadWebImage);
 
-      var image = await imageFile!.readAsBytes();
-      webImage = image;
-      pickImage = File(imageFile!.path);
-      setState!(() {});
-      print("pickImage : $pickImage");
-      print("webImage : $webImage");
+          ImageInfo info = await getImageInfo(image1);
+
+          if (info.image.width > 300 && info.image.height > 50) {
+            webImage = uploadWebImage;
+            pickImage = File("a");
+            isUploadSize = false;
+          } else {
+            isUploadSize = true;
+          }
+        } else {
+          ScaffoldMessenger.of(Get.context!)
+              .showSnackBar(const SnackBar(content: Text("No Svg Allow")));
+        }
+      } else {
+        final ImagePicker picker = ImagePicker();
+        imageFile = (await picker.pickImage(source: source))!;
+        print("imageFile : $imageFile");
+
+        if (imageFile!.name.contains("png") ||
+            imageFile!.name.contains("jpg") ||
+            imageFile!.name.contains("jpeg")) {
+          var image = await imageFile!.readAsBytes();
+          uploadWebImage = image;
+
+          Image image1 = Image.memory(uploadWebImage);
+
+          ImageInfo info = await getImageInfo(image1);
+
+          if (info.image.width > 300 && info.image.height > 50) {
+            webImage = uploadWebImage;
+            pickImage = File(imageFile!.path);
+            isUploadSize = false;
+          } else {
+            isUploadSize = true;
+          }
+
+          update();
+        } else {
+          ScaffoldMessenger.of(Get.context!)
+              .showSnackBar(const SnackBar(content: Text("No Svg Allow")));
+        }
+      }
     }
   }
 
-  //image picker option
-  imagePickerOption(StateSetter? setState) {
-    showModalBottomSheet(
-        context: Get.context!,
-        shape: const RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.vertical(top: Radius.circular(AppRadius.r25)),
-        ),
-        builder: (BuildContext context) {
-          // return your layout
-          return Container(
-            padding: const EdgeInsets.all(12),
-            height: Sizes.s150,
-            color: appCtrl.appTheme.whiteColor,
-            alignment: Alignment.bottomCenter,
-            child: Column(children: [
-              const VSpace(Sizes.s20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconCreation(
-                      icons: Icons.camera,
-                      color: appCtrl.isTheme
-                          ? appCtrl.appTheme.white
-                          : appCtrl.appTheme.primary,
-                      text: "camera",
-                      onTap: () {
-                        getImage(ImageSource.camera, setState: setState);
-                        Get.back();
-                      }),
-                  IconCreation(
-                      icons: Icons.image,
-                      color: appCtrl.isTheme
-                          ? appCtrl.appTheme.white
-                          : appCtrl.appTheme.primary,
-                      text: "gallery",
-                      onTap: () {
-                        getImage(ImageSource.gallery, setState: setState);
-                        Get.back();
-                      }),
-                ],
-              ),
-            ]),
-          );
-        });
-  }
+
 }
 
 class DataSource extends DataTableSource {
@@ -299,12 +321,12 @@ class DataSource extends DataTableSource {
             padding: const EdgeInsets.only(right: 16),
             child: OutlinedButton(
               onPressed: () => onDetailButtonPressed.call(data),
-              child: Text("crudDetail"),
+              child: const Text("crudDetail"),
             ),
           ),
           OutlinedButton(
             onPressed: () => onDeleteButtonPressed.call(data),
-            child: Text("crudDelete"),
+            child: const Text("crudDelete"),
           )
         ]);
       }))

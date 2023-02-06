@@ -42,5 +42,9 @@ final dynamic en = {
   "contactUs": "Contact Us",
   "termsCondition": "Terms & Condition",
   "privacyPolicy": "Privacy Policy",
-
+  "name": "Name",
+  "english": "English",
+  "hindi": "Hindi",
+  "korean": "Korean",
+  "arabic": "arabic",
 };

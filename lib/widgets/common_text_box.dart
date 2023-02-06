@@ -66,17 +66,18 @@ class CommonTextBox extends StatelessWidget {
           onFieldSubmitted: onFieldSubmitted,
           onTap: onTap,
           readOnly: readOnly,
+          style: AppCss.nunitoSemiBold12.textColor(appCtrl.appTheme.contentColor).letterSpace(.2) ,
           maxLength: maxLength,
           decoration: InputDecoration(
               filled: filled,
               fillColor: fillColor,
               hintText: hinText.tr,
-
               errorText: errorText,
               counterText: "",
               hintStyle:
               AppCss.nunitoSemiBold12.textColor(appCtrl.appTheme.contentColor).letterSpace(.2),
-
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(horizontal: Insets.i15,vertical: Insets.i16),
               border: border ?? inputBorder,
               focusedBorder: border ?? inputBorder,
               disabledBorder: border ?? inputBorder,

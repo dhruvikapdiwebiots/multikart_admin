@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -15,80 +16,76 @@ class NotificationController extends GetxController {
   Uint8List uploadWebImage = Uint8List(8);
   Uint8List webImage = Uint8List(8);
   String idType = "";
+  String imageName = "";
   late DropzoneViewController? controller1;
 
 // GET IMAGE FROM GALLERY
-  Future getImage(source) async {
-    final ImagePicker picker = ImagePicker();
-    imageFile = (await picker.pickImage(source: source))!;
+  Future getImage( {source,dropImage}) async {
+
     if (kDebugMode) {
-      if (imageFile!.name.contains("png") ||
-          imageFile!.name.contains("jpg") ||
-          imageFile!.name.contains("jpeg")) {
-        var image = await imageFile!.readAsBytes();
-        uploadWebImage = image;
-        print("info 1: $pickImage");
+      if(dropImage != null){
+        if (imageName.contains("png") ||
+            imageName.contains("jpg") ||
+            imageName.contains("jpeg")) {
+          var image = dropImage;
+          uploadWebImage = image;
+          log("info 1: $image");
 
-        Image image1 = Image.memory(uploadWebImage);
+          Image image1 = Image.memory(uploadWebImage);
 
-        ImageInfo info = await getImageInfo(image1);
-        print("info : ${info.image.width}");
-        print("info : ${info.image.width}");
-        if(info.image.width > 300 && info.image.height > 50){
-          webImage = uploadWebImage;
-          pickImage = File(imageFile!.path);
-          isUploadSize = false;
+          ImageInfo info = await getImageInfo(image1);
+          log("info : ${info.image.width}");
+          log("info : ${info.image.width}");
+          if (info.image.width > 300 && info.image.height > 50) {
+            webImage = uploadWebImage;
+            pickImage = File("a");
+            isUploadSize = false;
+          } else {
+            isUploadSize = true;
+          }
         }else{
-          isUploadSize = true;
+          ScaffoldMessenger.of(Get.context!)
+              .showSnackBar(const SnackBar(content: Text("No Svg Allow")));
         }
-
         update();
-      } else {
-        ScaffoldMessenger.of(Get.context!)
-            .showSnackBar(SnackBar(content: Text("No Svg Allow")));
+      }else {
+        final ImagePicker picker = ImagePicker();
+        imageFile = (await picker.pickImage(source: source))!;
+
+        if (imageFile!.name.contains("png") ||
+            imageFile!.name.contains("jpg") ||
+            imageFile!.name.contains("jpeg")) {
+          var image = await imageFile!.readAsBytes();
+          uploadWebImage = image;
+          log("info 1: $image");
+
+          Image image1 = Image.memory(uploadWebImage);
+
+          ImageInfo info = await getImageInfo(image1);
+          log("info : ${info.image.width}");
+          log("info : ${info.image.width}");
+          if (info.image.width > 300 && info.image.height > 50) {
+            webImage = uploadWebImage;
+            pickImage = File(imageFile!.path);
+            isUploadSize = false;
+          } else {
+            isUploadSize = true;
+          }
+
+          update();
+        } else {
+          ScaffoldMessenger.of(Get.context!)
+              .showSnackBar(const SnackBar(content: Text("No Svg Allow")));
+        }
       }
     }
   }
 
-  dragImage(image)async{
-    print("imagee : ${image.name}");
-    dynamic images = File(image);
-    print("object : $images");
-
- /*   if (kDebugMode) {
-      if (imageFile!.name.contains("png") ||
-          imageFile!.name.contains("jpg") ||
-          imageFile!.name.contains("jpeg")) {
-        var image = await imageFile!.readAsBytes();
-        uploadWebImage = image;
-        print("info 1: $pickImage");
-
-        Image image1 = Image.memory(uploadWebImage);
-
-        ImageInfo info = await getImageInfo(image1);
-        print("info : ${info.image.width}");
-        print("info : ${info.image.width}");
-        if(info.image.width > 300 && info.image.height > 50){
-          webImage = uploadWebImage;
-          pickImage = File(imageFile!.path);
-          isUploadSize = false;
-        }else{
-          isUploadSize = true;
-        }
-
-        update();
-      } else {
-        ScaffoldMessenger.of(Get.context!)
-            .showSnackBar(SnackBar(content: Text("No Svg Allow")));
-      }
-    }*/
-  }
-
   Future<ImageInfo> getImageInfo(Image img) async {
-    final c = new Completer<ImageInfo>();
+    final c = Completer<ImageInfo>();
     img.image
-        .resolve(new ImageConfiguration())
-        .addListener(new ImageStreamListener((ImageInfo i, bool _) {
+        .resolve(const ImageConfiguration())
+        .addListener(ImageStreamListener((ImageInfo i, bool _) {
       c.complete(i);
     }));
     return c.future;
@@ -122,7 +119,7 @@ class NotificationController extends GetxController {
                             : appCtrl.appTheme.primary,
                         text: "camera",
                         onTap: () {
-                          getImage(ImageSource.camera);
+                          getImage(source: ImageSource.camera);
                           Get.back();
                         }),
                     IconCreation(
@@ -132,7 +129,7 @@ class NotificationController extends GetxController {
                             : appCtrl.appTheme.primary,
                         text: "gallery",
                         onTap: () {
-                          getImage(ImageSource.gallery);
+                          getImage(source: ImageSource.gallery);
                           Get.back();
                         }),
                   ])

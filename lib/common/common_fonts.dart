@@ -37,4 +37,5 @@ class Fonts{
   final contactUs = "contactUs";
   final termsCondition = "termsCondition";
   final privacyPolicy = "privacyPolicy";
+  final name = "name";
 }

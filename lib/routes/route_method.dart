@@ -9,7 +9,7 @@ RouteName _routeName = RouteName();
 
 class AppRoute {
   final List<GetPage> getPages = [
-    GetPage(name: _routeName.login, page: () => const Login()),
+    GetPage(name: _routeName.login, page: () =>  Login()),
     GetPage(name: _routeName.index, page: () =>  Index()),
   ];
 }

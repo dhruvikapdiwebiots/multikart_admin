@@ -1,12 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:multikart_admin/controllers/pages_controller/banner_controller.dart';
-import 'package:multikart_admin/pages/banner/layouts/arrow_back.dart';
-import 'package:multikart_admin/pages/banner/layouts/arrow_forward.dart';
-import 'package:multikart_admin/pages/banner/layouts/pages_banner_drop_down.dart';
 import 'package:responsive_table/responsive_table.dart';
 
 import '../../../config.dart';
-import 'banner_search_action.dart';
 
 class BannerList extends StatelessWidget {
   const BannerList({Key? key}) : super(key: key);
@@ -14,17 +9,17 @@ class BannerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BannerController>(builder: (bannerCtrl) {
-      return ResponsiveDatatable(
+      return bannerCtrl.headers!.isNotEmpty ? ResponsiveDatatable(
         title: TextButton.icon(
           onPressed: () => bannerCtrl.addBannerDialog(),
           icon: const Icon(Icons.add),
-          label:  Text(fonts.signIn.tr),
+          label:  Text(fonts.signIn.tr)
         ),
         reponseScreenSizes: const [ScreenSize.xs],
         actions: const [BannerSearchAction()],
-        headers: bannerCtrl.headers,
+        headers: bannerCtrl.headers!.isNotEmpty ? bannerCtrl.headers! : [],
         source: bannerCtrl.source,
-        selecteds: bannerCtrl.selecteds,
+        selecteds: bannerCtrl.selected,
         autoHeight: false,
         onChangedRow: (value, header) {
           /// print(value);
@@ -73,20 +68,20 @@ class BannerList extends StatelessWidget {
             print("$value  $item ");
           }
           if (value!) {
-            bannerCtrl.selecteds.add(item);
+            bannerCtrl.selected.add(item);
             bannerCtrl.update();
           } else {
-            bannerCtrl.selecteds.removeAt(bannerCtrl.selecteds.indexOf(item));
+            bannerCtrl.selected.removeAt(bannerCtrl.selected.indexOf(item));
             bannerCtrl.update();
           }
         },
         onSelectAll: (value) {
           if (value!) {
-            bannerCtrl.selecteds =
+            bannerCtrl.selected =
                 bannerCtrl.source.map((entry) => entry).toList().cast();
             bannerCtrl.update();
           } else {
-            bannerCtrl.selecteds.clear();
+            bannerCtrl.selected.clear();
             bannerCtrl.update();
           }
         },
@@ -113,7 +108,7 @@ class BannerList extends StatelessWidget {
         headerTextStyle:  TextStyle(color: appCtrl.appTheme.whiteColor),
         rowTextStyle:  TextStyle(color: appCtrl.appTheme.greenColor),
         selectedTextStyle:  TextStyle(color: appCtrl.appTheme.whiteColor),
-      );
+      ):Container();
     });
   }
 }

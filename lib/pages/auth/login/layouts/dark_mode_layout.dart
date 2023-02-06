@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../common/theme/index.dart';
 import '../../../../config.dart';
 
 class DarkModeLayout extends StatelessWidget {
@@ -16,6 +17,13 @@ class DarkModeLayout extends StatelessWidget {
           Text(appCtrl.isTheme ? fonts.lightMode.tr : fonts.darkMode.tr,
               style: AppCss.nunitoSemiBold14
                   .textColor(appCtrl.appTheme.blackColor))
-        ]));
+        ]).inkWell(onTap: ()async{
+          appCtrl.isTheme = !appCtrl.isTheme;
+
+          appCtrl.update();
+          ThemeService().switchTheme(appCtrl.isTheme);
+          await appCtrl.storage
+              .write(session.isDarkMode, appCtrl.isTheme);
+        }));
   }
 }
