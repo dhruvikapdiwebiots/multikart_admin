@@ -51,7 +51,7 @@ class BannerImageLayout extends StatelessWidget {
                               Get.back();
                             }))
       ])
-          .height(bannerCtrl.isUploadSize ? Sizes.s40 : Sizes.s80)
+          .height(bannerCtrl.isUploadSize ? Sizes.s40 : Sizes.s50)
           .paddingSymmetric(horizontal: Insets.i15);
     });
   }

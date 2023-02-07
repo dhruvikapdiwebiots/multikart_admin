@@ -1,4 +1,3 @@
-import 'package:multikart_admin/controllers/pages_controller/notification_controller.dart';
 
 import '../../../config.dart';
 
@@ -13,7 +12,7 @@ class ProductCollectionRadio extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(fonts.productCollection.tr),
-              const VSpace(Sizes.s10),
+              const VSpace(Sizes.s15),
               Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,

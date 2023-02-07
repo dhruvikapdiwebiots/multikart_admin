@@ -17,7 +17,7 @@ class NotificationImage extends StatelessWidget {
             if (notificationCtrl.isUploadSize)
               Column(children: [
                 const VSpace(Sizes.s5),
-                Text("Upload image more than 300p X 50px",
+                Text(fonts.imageError.tr,
                     style: AppCss.nunitoMedium12
                         .textColor(appCtrl.appTheme.redColor))
               ])

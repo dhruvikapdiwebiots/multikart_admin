@@ -26,7 +26,7 @@
     <meta name="apple-mobile-web-app-title" content="multikart_admin">
     <link rel="apple-touch-icon" href="icons/Icon-192.png">
     <meta name="google-signin-client_id"
-          content="713436851366-9faegorr6ukfc9i302groh3nflnikvsm.apps.googleusercontent.com" />
+          content="713436851366-9faegorr6ukfc9i302groh3nflnikvsm.apps.googleusercontent.com"/>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png"/>
@@ -38,7 +38,13 @@
     // The value below is injected by flutter build, do not touch.
     var serviceWorkerVersion = null;
 
+
     </script>
+    <script type="text/javascript">
+  window.flutterWebRenderer = "html";
+
+    </script>
+
     <!-- This script adds the flutter initialization JS code -->
     <script src="flutter.js" defer></script>
 </head>
@@ -56,6 +62,7 @@
         return appRunner.runApp();
       });
     });
+
 
 </script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -85,6 +92,7 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
+
 
 </script>
 </body>

@@ -1,9 +1,4 @@
-
-
-
-
 import '../../config.dart';
-
 
 class BannerPage extends StatelessWidget {
   final bannerCtrl = Get.put(BannerController());
@@ -13,7 +8,7 @@ class BannerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BannerController>(builder: (_) {
-      return SingleChildScrollView(
+      return  SingleChildScrollView(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,

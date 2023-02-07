@@ -38,4 +38,6 @@ class Fonts{
   final termsCondition = "termsCondition";
   final privacyPolicy = "privacyPolicy";
   final name = "name";
+  final imageError = "imageError";
+  final submit = "submit";
 }

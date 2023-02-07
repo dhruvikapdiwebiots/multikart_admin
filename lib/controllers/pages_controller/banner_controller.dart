@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:html';
+import 'dart:io' as io;
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'dart:developer' as log;
@@ -40,7 +41,7 @@ class BannerController extends GetxController {
   bool sortAscending = true;
   bool isLoading = true;
   final bool showSelect = true;
-  File? pickImage;
+  io.File? pickImage;
   List banner = [];
   var random = Random();
 
@@ -48,7 +49,7 @@ class BannerController extends GetxController {
     // final List source = List.filled(n, Random.secure());
     // final List source = getData();
     List source = banner;
-    log.log("getData() : ${source}");
+    log.log("getData() : $source");
     List<Map<String, dynamic>> temps = [];
     var i = 1;
     if (kDebugMode) {
@@ -58,7 +59,7 @@ class BannerController extends GetxController {
     for (var data in source) {
       log.log("data : ${data["image"]}");
       temps.add({
-        "id":data["productCollectionId"],
+        "id": data["productCollectionId"],
         "image": data["image"],
         "name": data["title"],
         "isActive": true,
@@ -76,10 +77,9 @@ class BannerController extends GetxController {
         .get()
         .then((value) {
       log.log("message : ${value.docs.length}");
-      value.docs.asMap().entries.forEach((element){
+      value.docs.asMap().entries.forEach((element) {
         banner.add(element.value.data());
       });
-
     });
     update();
     return banner;
@@ -95,9 +95,11 @@ class BannerController extends GetxController {
     update();
     log.log("imageUrlimageUrl : $imageUrl");
     try {
+      int id = DateTime.now().millisecondsSinceEpoch;
       await FirebaseFirestore.instance.collection(collectionName.banner).add({
         "productCollectionId": txtId.text,
         "image": imageUrl,
+        "id": id,
         "isProduct": txtId.text.isEmpty
             ? false
             : idType == "product"
@@ -109,6 +111,7 @@ class BannerController extends GetxController {
         isLoading = false;
         update();
         Get.back();
+        initializeData();
       });
     } catch (e) {
       log.log("save error: $e");
@@ -218,7 +221,13 @@ class BannerController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-
+    String imageUrl = "image_url";
+    // https://github.com/flutter/flutter/issues/41563
+    // ignore: undefined_prefixed_name
+    ui.platformViewRegistry.registerViewFactory(
+      imageUrl,
+      (int _) => ImageElement()..src = imageUrl,
+    );
     getData();
     headers = [
       DatatableHeader(
@@ -235,7 +244,8 @@ class BannerController extends GetxController {
           sortable: false,
           sourceBuilder: (value, row) {
             log.log("va;ue : $value");
-            return Image(image: NetworkImage(value)).marginSymmetric(horizontal: Insets.i10);
+            return Image(image: NetworkImage(value),height: Sizes.s100,)
+                .marginSymmetric(horizontal: Insets.i10);
           },
           textAlign: TextAlign.center),
       DatatableHeader(
@@ -251,7 +261,7 @@ class BannerController extends GetxController {
           sortable: true,
           textAlign: TextAlign.center),
       DatatableHeader(
-          text: "Received",
+          text: "Actions",
           value: "action",
           show: true,
           sortable: false,
@@ -273,11 +283,18 @@ class BannerController extends GetxController {
                           },
                           child: const Icon(Icons.edit, size: Sizes.s18))),
                   OutlinedButton(
-                      onPressed: ()async {
+                      onPressed: () async {
                         log.log("vad L $row");
-                        await FirebaseFirestore.instance.collection(collectionName.banner).where("title",isEqualTo: row["name"]).get().then((value) {
-                          if(value.docs.isNotEmpty){
-                            FirebaseFirestore.instance.collection(collectionName.banner).doc(value.docs[0].id).delete();
+                        await FirebaseFirestore.instance
+                            .collection(collectionName.banner)
+                            .where("title", isEqualTo: row["id"])
+                            .get()
+                            .then((value) {
+                          if (value.docs.isNotEmpty) {
+                            FirebaseFirestore.instance
+                                .collection(collectionName.banner)
+                                .doc(value.docs[0].id)
+                                .delete();
                           }
                         });
                       },
@@ -307,7 +324,7 @@ class BannerController extends GetxController {
 
           if (info.image.width > 300 && info.image.height > 50) {
             webImage = uploadWebImage;
-            pickImage = File("a");
+            pickImage = io.File("a");
             isUploadSize = false;
           } else {
             isUploadSize = true;
@@ -333,7 +350,7 @@ class BannerController extends GetxController {
 
           if (info.image.width > 300 && info.image.height > 50) {
             webImage = uploadWebImage;
-            pickImage = File(imageFile!.path);
+            pickImage = io.File(imageFile!.path);
             isUploadSize = false;
           } else {
             isUploadSize = true;
@@ -359,7 +376,7 @@ class BannerController extends GetxController {
     if (Responsive.isDesktop(Get.context!)) {
       uploadTask = reference.putData(webImage);
     } else {
-      var file = File(imageFile!.path);
+      var file = io.File(imageFile!.path);
       uploadTask = reference.putFile(file);
     }
 
@@ -369,9 +386,6 @@ class BannerController extends GetxController {
         imageUrl = downloadUrl;
         log.log("imageUrl : $imageUrl");
         await Future.delayed(Durations.s3);
-        isLoading = false;
-
-        update();
         saveBanner();
       }, onError: (err) {
         update();
@@ -379,63 +393,27 @@ class BannerController extends GetxController {
       });
     });
   }
-}
 
-class DataSource extends DataTableSource {
-  final void Function(Map<String, dynamic> data) onDetailButtonPressed;
-  final void Function(Map<String, dynamic> data) onDeleteButtonPressed;
+  //on sort
+  onSort(value) async {
+    isLoading = true;
+    update();
 
-  final _data = List.generate(200, (index) {
-    return {
-      'image': "image",
-      'no': index + 1,
-      'item': 'Item ${index + 1}',
-      'price': Random().nextInt(10000),
-      'date': '2022-06-30',
-    };
-  });
-
-  DataSource({
-    required this.onDetailButtonPressed,
-    required this.onDeleteButtonPressed,
-  });
-
-  @override
-  DataRow? getRow(int index) {
-    final data = _data[index];
-
-    return DataRow(cells: [
-      DataCell(Text(data['image'].toString())
-          .decorated(color: appCtrl.appTheme.gray)),
-      DataCell(
-          Text(data['no'].toString()).decorated(color: appCtrl.appTheme.gray)),
-      DataCell(Text(data['item'].toString())),
-      DataCell(Text(data['price'].toString())),
-      DataCell(Text(data['date'].toString())),
-      DataCell(Builder(builder: (context) {
-        return Row(mainAxisSize: MainAxisSize.min, children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: OutlinedButton(
-              onPressed: () => onDetailButtonPressed.call(data),
-              child: const Text("crudDetail"),
-            ),
-          ),
-          OutlinedButton(
-            onPressed: () => onDeleteButtonPressed.call(data),
-            child: const Text("crudDelete"),
-          )
-        ]);
-      }))
-    ]);
+    sortColumn = value;
+    sortAscending = !sortAscending;
+    if (sortAscending) {
+      sourceFiltered
+          .sort((a, b) => b["$sortColumn"].compareTo(a["$sortColumn"]));
+    } else {
+      sourceFiltered
+          .sort((a, b) => a["$sortColumn"].compareTo(b["$sortColumn"]));
+    }
+    var rangeTop = currentPerPage! < sourceFiltered.length
+        ? currentPerPage!
+        : sourceFiltered.length;
+    source = sourceFiltered.getRange(0, rangeTop).toList();
+    searchKey = value;
+    isLoading = false;
+    update();
   }
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get rowCount => _data.length;
-
-  @override
-  int get selectedRowCount => 0;
 }
