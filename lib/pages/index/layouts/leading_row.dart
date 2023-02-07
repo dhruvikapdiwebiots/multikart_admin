@@ -5,7 +5,7 @@ class LeadingRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<IndexController>(builder: (indexCtrl) {
+    return GetBuilder<IndexLayoutController>(builder: (indexCtrl) {
       return Row(children: [
         ValueListenableBuilder<bool>(
             valueListenable: indexCtrl.isOpen,

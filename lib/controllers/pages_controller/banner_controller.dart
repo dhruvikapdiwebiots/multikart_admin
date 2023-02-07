@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
+import 'dart:ui' as ui;
 import 'dart:developer' as log;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multikart_admin/widgets/helper_function.dart';
 import 'package:responsive_table/responsive_table.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 import '../../config.dart';
-import '../../widgets/icon_creation.dart';
 
 class BannerController extends GetxController {
   List<DatatableHeader>? headers;
@@ -26,8 +26,10 @@ class BannerController extends GetxController {
   List<Map<String, dynamic>> sourceFiltered = [];
   List<Map<String, dynamic>> source = [];
   List<Map<String, dynamic>> selected = [];
-  String imageName = "";
+  String imageName = "", imageUrl = "";
   Uint8List webImage = Uint8List(8);
+  TextEditingController txtTitle = TextEditingController();
+  TextEditingController txtId = TextEditingController();
 
   // ignore: unused_field
   final String selectableKey = "id";
@@ -39,10 +41,14 @@ class BannerController extends GetxController {
   bool isLoading = true;
   final bool showSelect = true;
   File? pickImage;
+  List banner = [];
   var random = Random();
 
-  List<Map<String, dynamic>> _generateData({int n: 100}) {
-    final List source = List.filled(n, Random.secure());
+  List<Map<String, dynamic>> _generateData() {
+    // final List source = List.filled(n, Random.secure());
+    // final List source = getData();
+    List source = banner;
+    log.log("getData() : ${source}");
     List<Map<String, dynamic>> temps = [];
     var i = 1;
     if (kDebugMode) {
@@ -50,10 +56,11 @@ class BannerController extends GetxController {
     }
     // ignore: unused_local_variable
     for (var data in source) {
+      log.log("data : ${data["image"]}");
       temps.add({
-        "id": i + 1,
-        "image": imageAssets.logo1,
-        "name": "Product $i",
+        "id":data["productCollectionId"],
+        "image": data["image"],
+        "name": data["title"],
         "isActive": true,
         "action": i
       });
@@ -62,10 +69,54 @@ class BannerController extends GetxController {
     return temps;
   }
 
+  List getData() {
+    banner = [];
+    FirebaseFirestore.instance
+        .collection(collectionName.banner)
+        .get()
+        .then((value) {
+      log.log("message : ${value.docs.length}");
+      value.docs.asMap().entries.forEach((element){
+        banner.add(element.value.data());
+      });
+
+    });
+    update();
+    return banner;
+  }
+
   initializeData() async {
     mockPullData();
   }
 
+  //add banner
+  saveBanner() async {
+    isLoading = true;
+    update();
+    log.log("imageUrlimageUrl : $imageUrl");
+    try {
+      await FirebaseFirestore.instance.collection(collectionName.banner).add({
+        "productCollectionId": txtId.text,
+        "image": imageUrl,
+        "isProduct": txtId.text.isEmpty
+            ? false
+            : idType == "product"
+                ? true
+                : false,
+        "title": txtTitle.text,
+        "isActive": true
+      }).then((value) {
+        isLoading = false;
+        update();
+        Get.back();
+      });
+    } catch (e) {
+      log.log("save error: $e");
+    } finally {
+      isLoading = false;
+      update();
+    }
+  }
 
   //list data
   mockPullData() async {
@@ -75,10 +126,17 @@ class BannerController extends GetxController {
 
     Future.delayed(const Duration(seconds: 3)).then((value) {
       sourceOriginal.clear();
-      sourceOriginal.addAll(_generateData(n: random.nextInt(10000)));
+      sourceOriginal.addAll(_generateData());
+
       sourceFiltered = sourceOriginal;
       total = sourceFiltered.length;
-      source = sourceFiltered.getRange(0, currentPerPage!).toList();
+      if (sourceFiltered.length > 5) {
+        source = sourceFiltered.getRange(0, currentPerPage!).toList();
+      } else {
+        source = sourceFiltered;
+      }
+      log.log("sourceFiltered : ${source.length}");
+
       isLoading = false;
       update();
     });
@@ -147,13 +205,11 @@ class BannerController extends GetxController {
       imagePickerOption(
           setState: setState,
           cameraTap: () {
-            getImage(
-                source: ImageSource.camera, setState: setState);
+            getImage(source: ImageSource.camera, setState: setState);
             Get.back();
           },
           galleryTap: () {
-            getImage(
-                source: ImageSource.gallery, setState: setState);
+            getImage(source: ImageSource.gallery, setState: setState);
             Get.back();
           });
     }
@@ -162,12 +218,15 @@ class BannerController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
+
+    getData();
     headers = [
       DatatableHeader(
           text: "ID",
           value: "id",
           show: true,
           sortable: true,
+          flex: 1,
           textAlign: TextAlign.center),
       DatatableHeader(
           text: "Image",
@@ -175,7 +234,8 @@ class BannerController extends GetxController {
           show: true,
           sortable: false,
           sourceBuilder: (value, row) {
-            return Image.asset(value, height: Sizes.s60);
+            log.log("va;ue : $value");
+            return Image(image: NetworkImage(value)).marginSymmetric(horizontal: Insets.i10);
           },
           textAlign: TextAlign.center),
       DatatableHeader(
@@ -183,7 +243,7 @@ class BannerController extends GetxController {
           value: "name",
           show: true,
           sortable: true,
-          textAlign: TextAlign.left),
+          textAlign: TextAlign.center),
       DatatableHeader(
           text: "Is Active",
           value: "isActive",
@@ -213,7 +273,14 @@ class BannerController extends GetxController {
                           },
                           child: const Icon(Icons.edit, size: Sizes.s18))),
                   OutlinedButton(
-                      onPressed: () {},
+                      onPressed: ()async {
+                        log.log("vad L $row");
+                        await FirebaseFirestore.instance.collection(collectionName.banner).where("title",isEqualTo: row["name"]).get().then((value) {
+                          if(value.docs.isNotEmpty){
+                            FirebaseFirestore.instance.collection(collectionName.banner).doc(value.docs[0].id).delete();
+                          }
+                        });
+                      },
                       child: const Icon(Icons.delete, size: Sizes.s18))
                 ]);
           },
@@ -261,7 +328,7 @@ class BannerController extends GetxController {
           uploadWebImage = image;
 
           Image image1 = Image.memory(uploadWebImage);
-
+          log.log("image1 : $image1");
           ImageInfo info = await getImageInfo(image1);
 
           if (info.image.width > 300 && info.image.height > 50) {
@@ -281,7 +348,37 @@ class BannerController extends GetxController {
     }
   }
 
+// UPLOAD SELECTED IMAGE TO FIREBASE
+  Future uploadFile() async {
+    isLoading = true;
+    update();
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    Reference reference = FirebaseStorage.instance.ref().child(fileName);
+    log.log("reference : $webImage");
+    UploadTask? uploadTask;
+    if (Responsive.isDesktop(Get.context!)) {
+      uploadTask = reference.putData(webImage);
+    } else {
+      var file = File(imageFile!.path);
+      uploadTask = reference.putFile(file);
+    }
 
+    uploadTask.then((res) async {
+      log.log("res : $res");
+      res.ref.getDownloadURL().then((downloadUrl) async {
+        imageUrl = downloadUrl;
+        log.log("imageUrl : $imageUrl");
+        await Future.delayed(Durations.s3);
+        isLoading = false;
+
+        update();
+        saveBanner();
+      }, onError: (err) {
+        update();
+        //    Fluttertoast.showToast(msg: 'Image is Not Valid');
+      });
+    });
+  }
 }
 
 class DataSource extends DataTableSource {

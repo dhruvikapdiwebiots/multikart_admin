@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flash/flash.dart';
 import 'package:multikart_admin/widgets/icon_creation.dart';
 
 import '../config.dart';
@@ -52,4 +53,36 @@ imagePickerOption({StateSetter? setState,GestureTapCallback? cameraTap, galleryT
                   ])
             ]));
       });
+}
+
+//alert
+showAlert({title,context})async{
+  showFlash(
+    context: context,
+    duration: const Duration(seconds: 2),
+    persistent: false,
+    builder: (_, controller) {
+      return Flash(
+        controller: controller,
+        margin: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width / 1.2,
+            top: Insets.i50),
+        backgroundColor: appCtrl.appTheme.blackColor,
+        brightness: Brightness.light,
+        boxShadows: const [BoxShadow(blurRadius: 4)],
+        barrierBlur: 0.0,
+        barrierColor: Colors.transparent,
+        barrierDismissible: true,
+        behavior: FlashBehavior.floating,
+        borderWidth: 1,
+        position: FlashPosition.top,
+        child: FlashBar(
+            content: Text(title.toString().tr,
+                textAlign: TextAlign.center,
+                style: AppCss.nunitoMedium14
+                    .textColor(appCtrl.appTheme.white)),
+            showProgressIndicator: false),
+      );
+    },
+  );
 }

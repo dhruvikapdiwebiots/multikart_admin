@@ -5,7 +5,7 @@ class SelectedIndexBodyLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<IndexController>(builder: (indexCtrl) {
+    return GetBuilder<IndexLayoutController>(builder: (indexCtrl) {
       return Expanded(
           child: SelectionArea(
               child: CustomScrollView(

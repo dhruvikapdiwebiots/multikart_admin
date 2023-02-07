@@ -63,7 +63,7 @@ class LoginBodyLayout extends StatelessWidget {
           CommonButton(
               title: fonts.signIn.tr,
               margin: 0,
-              onTap: () => loginCtrl.signIn(),
+              onTap: () => loginCtrl.signIn(context),
               padding: 0,
               height: Sizes.s35,
               style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.white)),

@@ -1,4 +1,4 @@
-import 'package:multikart_admin/pages/index/layouts/drawer_list.dart';
+
 
 import '../../../config.dart';
 
@@ -7,7 +7,7 @@ class IndexDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<IndexController>(builder: (indexCtrl) {
+    return GetBuilder<IndexLayoutController>(builder: (indexCtrl) {
       return Visibility(
           visible: MediaQuery.of(context).size.width <= 992,
           child: ValueListenableBuilder<bool>(

@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../config.dart';
-import '../../../widgets/helper_function.dart';
 
 class AddBanner extends StatelessWidget {
   const AddBanner({Key? key}) : super(key: key);
@@ -41,10 +40,10 @@ class AddBanner extends StatelessWidget {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                CommonTextBox(hinText: fonts.name.tr),
+                                CommonTextBox(hinText: fonts.name.tr,controller: bannerCtrl.txtTitle),
                                 const VSpace(Sizes.s15),
                                 CommonTextBox(
-                                    hinText: fonts.productCollectionId),
+                                    hinText: fonts.productCollectionId,controller: bannerCtrl.txtId),
                                 const VSpace(Sizes.s15),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -57,7 +56,9 @@ class AddBanner extends StatelessWidget {
                                               value: "product",
                                               dense: true,
                                               visualDensity:
-                                                  const VisualDensity(horizontal: 0),
+                                                  const VisualDensity(
+                                                      horizontal: 0,
+                                                      vertical: 0),
                                               groupValue: bannerCtrl.idType,
                                               activeColor:
                                                   appCtrl.appTheme.primary,
@@ -69,10 +70,12 @@ class AddBanner extends StatelessWidget {
                                       Expanded(
                                           child: RadioListTile(
                                               contentPadding: EdgeInsets.zero,
-                                              title:  Text(fonts.collection.tr),
+                                              title: Text(fonts.collection.tr),
                                               dense: true,
                                               visualDensity:
-                                                  const VisualDensity(horizontal: 0),
+                                                  const VisualDensity(
+                                                      horizontal: 0,
+                                                      vertical: 0),
                                               value: "collection",
                                               groupValue: bannerCtrl.idType,
                                               activeColor:
@@ -106,21 +109,26 @@ class AddBanner extends StatelessWidget {
                                   bannerCtrl.getImage(
                                       source: ImageSource.gallery);
                                 } else {
-                                  imagePickerOption(setState:setState, cameraTap: () {
-                                    bannerCtrl.getImage(
-                                        source: ImageSource.camera,
-                                        setState: setState);
-                                    Get.back();
-                                  }, galleryTap: () {
-                                    bannerCtrl.getImage(
-                                        source: ImageSource.gallery,
-                                        setState: setState);
-                                    Get.back();
-                                  });
+                                  imagePickerOption(
+                                      setState: setState,
+                                      cameraTap: () {
+                                        bannerCtrl.getImage(
+                                            source: ImageSource.camera,
+                                            setState: setState);
+                                        Get.back();
+                                      },
+                                      galleryTap: () {
+                                        bannerCtrl.getImage(
+                                            source: ImageSource.gallery,
+                                            setState: setState);
+                                        Get.back();
+                                      });
                                 }
                               })
                             : kIsWeb
-                                ? CommonDottedBorder(child: Image.memory(bannerCtrl.webImage, fit: BoxFit.fill))
+                                ? CommonDottedBorder(
+                                        child: Image.memory(bannerCtrl.webImage,
+                                            fit: BoxFit.fill))
                                     .inkWell(
                                         onTap: () => bannerCtrl.getImage(
                                             source: ImageSource.gallery))
@@ -129,12 +137,15 @@ class AddBanner extends StatelessWidget {
                                             fit: BoxFit.fill,
                                             height: Sizes.s100))
                                     .inkWell(
-                                        onTap: () => imagePickerOption(setState:setState, cameraTap: () {
+                                        onTap: () => imagePickerOption(
+                                            setState: setState,
+                                            cameraTap: () {
                                               bannerCtrl.getImage(
                                                   source: ImageSource.camera,
                                                   setState: setState);
                                               Get.back();
-                                            }, galleryTap: () {
+                                            },
+                                            galleryTap: () {
                                               bannerCtrl.getImage(
                                                   source: ImageSource.gallery,
                                                   setState: setState);
@@ -142,7 +153,7 @@ class AddBanner extends StatelessWidget {
                                             }))
                       ])
                           .height(
-                              bannerCtrl.isUploadSize ? Sizes.s40 : Sizes.s80)
+                              bannerCtrl.isUploadSize ? Sizes.s40 : Sizes.s50)
                           .paddingSymmetric(horizontal: Insets.i15),
                       const VSpace(Sizes.s10),
                       if (bannerCtrl.isUploadSize)
@@ -155,6 +166,7 @@ class AddBanner extends StatelessWidget {
                       const VSpace(Sizes.s25),
                       CommonButton(
                           title: "Submit",
+                          onTap: ()=>bannerCtrl.uploadFile(),
                           style: AppCss.nunitoblack14
                               .textColor(appCtrl.appTheme.white)),
                       const VSpace(Sizes.s15)

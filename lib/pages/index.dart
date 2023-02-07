@@ -17,7 +17,7 @@ export 'auth/login/layouts/dark_language_layout.dart';
 export 'auth/login/layouts/glass_morphic_layout.dart';
 export 'auth/login/layouts/login_layout.dart';
 export 'auth/login/layouts/login_body_layout.dart';
-
+export 'banner/layouts/banner_list.dart';
 export '/widgets/image_pick_up.dart';
 export '/widgets/helper_function.dart';
 export 'banner/layouts/add_banner.dart';

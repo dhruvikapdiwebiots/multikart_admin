@@ -9,15 +9,22 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
       builder: (_) {
-        return Scaffold(
-            backgroundColor: appCtrl.appTheme.whiteColor,
-            body: GlassMorphicLayout(
-                linearGradient: backgroundLinearGradient(),
-                child: GlassMorphicLayout(
-                    linearGradient: loginLinearGradient(),
-                    child: Stack(
-                        alignment: Alignment.topRight,
-                        children: const [DarkLanguageLayout(), LoginLayout()]))));
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(primaryColor: Colors.orangeAccent),
+          home: Builder(
+            builder: (context) {
+              return Scaffold(
+                  backgroundColor: appCtrl.appTheme.whiteColor,
+                  body: GlassMorphicLayout(
+                      linearGradient: backgroundLinearGradient(),
+                      child: GlassMorphicLayout(
+                          linearGradient: loginLinearGradient(),
+                          child: Column(
+                              children: const [DarkLanguageLayout(), VSpace(Sizes.s80), LoginLayout()]))));
+            }
+          ),
+        );
       }
     );
   }

@@ -9,7 +9,7 @@ class DrawerList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<IndexController>(builder: (indexCtrl) {
+    return GetBuilder<IndexLayoutController>(builder: (indexCtrl) {
       return Column(children: [
         ...appArray.drawerList.asMap().entries.map((e) {
           return MouseRegion(

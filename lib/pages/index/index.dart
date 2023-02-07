@@ -1,14 +1,14 @@
 import 'package:multikart_admin/config.dart';
 
-class Index extends StatelessWidget {
-  final indexCtrl = Get.put(IndexController());
+class IndexLayout extends StatelessWidget {
+  final indexCtrl = Get.put(IndexLayoutController());
 
-  Index({Key? key}) : super(key: key);
+  IndexLayout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<IndexController>(builder: (_) {
-      return Scaffold(
+    return GetBuilder<IndexLayoutController>(builder: (_) {
+      return  Scaffold(
           key: indexCtrl.scaffoldKey,
           appBar: AppBar(
               elevation: 0.0,

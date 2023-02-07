@@ -6,7 +6,7 @@ import 'package:multikart_admin/pages/static_page/static_page.dart';
 
 import '../../config.dart';
 
-class IndexController extends GetxController{
+class IndexLayoutController extends GetxController{
   ValueNotifier<bool> isOpen = ValueNotifier(true);
   final GlobalKey<ScaffoldState> scaffoldDrawerKey =
   GlobalKey<ScaffoldState>();
@@ -18,7 +18,6 @@ class IndexController extends GetxController{
   int isSelectedHover = 0;
 
   final ScrollController scrollController = ScrollController();
-
 
   //list of bottommost page
   List<Widget> widgetOptions = <Widget>[

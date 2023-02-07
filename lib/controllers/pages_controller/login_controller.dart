@@ -14,7 +14,9 @@ class LoginController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     bool isTheme = appCtrl.storage.read(session.isDarkMode) ?? false;
+
     log("isTheme : $isTheme");
+
     update();
     appCtrl.isTheme = isTheme;
     ThemeService().switchTheme(appCtrl.isTheme);
@@ -37,24 +39,44 @@ class LoginController extends GetxController {
       Get.updateLocale(locale);
     }
     update();
+
     super.onInit();
   }
 
   //login
-  signIn() async {
-  if(formKey.currentState!.validate()){
-    await FirebaseFirestore.instance
-        .collection(collectionName.admin)
-        .get()
-        .then((value) {
-          log("value : #$value");
-      if (value.docs[0].data().isNotEmpty) {
-        if (value.docs[0].data()["userName"] == txtName.text &&
-            value.docs[0].data()["password"] == txtPassword.text) {
-          log("success");
+  signIn(context) async {
+    if (formKey.currentState!.validate()) {
+      await FirebaseFirestore.instance
+          .collection(collectionName.admin)
+          .get()
+          .then((value) async {
+        log("value : #$value");
+        if (value.docs[0].data().isNotEmpty) {
+          if (value.docs[0].data()["userName"] == txtName.text) {
+            if (value.docs[0].data()["password"] == txtPassword.text) {
+              await appCtrl.storage.write(session.isLogin, true);
+              Get.offAllNamed(routeName.index);
+            } else {
+              showAlert(context: context, title: "Invalid Password");
+            }
+          } else {
+            showAlert(context: context, title: 'Invalid Email or Password');
+          }
+        } else {
+          log("Invalid Credential");
         }
-      }
-    });
+      });
+    }
   }
+
+  @override
+  void onReady() {
+    // TODO: implement onReady
+    bool isLogin = appCtrl.storage.read(session.isLogin) ?? false;
+    if(isLogin){
+      log("iss : ,$isLogin");
+      Get.offAllNamed(routeName.index);
+    }
+    super.onReady();
   }
 }
