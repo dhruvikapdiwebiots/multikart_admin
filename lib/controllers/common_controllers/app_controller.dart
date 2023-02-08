@@ -11,6 +11,7 @@ class AppController extends GetxController {
   AppTheme get appTheme => _appTheme;
   int selectedIndex = 0;
   bool isTheme = false;
+  bool isAlert = false;
   bool isRTL = false;
   String languageVal = "in";
   List drawerList = [];

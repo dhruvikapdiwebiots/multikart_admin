@@ -39,7 +39,7 @@ dependencies:
   flutter_bloc: ^8.1.1
   get_storage: ^2.0.3
   google_fonts: ^4.0.1
-  glassmorphism: ^3.0.0
+  #glassmorphism: ^3.0.0
   flutter_svg: ^1.1.6
   responsive_table: ^0.2.0+2
   image_picker: ^0.8.6+1

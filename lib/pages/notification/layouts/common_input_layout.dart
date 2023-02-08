@@ -13,7 +13,7 @@ class CommonInputLayout extends StatelessWidget {
       children: [
         Text(title.toString().tr),
         const VSpace(Sizes.s10),
-        CommonTextBox(hinText: hinText.toString().tr,maxLines: maxLines,),
+        CommonTextBox(hinText: hinText.toString().tr,maxLines: maxLines,controller: controller),
       ],
     );
   }

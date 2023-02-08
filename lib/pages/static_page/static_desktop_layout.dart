@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:multikart_admin/controllers/pages_controller/static_controller.dart';
 
 import '../../config.dart';
@@ -39,6 +41,7 @@ class StaticDesktopLayout extends StatelessWidget {
           CommonButton(
               title: fonts.update.tr,
               width: Sizes.s100,
+              onTap: ()=>staticCtrl.updateData(),
               style: AppCss.nunitoblack14
                   .textColor(appCtrl.appTheme.white))
               .alignment(Alignment.bottomRight),

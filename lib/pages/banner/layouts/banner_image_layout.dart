@@ -24,14 +24,14 @@ class BannerImageLayout extends StatelessWidget {
               bannerCtrl.getImage(dropImage: bytes);
             }),
         bannerCtrl.pickImage == null
-            ? const ImagePickUp().inkWell(onTap: () => bannerCtrl.onImagePickUp(setState))
+            ? const ImagePickUp().inkWell(onTap: () => bannerCtrl.onImagePickUp(setState,context))
             : kIsWeb
                 ? CommonDottedBorder(
                         child:
                             Image.memory(bannerCtrl.webImage, fit: BoxFit.fill))
                     .inkWell(
                         onTap: () =>
-                            bannerCtrl.getImage(source: ImageSource.gallery))
+                            bannerCtrl.getImage(source: ImageSource.gallery,context: context))
                 : CommonDottedBorder(
                         child: Image.file(bannerCtrl.pickImage!,
                             fit: BoxFit.fill, height: Sizes.s100))
@@ -41,13 +41,13 @@ class BannerImageLayout extends StatelessWidget {
                             cameraTap: () {
                               bannerCtrl.getImage(
                                   source: ImageSource.camera,
-                                  setState: setState);
+                                  setState: setState,context: context);
                               Get.back();
                             },
                             galleryTap: () {
                               bannerCtrl.getImage(
                                   source: ImageSource.gallery,
-                                  setState: setState);
+                                  setState: setState,context: context);
                               Get.back();
                             }))
       ])

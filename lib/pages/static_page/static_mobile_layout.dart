@@ -29,6 +29,7 @@ class StaticMobileLayout extends StatelessWidget {
               hinText: fonts.privacyPolicy.tr),
           const VSpace(Sizes.s20),
           CommonButton(
+              onTap: ()=>staticCtrl.updateData(),
               title: fonts.update.tr,
               width: Sizes.s100,
               style: AppCss.nunitoblack14

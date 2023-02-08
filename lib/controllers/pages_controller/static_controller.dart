@@ -1,24 +1,15 @@
-import 'dart:async';
-import 'dart:html';
-import 'dart:io' as io;
-import 'dart:math';
-import 'dart:ui' as ui;
-import 'dart:developer' as log;
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_dropzone/flutter_dropzone.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:responsive_table/responsive_table.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import '../../config.dart';
 
 class StaticController extends GetxController {
-
   TextEditingController txtAboutUs = TextEditingController();
+  String id = "";
   TextEditingController txtContactUs = TextEditingController();
   TextEditingController txtTermsCondition = TextEditingController();
   TextEditingController txtPrivacyPolicy = TextEditingController();
-
+  bool isLoading = false;
 
   @override
   void onReady() {
@@ -27,14 +18,41 @@ class StaticController extends GetxController {
     super.onReady();
   }
 
-  getData()async{
-    await FirebaseFirestore.instance.collection(collectionName.static).get().then((value) {
-      log.log("dd : ${value.docs[0].data()["aboutUs"]}");
+  //get data from firebase
+  getData() async {
+
+    await FirebaseFirestore.instance
+        .collection(collectionName.static)
+        .get()
+        .then((value) {
+      id = value.docs[0].id;
       txtAboutUs.text = value.docs[0].data()["aboutUs"];
       txtContactUs.text = value.docs[0].data()["contactUs"];
-      txtTermsCondition.text = value.docs[0].data()["privacyPolicy"];
-      txtPrivacyPolicy.text = value.docs[0].data()["aboutUs"];
+      txtTermsCondition.text = value.docs[0].data()["termsCondition"];
+      txtPrivacyPolicy.text = value.docs[0].data()["privacyPolicy"];
       update();
     });
+    update();
+  }
+
+  //update data
+  updateData() async {
+    isLoading = true;
+    update();
+    await FirebaseFirestore.instance
+        .collection(collectionName.static)
+        .doc(id)
+        .update({
+      "aboutUs": txtAboutUs.text,
+      "contactUs": txtContactUs.text,
+      "termsCondition": txtTermsCondition.text,
+      "privacyPolicy": txtPrivacyPolicy.text
+    }).then((value) {
+      isLoading = false;
+      update();
+    });
+    update();
+    getData();
+    log("id : $id");
   }
 }

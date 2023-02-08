@@ -14,13 +14,13 @@ class IndexLayout extends StatelessWidget {
               elevation: 0.0,
               shadowColor: Colors.transparent,
               centerTitle: false,
-              backgroundColor: appCtrl.appTheme.whiteColor,
+              backgroundColor: appCtrl.appTheme.blackColor1,
               leadingWidth: Responsive.isDesktop(context) ? 392 : 100,
               title: !Responsive.isDesktop(context)
                   ? Text(indexCtrl.pageName.tr).backgroundColor(Colors.cyan)
                   : Container(),
               leading: const LeadingRow(),
-              actions: const [ActionLayout()]),
+              actions: const [DarkLanguageLayout()]),
           drawerScrimColor: Colors.transparent,
           drawer: const IndexDrawer(),
           body: SafeArea(
@@ -40,7 +40,7 @@ class IndexLayout extends StatelessWidget {
                                       .height,
                                   width:
                                   value ? Sizes.s240 : Sizes.s70,
-                                  color: appCtrl.appTheme.blackColor,
+                                  color: appCtrl.appTheme.blackColor1,
                                   child: SingleChildScrollView(
                                       controller: ScrollController(),
                                       child: Column(

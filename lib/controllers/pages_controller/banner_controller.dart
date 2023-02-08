@@ -22,7 +22,7 @@ class BannerController extends GetxController {
   String? searchKey = "id";
   XFile? imageFile;
   int currentPage = 1;
-  bool isSearch = false, isUploadSize = false;
+  bool isSearch = false, isUploadSize = false,isAlert = false;
   final List<Map<String, dynamic>> sourceOriginal = [];
   List<Map<String, dynamic>> sourceFiltered = [];
   List<Map<String, dynamic>> source = [];
@@ -201,18 +201,18 @@ class BannerController extends GetxController {
   }
 
   //on click Image
-  onImagePickUp(setState) {
+  onImagePickUp(setState,context) {
     if (kIsWeb) {
-      getImage(source: ImageSource.gallery);
+      getImage(source: ImageSource.gallery,context: context);
     } else {
       imagePickerOption(
           setState: setState,
           cameraTap: () {
-            getImage(source: ImageSource.camera, setState: setState);
+            getImage(source: ImageSource.camera, setState: setState,context: context);
             Get.back();
           },
           galleryTap: () {
-            getImage(source: ImageSource.gallery, setState: setState);
+            getImage(source: ImageSource.gallery, setState: setState,context: context);
             Get.back();
           });
     }
@@ -310,7 +310,7 @@ class BannerController extends GetxController {
   }
 
 // GET IMAGE FROM GALLERY
-  Future getImage({source, StateSetter? setState, dropImage}) async {
+  Future getImage({source, StateSetter? setState, dropImage,context}) async {
     if (kDebugMode) {
       if (dropImage != null) {
         if (imageName.contains("png") ||
@@ -329,9 +329,14 @@ class BannerController extends GetxController {
           } else {
             isUploadSize = true;
           }
+          isAlert = false;
         } else {
-          ScaffoldMessenger.of(Get.context!)
-              .showSnackBar(const SnackBar(content: Text("No Svg Allow")));
+          isAlert = true;
+          update();
+          await Future.delayed(Durations.s2);
+          isAlert = false;
+          update();
+         // showAlert(context: Get.context!, title: "No Svg Allow");
         }
       } else {
         final ImagePicker picker = ImagePicker();
@@ -355,11 +360,15 @@ class BannerController extends GetxController {
           } else {
             isUploadSize = true;
           }
-
+          isAlert = false;
           update();
         } else {
-          ScaffoldMessenger.of(Get.context!)
-              .showSnackBar(const SnackBar(content: Text("No Svg Allow")));
+          isAlert = true;
+          update();
+          await Future.delayed(Durations.s2);
+          isAlert = false;
+          update();
+          //showAlert(context: Get.context!, title: "No Svg Allow");
         }
       }
     }

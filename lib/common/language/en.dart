@@ -49,4 +49,5 @@ final dynamic en = {
   "arabic": "arabic",
   "imageError": "Upload image more than 300p X 50px",
   "submit": "Submit",
+  "svgNotAllowed": "Svg Not Allowed",
 };

@@ -40,4 +40,5 @@ class Fonts{
   final name = "name";
   final imageError = "imageError";
   final submit = "submit";
+  final svgNotAllowed = "svgNotAllowed";
 }

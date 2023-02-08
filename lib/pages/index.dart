@@ -34,3 +34,4 @@ export 'auth/login/layouts/validator.dart';
 export 'banner/layouts/banner_class.dart';
 export 'banner/layouts/banner_image_layout.dart';
 export 'banner/layouts/banner_product_collection.dart';
+export '/widgets/custom_snack_bar.dart';
