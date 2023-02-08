@@ -19,6 +19,7 @@ class BannerSearchAction extends StatelessWidget {
                             icon: const Icon(Icons.cancel),
                             onPressed: () {
                               bannerCtrl.isSearch = false;
+                              bannerCtrl.initialSetUi();
                               bannerCtrl.initializeData();
                               bannerCtrl.update();
                             }),

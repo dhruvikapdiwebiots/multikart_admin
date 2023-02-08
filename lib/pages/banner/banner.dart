@@ -30,7 +30,7 @@ class BannerPage extends StatelessWidget {
                   const VSpace(Sizes.s10),
                   Text("No Banner Available. For Add Click on Add Banner"),
                   const VSpace(Sizes.s10),
-                  CommonButton(title: "Add Banner",style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.white),width: Sizes.s150,),
+                  CommonButton(title: "Add Banner",style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.white),width: Sizes.s150,onTap: () => bannerCtrl.addBannerDialog()),
                 ],
               ),);
     });

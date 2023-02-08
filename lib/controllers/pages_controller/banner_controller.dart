@@ -63,7 +63,8 @@ class BannerController extends GetxController {
         "image": data["image"],
         "name": data["title"],
         "isActive": true,
-        "action": i
+        "action": i,
+        "bannerId":data["bannerId"]
       });
       i++;
     }
@@ -86,6 +87,7 @@ class BannerController extends GetxController {
   }
 
   initializeData() async {
+    log.log("message");
     mockPullData();
   }
 
@@ -99,7 +101,7 @@ class BannerController extends GetxController {
       await FirebaseFirestore.instance.collection(collectionName.banner).add({
         "productCollectionId": txtId.text,
         "image": imageUrl,
-        "id": id,
+        "bannerId": id,
         "isProduct": txtId.text.isEmpty
             ? false
             : idType == "product"
@@ -111,12 +113,16 @@ class BannerController extends GetxController {
         isLoading = false;
         update();
         Get.back();
+        initialSetUi();
         initializeData();
       });
     } catch (e) {
       log.log("save error: $e");
     } finally {
       isLoading = false;
+      Get.back();
+      initialSetUi();
+      initializeData();
       update();
     }
   }
@@ -218,15 +224,13 @@ class BannerController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    // TODO: implement onInit
+  initialSetUi()async{
     String imageUrl = "image_url";
     // https://github.com/flutter/flutter/issues/41563
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(
       imageUrl,
-      (int _) => ImageElement()..src = imageUrl,
+          (int _) => ImageElement()..src = imageUrl,
     );
     getData();
     headers = [
@@ -284,12 +288,13 @@ class BannerController extends GetxController {
                           child: const Icon(Icons.edit, size: Sizes.s18))),
                   OutlinedButton(
                       onPressed: () async {
-                        log.log("vad L $row");
+                        log.log("vad L ${row["bannerId"]}");
                         await FirebaseFirestore.instance
                             .collection(collectionName.banner)
-                            .where("title", isEqualTo: row["id"])
+                            .where("bannerId", isEqualTo: row["bannerId"])
                             .get()
                             .then((value) {
+
                           if (value.docs.isNotEmpty) {
                             FirebaseFirestore.instance
                                 .collection(collectionName.banner)
@@ -297,12 +302,20 @@ class BannerController extends GetxController {
                                 .delete();
                           }
                         });
+                        initialSetUi();
+                        initializeData();
                       },
                       child: const Icon(Icons.delete, size: Sizes.s18))
                 ]);
           },
           textAlign: TextAlign.center),
     ];
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    initialSetUi();
     update();
     initializeData();
 
