@@ -2,8 +2,6 @@ export 'package:flutter/material.dart';
 export 'package:get/get.dart';
 export 'package:get_storage/get_storage.dart';
 
-
-
 export '../../common/config.dart';
 export '../../controllers/pages_controller/index.dart';
 export '../pages/index.dart';

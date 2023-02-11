@@ -1,8 +1,4 @@
 
-import 'package:multikart_admin/pages/banner/banner.dart';
-import 'package:multikart_admin/pages/dashboard/dashboard.dart';
-import 'package:multikart_admin/pages/notification/notification.dart';
-import 'package:multikart_admin/pages/static_page/static_page.dart';
 
 import '../../config.dart';
 

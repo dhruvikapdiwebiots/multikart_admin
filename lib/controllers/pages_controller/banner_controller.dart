@@ -58,10 +58,11 @@ class BannerController extends GetxController {
         "id": data["bannerId"],
         "image": data["image"],
         "name": data["title"],
-        "isActive": true,
+        "isActive": data["isActive"],
         "action": i,
         "isProduct": data["isProduct"],
-        "productCollectionId": data["productCollectionId"]
+        "productCollectionId": data["productCollectionId"],
+        "bannerId": data["bannerId"]
       });
       i++;
     }
@@ -425,31 +426,36 @@ class BannerController extends GetxController {
 
 // UPLOAD SELECTED IMAGE TO FIREBASE
   Future uploadFile() async {
-    isLoading = true;
-    update();
-    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-    Reference reference = FirebaseStorage.instance.ref().child(fileName);
-    log.log("reference : $webImage");
-    UploadTask? uploadTask;
-    if (Responsive.isDesktop(Get.context!)) {
-      uploadTask = reference.putData(webImage);
+    bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+    if (isLoginTest) {
+      accessDenied("Modification is not allow for test user");
     } else {
-      var file = io.File(imageFile!.path);
-      uploadTask = reference.putFile(file);
-    }
+      isLoading = true;
+      update();
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference reference = FirebaseStorage.instance.ref().child(fileName);
+      log.log("reference : $webImage");
+      UploadTask? uploadTask;
+      if (Responsive.isDesktop(Get.context!)) {
+        uploadTask = reference.putData(webImage);
+      } else {
+        var file = io.File(imageFile!.path);
+        uploadTask = reference.putFile(file);
+      }
 
-    uploadTask.then((res) async {
-      log.log("res : $res");
-      res.ref.getDownloadURL().then((downloadUrl) async {
-        imageUrl = downloadUrl;
-        log.log("imageUrl : $imageUrl");
-        await Future.delayed(Durations.s3);
-        saveBanner();
-      }, onError: (err) {
-        update();
-        //    Fluttertoast.showToast(msg: 'Image is Not Valid');
+      uploadTask.then((res) async {
+        log.log("res : $res");
+        res.ref.getDownloadURL().then((downloadUrl) async {
+          imageUrl = downloadUrl;
+          log.log("imageUrl : $imageUrl");
+          await Future.delayed(Durations.s3);
+          saveBanner();
+        }, onError: (err) {
+          update();
+          //    Fluttertoast.showToast(msg: 'Image is Not Valid');
+        });
       });
-    });
+    }
   }
 
   //on sort

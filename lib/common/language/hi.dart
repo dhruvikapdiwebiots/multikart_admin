@@ -47,4 +47,9 @@ final dynamic hi = {
   "hindi": "हिंदी",
   "korean": "कोरियाई",
   "arabic": "अरबी",
+  "imageError": "300p X 50px से अधिक की छवि अपलोड करें",
+  "submit": "जमा करना",
+  "svgNotAllowed": "एसवीजी की अनुमति नहीं है",
+  "accessDenied": "टेस्ट में @title की अनुमति नहीं है",
+  "sendNotification": "अधिसूचना भेजें",
 };

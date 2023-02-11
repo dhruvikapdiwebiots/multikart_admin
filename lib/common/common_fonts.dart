@@ -1,5 +1,7 @@
 
 
+import 'package:get/get.dart';
+
 class Fonts{
   final multiKartAdmin = "multiKartAdmin";
   final selectLanguage = "selectLanguage";
@@ -41,4 +43,6 @@ class Fonts{
   final imageError = "imageError";
   final submit = "submit";
   final svgNotAllowed = "svgNotAllowed";
+  final sendNotification = "sendNotification";
+  String accessDenied(val) => "accessDenied".trParams({'title':val});
 }

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
@@ -89,42 +88,46 @@ class NotificationController extends GetxController {
   //send notification
   Future<void> sendNotification(
       {data}) async {
-    final data = {
-      "notification": {"body": txtContent.text, "title": txtTitle.text, },
-      "priority": "high",
-      "data": {
-        "click_action": "FLUTTER_NOTIFICATION_CLICK",
-        "alertMessage": 'true',
-        "title": txtTitle.text,
-      },
-      "to": "dfWhS-FDSfOcvRGktKu5LJ:APA91bGpgJ0VgdjgBvBL0kD3TkCcLRqJ-Z-U14aT9hUUZy-ShSpjdSoyaWeJ9OvO7MKeS9xkFj6BhpjtYagswEG1OLw4uhd45gxZ7ypCoSWTqHRs_V_JumM07h43pQUjlFHFX7RtRj-H"
-    };
+    bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+    if (isLoginTest) {
+      accessDenied("Modification is not allow for test user");
+    }else {
+      final data = {
+        "notification": {"body": txtContent.text, "title": txtTitle.text,},
+        "priority": "high",
+        "data": {
+          "click_action": "FLUTTER_NOTIFICATION_CLICK",
+          "alertMessage": 'true',
+          "title": txtTitle.text,
+        },
+        "to": "dfWhS-FDSfOcvRGktKu5LJ:APA91bGpgJ0VgdjgBvBL0kD3TkCcLRqJ-Z-U14aT9hUUZy-ShSpjdSoyaWeJ9OvO7MKeS9xkFj6BhpjtYagswEG1OLw4uhd45gxZ7ypCoSWTqHRs_V_JumM07h43pQUjlFHFX7RtRj-H"
+      };
 
-    final headers = {
-      'content-type': 'application/json',
-      'Authorization':
-      'key=AAAAphwmbKY:APA91bGHsxPDGQmFD1XKbx3BKGmjFZTjBy3VXHIKVZ4HJVr0wYuG7c-7FOQGI6rrdR8ahTKkyv8yAso-PZXDZ00unk0rnJXq_Y1V-R1GH7omkP6hEzaydYlZAbIx48VofT831bpe_nLR'
-    };
+      final headers = {
+        'content-type': 'application/json',
+        'Authorization':
+        'key=AAAAphwmbKY:APA91bGHsxPDGQmFD1XKbx3BKGmjFZTjBy3VXHIKVZ4HJVr0wYuG7c-7FOQGI6rrdR8ahTKkyv8yAso-PZXDZ00unk0rnJXq_Y1V-R1GH7omkP6hEzaydYlZAbIx48VofT831bpe_nLR'
+      };
 
-    BaseOptions options = BaseOptions(
-      connectTimeout: 5000,
-      receiveTimeout: 3000,
-      headers: headers,
-    );
+      BaseOptions options = BaseOptions(
+        connectTimeout: 5000,
+        receiveTimeout: 3000,
+        headers: headers,
+      );
 
-    try {
-      final response = await Dio(options)
-          .post('https://fcm.googleapis.com/fcm/send', data: data);
+      try {
+        final response = await Dio(options)
+            .post('https://fcm.googleapis.com/fcm/send', data: data);
 
-      if (response.statusCode == 200) {
-        log('Alert push notification send');
-      } else {
-        log('notification sending failed');
-        // on failure do sth
+        if (response.statusCode == 200) {
+          log('Alert push notification send');
+        } else {
+          log('notification sending failed');
+          // on failure do sth
+        }
+      } catch (e) {
+        log('exception $e');
       }
-    } catch (e) {
-      log('exception $e');
     }
-
   }
 }

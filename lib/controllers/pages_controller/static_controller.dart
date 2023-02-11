@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../config.dart';
@@ -20,7 +19,6 @@ class StaticController extends GetxController {
 
   //get data from firebase
   getData() async {
-
     await FirebaseFirestore.instance
         .collection(collectionName.static)
         .get()
@@ -37,22 +35,26 @@ class StaticController extends GetxController {
 
   //update data
   updateData() async {
-    isLoading = true;
-    update();
-    await FirebaseFirestore.instance
-        .collection(collectionName.static)
-        .doc(id)
-        .update({
-      "aboutUs": txtAboutUs.text,
-      "contactUs": txtContactUs.text,
-      "termsCondition": txtTermsCondition.text,
-      "privacyPolicy": txtPrivacyPolicy.text
-    }).then((value) {
-      isLoading = false;
+    bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+    if (isLoginTest) {
+      accessDenied("Modification is not allow for test user");
+    }else {
+      isLoading = true;
       update();
-    });
-    update();
-    getData();
-    log("id : $id");
+      await FirebaseFirestore.instance
+          .collection(collectionName.static)
+          .doc(id)
+          .update({
+        "aboutUs": txtAboutUs.text,
+        "contactUs": txtContactUs.text,
+        "termsCondition": txtTermsCondition.text,
+        "privacyPolicy": txtPrivacyPolicy.text
+      }).then((value) {
+        isLoading = false;
+        update();
+      });
+      update();
+      getData();
+    }
   }
 }

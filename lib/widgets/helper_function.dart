@@ -16,12 +16,13 @@ Future<ImageInfo> getImageInfo(Image img) async {
 }
 
 //image picker option
-imagePickerOption({StateSetter? setState,GestureTapCallback? cameraTap, galleryTap}) {
+imagePickerOption(
+    {StateSetter? setState, GestureTapCallback? cameraTap, galleryTap}) {
   showModalBottomSheet(
       context: Get.context!,
       shape: const RoundedRectangleBorder(
         borderRadius:
-        BorderRadius.vertical(top: Radius.circular(AppRadius.r25)),
+            BorderRadius.vertical(top: Radius.circular(AppRadius.r25)),
       ),
       builder: (BuildContext context) {
         // return your layout
@@ -42,7 +43,7 @@ imagePickerOption({StateSetter? setState,GestureTapCallback? cameraTap, galleryT
                             ? appCtrl.appTheme.white
                             : appCtrl.appTheme.primary,
                         text: "camera",
-                        onTap:cameraTap),
+                        onTap: cameraTap),
                     IconCreation(
                         icons: Icons.image,
                         color: appCtrl.isTheme
@@ -56,33 +57,44 @@ imagePickerOption({StateSetter? setState,GestureTapCallback? cameraTap, galleryT
 }
 
 //alert
-showAlert({title,context})async{
+showAlert({title, context}) async {
   showFlash(
-    context: context,
-    duration: const Duration(seconds: 2),
-    persistent: false,
-    builder: (_, controller) {
-      return Flash(
-        controller: controller,
-        margin: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width / 1.2,
-            top: Insets.i50),
-        backgroundColor: appCtrl.appTheme.blackColor,
-        brightness: Brightness.light,
-        boxShadows: const [BoxShadow(blurRadius: 4)],
-        barrierBlur: 0.0,
-        barrierColor: Colors.transparent,
-        barrierDismissible: true,
-        behavior: FlashBehavior.floating,
-        borderWidth: 1,
-        position: FlashPosition.top,
-        child: FlashBar(
-            content: Text(title.toString().tr,
-                textAlign: TextAlign.center,
-                style: AppCss.nunitoMedium14
-                    .textColor(appCtrl.appTheme.white)),
-            showProgressIndicator: false),
-      );
-    },
+      context: context,
+      duration: const Duration(seconds: 2),
+      persistent: false,
+      builder: (_, controller) {
+        return Flash(
+            controller: controller,
+            margin: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width / 1.2, top: Insets.i50),
+            backgroundColor: appCtrl.appTheme.blackColor,
+            brightness: Brightness.light,
+            boxShadows: const [BoxShadow(blurRadius: 4)],
+            barrierBlur: 0.0,
+            barrierColor: Colors.transparent,
+            barrierDismissible: true,
+            behavior: FlashBehavior.floating,
+            borderWidth: 1,
+            position: FlashPosition.top,
+            child: FlashBar(
+                content: Text(title.toString().tr,
+                    textAlign: TextAlign.center,
+                    style: AppCss.nunitoMedium14
+                        .textColor(appCtrl.appTheme.white)),
+                showProgressIndicator: false));
+      });
+}
+
+//test user not allow dialog
+accessDenied(String content){
+  Get.dialog(
+    AlertDialog(
+      title: Text("Alert!"),
+      content: Text(content.tr),
+      actions: <Widget>[
+        CommonButton(title: "Close",width: Sizes.s80,style: AppCss.nunitoMedium16.textColor(appCtrl.appTheme.white),onTap: ()=> Get.back(),)
+      ],
+    ),
+    barrierDismissible: false,
   );
 }

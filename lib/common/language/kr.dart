@@ -47,4 +47,9 @@ final dynamic kr = {
   "hindi": "힌디 어",
   "korean": "한국인",
   "arabic": "아라비아 말",
+  "imageError": "300p X 50px 이상의 이미지 업로드",
+  "submit": "제출하다",
+  "svgNotAllowed": "허용되지 않음",
+  "accessDenied": "테스트에서 @title 에 허용되지 않음",
+  "sendNotification": "알림 보내기",
 };

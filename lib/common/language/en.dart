@@ -50,4 +50,6 @@ final dynamic en = {
   "imageError": "Upload image more than 300p X 50px",
   "submit": "Submit",
   "svgNotAllowed": "Svg Not Allowed",
+  "accessDenied": "Not Allowed to @title in Test",
+  "sendNotification": "Send Notification",
 };

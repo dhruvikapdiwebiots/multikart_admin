@@ -11,6 +11,7 @@ class IndexLayout extends StatelessWidget {
     return GetBuilder<IndexLayoutController>(builder: (_) {
       return
         MaterialApp(
+          debugShowCheckedModeBanner: false,
           home: Scaffold(
               key: indexCtrl.scaffoldKey,
               appBar: AppBar(

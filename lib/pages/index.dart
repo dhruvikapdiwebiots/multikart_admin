@@ -36,3 +36,8 @@ export 'banner/layouts/banner_image_layout.dart';
 export 'banner/layouts/banner_product_collection.dart';
 export '/widgets/custom_snack_bar.dart';
 export 'notification/layouts/notification_image.dart';
+
+export '/pages/banner/banner.dart';
+export '/pages/dashboard/dashboard.dart';
+export '/pages/notification/notification.dart';
+export '/pages/static_page/static_page.dart';
