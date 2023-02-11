@@ -13,6 +13,7 @@ class AppController extends GetxController {
   bool isTheme = false;
   bool isAlert = false;
   bool isRTL = false;
+  String isLogin = "false";
   String languageVal = "in";
   List drawerList = [];
   int currVal = 1;

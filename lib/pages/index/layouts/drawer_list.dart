@@ -52,7 +52,7 @@ class DrawerList extends StatelessWidget {
                   }).decorated(
                   color: indexCtrl.isHover && indexCtrl.isSelectedHover == e.key
                       ? appCtrl.appTheme.gray.withOpacity(.2)
-                      : appCtrl.appTheme.blackColor,
+                      : appCtrl.appTheme.blackColor1,
                   border: Border(
                       left: BorderSide(
                           color: indexCtrl.selectedIndex == e.key
@@ -60,7 +60,7 @@ class DrawerList extends StatelessWidget {
                               : indexCtrl.isHover &&
                                       indexCtrl.isSelectedHover == e.key
                                   ? appCtrl.appTheme.primary
-                                  : appCtrl.appTheme.blackColor))));
+                                  : appCtrl.appTheme.blackColor1))));
         }).toList()
       ]);
     });

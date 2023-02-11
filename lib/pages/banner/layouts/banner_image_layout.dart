@@ -23,6 +23,9 @@ class BannerImageLayout extends StatelessWidget {
               final bytes = await bannerCtrl.controller1!.getFileData(ev);
               bannerCtrl.getImage(dropImage: bytes);
             }),
+        bannerCtrl.imageUrl.isNotEmpty ? CommonDottedBorder(child: Image.network(bannerCtrl.imageUrl)) .inkWell(
+            onTap: () =>
+                bannerCtrl.getImage(source: ImageSource.gallery,context: context)) :
         bannerCtrl.pickImage == null
             ? const ImagePickUp().inkWell(onTap: () => bannerCtrl.onImagePickUp(setState,context))
             : kIsWeb

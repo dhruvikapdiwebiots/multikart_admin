@@ -32,6 +32,7 @@ class AddBanner extends StatelessWidget {
                                 const VSpace(Sizes.s15),
                                 const BannerProductCollection()
                               ])),
+
                       const BannerImageLayout(),
                       const VSpace(Sizes.s10),
                       if (bannerCtrl.isUploadSize)
@@ -43,12 +44,15 @@ class AddBanner extends StatelessWidget {
                         ]),
                       const VSpace(Sizes.s25),
                       CommonButton(
-                          title: fonts.submit.tr,
+                        icon: bannerCtrl.isLoading ? CircularProgressIndicator(color: appCtrl.appTheme.white).paddingSymmetric(vertical: Insets.i10): Container(),
+                          title:bannerCtrl.isLoading ? "loading.." : bannerCtrl.bannerId != ""  ?"Update" :fonts.submit.tr,
                           onTap: () => bannerCtrl.uploadFile(),
                           style: AppCss.nunitoblack14
                               .textColor(appCtrl.appTheme.white)),
                       const VSpace(Sizes.s15)
                     ]),
+
+
                     Positioned(
                         right: 15.0,
                         top: 15.0,
@@ -58,9 +62,7 @@ class AddBanner extends StatelessWidget {
                                 radius: 12,
                                 backgroundColor: appCtrl.appTheme.primary,
                                 child: Icon(Icons.close,
-                                    size: 18, color: appCtrl.appTheme.white)))),
-                    if (bannerCtrl.isLoading)
-                      const Center(child: CircularProgressIndicator())
+                                    size: 18, color: appCtrl.appTheme.white))))
                   ]))),
           CustomSnackBar(isAlert: bannerCtrl.isAlert)
         ]);

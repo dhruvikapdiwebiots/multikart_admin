@@ -17,7 +17,7 @@ class LeadingRow extends StatelessWidget {
                         width: Sizes.s240,
                         padding: const EdgeInsets.symmetric(horizontal: 61),
                         height: double.infinity,
-                        color: appCtrl.appTheme.blackColor,
+                        color: appCtrl.appTheme.blackColor1,
                         child: Image.asset(imageAssets.logo2)));
               }
               return InkWell(
@@ -51,7 +51,7 @@ class LeadingRow extends StatelessWidget {
                 indexCtrl.isOpen.value = !indexCtrl.isOpen.value;
               }
             },
-            child: const Icon(Icons.menu))
+            child:  Icon(Icons.menu,color: appCtrl.appTheme.blackColor,))
       ]);
     });
   }

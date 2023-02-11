@@ -22,7 +22,7 @@ class BannerController extends GetxController {
   String? searchKey = "id";
   XFile? imageFile;
   int currentPage = 1;
-  bool isSearch = false, isUploadSize = false,isAlert = false;
+  bool isSearch = false, isUploadSize = false, isAlert = false;
   final List<Map<String, dynamic>> sourceOriginal = [];
   List<Map<String, dynamic>> sourceFiltered = [];
   List<Map<String, dynamic>> source = [];
@@ -34,7 +34,7 @@ class BannerController extends GetxController {
 
   // ignore: unused_field
   final String selectableKey = "id";
-  String idType = "product";
+  String idType = "", bannerId = "";
   String? sortColumn;
   Uint8List uploadWebImage = Uint8List(8);
 
@@ -46,10 +46,7 @@ class BannerController extends GetxController {
   var random = Random();
 
   List<Map<String, dynamic>> _generateData() {
-    // final List source = List.filled(n, Random.secure());
-    // final List source = getData();
     List source = banner;
-    log.log("getData() : $source");
     List<Map<String, dynamic>> temps = [];
     var i = 1;
     if (kDebugMode) {
@@ -57,14 +54,14 @@ class BannerController extends GetxController {
     }
     // ignore: unused_local_variable
     for (var data in source) {
-      log.log("data : ${data["image"]}");
       temps.add({
-        "id": data["productCollectionId"],
+        "id": data["bannerId"],
         "image": data["image"],
         "name": data["title"],
         "isActive": true,
         "action": i,
-        "bannerId":data["bannerId"]
+        "isProduct": data["isProduct"],
+        "productCollectionId": data["productCollectionId"]
       });
       i++;
     }
@@ -77,7 +74,6 @@ class BannerController extends GetxController {
         .collection(collectionName.banner)
         .get()
         .then((value) {
-      log.log("message : ${value.docs.length}");
       value.docs.asMap().entries.forEach((element) {
         banner.add(element.value.data());
       });
@@ -87,7 +83,6 @@ class BannerController extends GetxController {
   }
 
   initializeData() async {
-    log.log("message");
     mockPullData();
   }
 
@@ -96,26 +91,52 @@ class BannerController extends GetxController {
     isLoading = true;
     update();
     log.log("imageUrlimageUrl : $imageUrl");
+
     try {
-      int id = DateTime.now().millisecondsSinceEpoch;
-      await FirebaseFirestore.instance.collection(collectionName.banner).add({
-        "productCollectionId": txtId.text,
-        "image": imageUrl,
-        "bannerId": id,
-        "isProduct": txtId.text.isEmpty
-            ? false
-            : idType == "product"
-                ? true
-                : false,
-        "title": txtTitle.text,
-        "isActive": true
-      }).then((value) {
-        isLoading = false;
-        update();
-        Get.back();
-        initialSetUi();
-        initializeData();
-      });
+      if (bannerId == "") {
+        int id = DateTime.now().millisecondsSinceEpoch;
+        await FirebaseFirestore.instance.collection(collectionName.banner).add({
+          "productCollectionId": txtId.text,
+          "image": imageUrl,
+          "bannerId": id,
+          "isProduct": txtId.text.isEmpty
+              ? false
+              : idType == "product"
+                  ? true
+                  : false,
+          "title": txtTitle.text,
+          "isActive": true
+        }).then((value) {
+          isLoading = false;
+          update();
+          Get.back();
+          initializeData();
+        });
+      } else {
+        await FirebaseFirestore.instance
+            .collection(collectionName.banner)
+            .where("bannerId", isEqualTo: bannerId)
+            .get()
+            .then((value) {
+          if (value.docs.isNotEmpty) {
+            FirebaseFirestore.instance
+                .collection(collectionName.banner)
+                .doc(value.docs[0].id)
+                .update({
+              "productCollectionId": txtId.text,
+              "image": imageUrl,
+              "bannerId": bannerId,
+              "isProduct": txtId.text.isEmpty
+                  ? false
+                  : idType == "product"
+                      ? true
+                      : false,
+              "title": txtTitle.text,
+              "isActive": true
+            });
+          }
+        });
+      }
     } catch (e) {
       log.log("save error: $e");
     } finally {
@@ -144,7 +165,6 @@ class BannerController extends GetxController {
       } else {
         source = sourceFiltered;
       }
-      log.log("sourceFiltered : ${source.length}");
 
       isLoading = false;
       update();
@@ -152,7 +172,22 @@ class BannerController extends GetxController {
   }
 
 //add banner dialog
-  addBannerDialog() async {
+  addBannerDialog({data}) async {
+    if (data != null) {
+      txtTitle.text = data["name"];
+      txtId.text = data["productCollectionId"].toString();
+      idType = data["isProduct"] == true ? "product" : "collection";
+      imageUrl = data["image"];
+      bannerId = data["id"].toString();
+      update();
+    } else {
+      txtTitle.text = "";
+      txtId.text = "";
+      idType = "";
+      imageUrl = "";
+      bannerId = "";
+      update();
+    }
     showDialog(
         context: Get.context!,
         builder: (BuildContext context) {
@@ -207,30 +242,36 @@ class BannerController extends GetxController {
   }
 
   //on click Image
-  onImagePickUp(setState,context) {
+  onImagePickUp(setState, context) {
     if (kIsWeb) {
-      getImage(source: ImageSource.gallery,context: context);
+      getImage(source: ImageSource.gallery, context: context);
     } else {
       imagePickerOption(
           setState: setState,
           cameraTap: () {
-            getImage(source: ImageSource.camera, setState: setState,context: context);
+            getImage(
+                source: ImageSource.camera,
+                setState: setState,
+                context: context);
             Get.back();
           },
           galleryTap: () {
-            getImage(source: ImageSource.gallery, setState: setState,context: context);
+            getImage(
+                source: ImageSource.gallery,
+                setState: setState,
+                context: context);
             Get.back();
           });
     }
   }
 
-  initialSetUi()async{
+  initialSetUi() async {
     String imageUrl = "image_url";
     // https://github.com/flutter/flutter/issues/41563
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(
       imageUrl,
-          (int _) => ImageElement()..src = imageUrl,
+      (int _) => ImageElement()..src = imageUrl,
     );
     getData();
     headers = [
@@ -247,9 +288,10 @@ class BannerController extends GetxController {
           show: true,
           sortable: false,
           sourceBuilder: (value, row) {
-            log.log("va;ue : $value");
-            return Image(image: NetworkImage(value),height: Sizes.s100,)
-                .marginSymmetric(horizontal: Insets.i10);
+            return Image(
+              image: NetworkImage(value),
+              height: Sizes.s100,
+            ).marginSymmetric(horizontal: Insets.i10);
           },
           textAlign: TextAlign.center),
       DatatableHeader(
@@ -278,23 +320,17 @@ class BannerController extends GetxController {
                       padding: const EdgeInsets.only(right: 16),
                       child: OutlinedButton(
                           onPressed: () {
-                            if (kDebugMode) {
-                              print("caa : #$value");
-                            }
-                            if (kDebugMode) {
-                              print("caa : #$row");
-                            }
+                            addBannerDialog(data: row);
                           },
                           child: const Icon(Icons.edit, size: Sizes.s18))),
                   OutlinedButton(
                       onPressed: () async {
-                        log.log("vad L ${row["bannerId"]}");
+                        log.log("vad L ${row["id"]}");
                         await FirebaseFirestore.instance
                             .collection(collectionName.banner)
-                            .where("bannerId", isEqualTo: row["bannerId"])
+                            .where("bannerId", isEqualTo: row["id"])
                             .get()
                             .then((value) {
-
                           if (value.docs.isNotEmpty) {
                             FirebaseFirestore.instance
                                 .collection(collectionName.banner)
@@ -323,7 +359,7 @@ class BannerController extends GetxController {
   }
 
 // GET IMAGE FROM GALLERY
-  Future getImage({source, StateSetter? setState, dropImage,context}) async {
+  Future getImage({source, StateSetter? setState, dropImage, context}) async {
     if (kDebugMode) {
       if (dropImage != null) {
         if (imageName.contains("png") ||
@@ -349,7 +385,7 @@ class BannerController extends GetxController {
           await Future.delayed(Durations.s2);
           isAlert = false;
           update();
-         // showAlert(context: Get.context!, title: "No Svg Allow");
+          // showAlert(context: Get.context!, title: "No Svg Allow");
         }
       } else {
         final ImagePicker picker = ImagePicker();
