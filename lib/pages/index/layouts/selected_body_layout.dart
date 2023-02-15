@@ -36,9 +36,9 @@ class SelectedIndexBodyLayout extends StatelessWidget {
                                             .copyWith(fontWeight: FontWeight.bold)),
                                     const VSpace(Sizes.s8),
                                     Row(children: [
-                                      const InkWell(
+                                       InkWell(
                                           mouseCursor: SystemMouseCursors.click,
-                                          child: Text("Admin")),
+                                          child: Text(fonts.admin.tr)),
                                       const Text('  /  '),
                                       Text(indexCtrl.pageName.tr)
                                     ])

@@ -2,7 +2,6 @@
 
 
 import '../../../config.dart';
-import 'notification_image.dart';
 
 class DesktopNotificationLayout extends StatelessWidget {
   const DesktopNotificationLayout({Key? key}) : super(key: key);
@@ -28,9 +27,7 @@ class DesktopNotificationLayout extends StatelessWidget {
             ]).paddingSymmetric(
                 horizontal: Insets.i15, vertical: Insets.i20),
             Row(children: [
-              const    Expanded(
-                  child: NotificationImage()),
-              const HSpace(Sizes.s10),
+
               Expanded(
                   child: CommonInputLayout(
                     controller: notificationCtrl.txtProductCollectionId,
@@ -49,7 +46,7 @@ class DesktopNotificationLayout extends StatelessWidget {
                 };
                 notificationCtrl.sendNotification(data: data);
               },
-                title: fonts.update.tr,
+                title: fonts.submit.tr,
                 width: Sizes.s100,
                 style: AppCss.nunitoblack14
                     .textColor(appCtrl.appTheme.white))

@@ -50,6 +50,8 @@ final dynamic ar = {
   "imageError": "تحميل الصورة أكثر من 300 بكسل × 50 بكسل",
   "submit": "يُقدِّم",
   "svgNotAllowed": "Svg غير مسموح به",
-  "accessDenied": "غير مسموح بـ title@ في الاختبار إرسال الإخطار",
+  "accessDenied": "غير مسموح بـ @title في الاختبار إرسال الإخطار",
   "sendNotification": "إرسال الإخطار",
+  "admin": "مسؤل",
+  "modification": "التعديل غير مسموح به لمستخدم الاختبار",
 };

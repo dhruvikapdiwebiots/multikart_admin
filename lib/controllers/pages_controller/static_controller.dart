@@ -37,7 +37,7 @@ class StaticController extends GetxController {
   updateData() async {
     bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
     if (isLoginTest) {
-      accessDenied("Modification is not allow for test user");
+      accessDenied(fonts.modification.tr);
     }else {
       isLoading = true;
       update();

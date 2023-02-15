@@ -278,7 +278,7 @@ class BannerController extends GetxController {
     headers = [
       DatatableHeader(
           text: "ID",
-          value: "id",
+          value: "productCollectionId",
           show: true,
           sortable: true,
           flex: 1,
@@ -428,7 +428,7 @@ class BannerController extends GetxController {
   Future uploadFile() async {
     bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
     if (isLoginTest) {
-      accessDenied("Modification is not allow for test user");
+      accessDenied(fonts.modification.tr);
     } else {
       isLoading = true;
       update();

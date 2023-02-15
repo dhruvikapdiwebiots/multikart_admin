@@ -1,7 +1,8 @@
 import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:multikart_admin/controllers/pages_controller/static_controller.dart';
 import '../../../config.dart';
+import 'dart:html' as html;
 
 class DrawerList extends StatelessWidget {
   final bool? value;
@@ -18,10 +19,6 @@ class DrawerList extends StatelessWidget {
                 indexCtrl.isHover = true;
                 indexCtrl.isSelectedHover = e.key;
                 indexCtrl.update();
-                log("val : ${indexCtrl.isHover}");
-                log("isIndex Hover : ${indexCtrl.isHover == true}");
-
-
               },
               onExit: (exit) {
                 indexCtrl.isHover = false;
@@ -44,9 +41,16 @@ class DrawerList extends StatelessWidget {
                     if (!Responsive.isDesktop(context)) {
                       Get.back();
                     }
-                    if(indexCtrl.selectedIndex == 2 ){
-                      final staticCtrl = Get.isRegistered<StaticController>() ? Get.find<StaticController>() :Get.put(StaticController());
+                    if (indexCtrl.selectedIndex == 2) {
+                      final staticCtrl = Get.isRegistered<StaticController>()
+                          ? Get.find<StaticController>()
+                          : Get.put(StaticController());
                       staticCtrl.getData();
+                    }
+                    if (indexCtrl.selectedIndex == 4) {
+                      FirebaseAuth.instance.signOut();
+                      html.window.localStorage[session.isLogin] = "false";
+                      Get.offAll(() => Login());
                     }
                     indexCtrl.update();
                   }).decorated(

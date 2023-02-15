@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 enum ThemeType {
@@ -114,7 +113,7 @@ class AppTheme {
           contentColor: const Color(0xFF777777),
           borderColor: const Color(0xFFDDDDDD),
           greenColor: const Color(0xFF198754),
-          redColor:Colors.red,
+          redColor: Colors.red,
           darkContentColor: const Color(0xFFBABABA),
           ratingColor: const Color(0xFFFFBA49),
           homeCategoryColor: const Color(0xFFEAEDF2),
@@ -131,7 +130,7 @@ class AppTheme {
           secondary: const Color(0xFF6EBAE7),
           accentTxt: const Color(0xFF001928),
           bg1: const Color(0xFF151A1E),
-          bgColor:const Color(0xFF262626),
+          bgColor: const Color(0xFF262626),
           surface: const Color(0xFF151A1E),
           error: const Color(0xFFd32f2f),
           transparentColor: Colors.transparent,
@@ -151,7 +150,7 @@ class AppTheme {
           contentColor: const Color(0xFF777777),
           borderColor: const Color(0xFFDDDDDD),
           greenColor: const Color(0xFF198754),
-          redColor:Colors.red,
+          redColor: Colors.red,
           darkContentColor: const Color(0xFFBABABA),
           ratingColor: const Color(0xFFFFBA49),
           textColor: const Color(0xFF636363),
@@ -187,8 +186,18 @@ class AppTheme {
       ),
       buttonTheme: ButtonThemeData(buttonColor: primary),
       highlightColor: primary,
-      toggleableActiveColor: primary,
+      radioTheme: RadioThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return primary;
+          }
+          return null;
+        }),
+      ),
     );
   }
-
 }

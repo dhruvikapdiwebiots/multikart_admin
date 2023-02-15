@@ -1,6 +1,4 @@
 
-import 'package:multikart_admin/pages/dashboard/dashboard.dart';
-
 import '../../config.dart';
 
 class DashboardController extends GetxController{

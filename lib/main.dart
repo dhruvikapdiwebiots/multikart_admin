@@ -1,13 +1,13 @@
 import 'dart:developer';
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:multikart_admin/pages/index/index.dart';
 
 import 'common/language/index.dart';
 import 'common/theme/theme_service.dart';
 import 'config.dart';
-import 'routes/index.dart';
 
 import 'dart:html' as html;
 
@@ -42,9 +42,16 @@ class MyApp extends StatelessWidget {
     appCtrl.isLogin = html.window.localStorage[session.isLogin] ?? "false";
     return GetMaterialApp(
       builder: (context, widget) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-          child: widget!,
+        return StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+              log("message : ${!snapshot.hasData}");
+
+              return !snapshot.hasData ? MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              child: widget!,
+            ) : Login();
+          }
         );
       },
       debugShowCheckedModeBanner: false,

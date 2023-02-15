@@ -52,4 +52,6 @@ final dynamic kr = {
   "svgNotAllowed": "허용되지 않음",
   "accessDenied": "테스트에서 @title 에 허용되지 않음",
   "sendNotification": "알림 보내기",
+  "admin": "관리자",
+  "modification": "테스트 사용자는 수정이 허용되지 않습니다.",
 };

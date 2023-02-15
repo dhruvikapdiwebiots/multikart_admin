@@ -1,18 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:multikart_admin/config.dart';
 
 class NotificationController extends GetxController {
-  File? pickImage;
-  XFile? imageFile;
-  bool isUploadSize = false,isAlert= false;
-  Uint8List uploadWebImage = Uint8List(8);
-  Uint8List webImage = Uint8List(8);
+
   String idType = "";
   String imageName = "";
   late DropzoneViewController? controller1;
@@ -20,77 +13,12 @@ class NotificationController extends GetxController {
   TextEditingController txtContent = TextEditingController();
   TextEditingController txtProductCollectionId = TextEditingController();
 
-
-// GET IMAGE FROM GALLERY
-  Future getImage({source, dropImage}) async {
-    if (kDebugMode) {
-      if (dropImage != null) {
-        if (imageName.contains("png") ||
-            imageName.contains("jpg") ||
-            imageName.contains("jpeg")) {
-          var image = dropImage;
-          uploadWebImage = image;
-          log("info 1: $image");
-
-          Image image1 = Image.memory(uploadWebImage);
-
-          ImageInfo info = await getImageInfo(image1);
-          log("info : ${info.image.width}");
-          log("info : ${info.image.width}");
-          if (info.image.width > 300 && info.image.height > 50) {
-            webImage = uploadWebImage;
-            pickImage = File("a");
-            isUploadSize = false;
-          } else {
-            isUploadSize = true;
-          }
-          appCtrl.isAlert = false;
-          appCtrl.update();
-        } else {
-          appCtrl.isAlert = true;
-          appCtrl.update();
-          await Future.delayed(Durations.s2);
-          appCtrl.isAlert = false;
-          appCtrl.update();
-        }
-        update();
-      } else {
-        final ImagePicker picker = ImagePicker();
-        imageFile = (await picker.pickImage(source: source))!;
-        if (imageFile!.name.contains("png") ||
-            imageFile!.name.contains("jpg") ||
-            imageFile!.name.contains("jpeg")) {
-          var image = await imageFile!.readAsBytes();
-          uploadWebImage = image;
-          log("info 1: $image");
-          Image image1 = Image.memory(uploadWebImage);
-          ImageInfo info = await getImageInfo(image1);
-          if (info.image.width > 300 && info.image.height > 50) {
-            webImage = uploadWebImage;
-            pickImage = File(imageFile!.path);
-            isUploadSize = false;
-          } else {
-            isUploadSize = true;
-          }
-          appCtrl.isAlert = false;
-          appCtrl.update();
-        } else {
-          appCtrl.isAlert = true;
-          appCtrl.update();
-          await Future.delayed(Durations.s2);
-          appCtrl.isAlert = false;
-          appCtrl.update();
-        }
-      }
-    }
-  }
-
   //send notification
   Future<void> sendNotification(
       {data}) async {
     bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
     if (isLoginTest) {
-      accessDenied("Modification is not allow for test user");
+      accessDenied(fonts.modification.tr);
     }else {
       final data = {
         "notification": {"body": txtContent.text, "title": txtTitle.text,},
@@ -100,7 +28,7 @@ class NotificationController extends GetxController {
           "alertMessage": 'true',
           "title": txtTitle.text,
         },
-        "to": "dfWhS-FDSfOcvRGktKu5LJ:APA91bGpgJ0VgdjgBvBL0kD3TkCcLRqJ-Z-U14aT9hUUZy-ShSpjdSoyaWeJ9OvO7MKeS9xkFj6BhpjtYagswEG1OLw4uhd45gxZ7ypCoSWTqHRs_V_JumM07h43pQUjlFHFX7RtRj-H"
+        "to": "eS1UT5AyT8SGh0GWh1x69R:APA91bE344mt0TzcWxHIYypx2I4-zbeOD-ntaTEhaRpmfU-jjz5cfiUAg5XCM1iXuxsXLMy2R59FfzanwQexkMF0_rBxAkQcsE_0iBRj51IzSkIGMechyGJaXRi3lD5FRBpJg-WyqvGf"
       };
 
       final headers = {

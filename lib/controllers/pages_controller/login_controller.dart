@@ -3,7 +3,6 @@ import 'dart:html' as html;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:multikart_admin/config.dart';
-import 'package:multikart_admin/pages/index/index.dart';
 import '../../common/theme/index.dart';
 
 class LoginController extends GetxController {
@@ -15,12 +14,6 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-  /*  bool isLogin = appCtrl.storage.read(session.isLogin) ?? false;
-    log("iss : ,$isLogin");
-    if(isLogin){
-
-      Get.offAllNamed(routeName.index);
-    }*/
 
     bool isTheme = appCtrl.storage.read(session.isDarkMode) ?? false;
     log("isTheme : $isTheme");
@@ -30,7 +23,7 @@ class LoginController extends GetxController {
     ThemeService().switchTheme(appCtrl.isTheme);
     appCtrl.update();
 
-    log("iss : ,${appCtrl.isLogin}");
+
 
     appCtrl.languageVal = appCtrl.storage.read(session.languageCode) ?? "en";
     log("language : ${appCtrl.languageVal}");
@@ -66,7 +59,10 @@ class LoginController extends GetxController {
             if (value.docs[0].data()["password"] == txtPassword.text) {
               html.window.localStorage[session.isLogin] = "true";
               await appCtrl.storage.write(session.isLogin, true);
-              await appCtrl.storage.write(session.isLoginTest, true);
+              await appCtrl.storage.write(session.isLoginTest, false);
+              txtName.text = "";
+              txtPassword.text = "";
+              update();
               Get.offAllNamed(routeName.index);
 
             } else {

@@ -28,16 +28,15 @@ export 'banner/layouts/arrow_back.dart';
 export 'banner/layouts/arrow_forward.dart';
 export 'banner/layouts/pages_banner_drop_down.dart';
 export 'banner/layouts/banner_search_action.dart';
-export 'notification/layouts/notification_image_layout.dart';
 export 'notification/layouts/product_collection_radio.dart';
 export 'auth/login/layouts/validator.dart';
 export 'banner/layouts/banner_class.dart';
 export 'banner/layouts/banner_image_layout.dart';
 export 'banner/layouts/banner_product_collection.dart';
 export '/widgets/custom_snack_bar.dart';
-export 'notification/layouts/notification_image.dart';
 
 export '/pages/banner/banner.dart';
 export '/pages/dashboard/dashboard.dart';
 export '/pages/notification/notification.dart';
 export '/pages/static_page/static_page.dart';
+export 'auth/login/layouts/glass_morphic_border.dart';

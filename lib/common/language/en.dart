@@ -52,4 +52,7 @@ final dynamic en = {
   "svgNotAllowed": "Svg Not Allowed",
   "accessDenied": "Not Allowed to @title in Test",
   "sendNotification": "Send Notification",
+  "admin": "Admin",
+  "modification": "Modification is not allow for test user",
+  "noBanner": "No Banner Available. For Add Click on Add Banner",
 };

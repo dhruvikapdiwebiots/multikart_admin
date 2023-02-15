@@ -89,7 +89,7 @@ showAlert({title, context}) async {
 accessDenied(String content){
   Get.dialog(
     AlertDialog(
-      title: Text("Alert!"),
+      title: const Text("Alert!"),
       content: Text(content.tr),
       actions: <Widget>[
         CommonButton(title: "Close",width: Sizes.s80,style: AppCss.nunitoMedium16.textColor(appCtrl.appTheme.white),onTap: ()=> Get.back(),)

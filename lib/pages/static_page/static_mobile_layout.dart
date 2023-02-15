@@ -1,4 +1,4 @@
-import 'package:multikart_admin/controllers/pages_controller/static_controller.dart';
+
 
 import '../../config.dart';
 

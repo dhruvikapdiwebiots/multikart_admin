@@ -44,5 +44,8 @@ class Fonts{
   final submit = "submit";
   final svgNotAllowed = "svgNotAllowed";
   final sendNotification = "sendNotification";
+  final admin = "admin";
+  final modification = "modification";
+  final noBanner = "noBanner";
   String accessDenied(val) => "accessDenied".trParams({'title':val});
 }

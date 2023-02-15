@@ -52,4 +52,6 @@ final dynamic hi = {
   "svgNotAllowed": "एसवीजी की अनुमति नहीं है",
   "accessDenied": "टेस्ट में @title की अनुमति नहीं है",
   "sendNotification": "अधिसूचना भेजें",
+  "admin": "व्यवस्थापक",
+  "modification": "परीक्षण उपयोगकर्ता के लिए संशोधन की अनुमति नहीं है",
 };

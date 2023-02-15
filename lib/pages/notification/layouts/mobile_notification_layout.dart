@@ -18,8 +18,7 @@ class MobileNotificationLayout extends StatelessWidget {
             hinText: fonts.enterNotificationContent.tr,
             maxLines: 2),
         const VSpace(Sizes.s15),
-        const NotificationImage(),
-        const VSpace(Sizes.s15),
+
         CommonInputLayout(
             controller: notificationCtrl.txtProductCollectionId,
             title: fonts.productCollectionId.tr,

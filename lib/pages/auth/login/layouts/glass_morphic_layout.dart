@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 
-
 import '../../../../config.dart';
 
 class GlassMorphicLayout extends StatelessWidget {
@@ -11,15 +10,6 @@ class GlassMorphicLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return GlassmorphicContainer(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        borderRadius: AppRadius.r20,
-        blur: 20,
-        alignment: Alignment.bottomCenter,
-        border: 2,
-        borderGradient: commonLinearGradient(),
-        linearGradient: linearGradient!,child: child,);*/
     return Container(
       key: key,
       width:  MediaQuery.of(context).size.width,
@@ -42,7 +32,7 @@ class GlassMorphicLayout extends StatelessWidget {
               ),
             ),
           ),
-          GlassmorphicBorder(
+          GlassMorphicBorder(
             strokeWidth: 2,
             radius: AppRadius.r20,
             width: MediaQuery.of(context).size.width,
@@ -53,38 +43,12 @@ class GlassMorphicLayout extends StatelessWidget {
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(AppRadius.r20),
             child: Container(
-              child: child,
               alignment: Alignment.bottomCenter,
+              child: child,
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class GlassmorphicBorder extends StatelessWidget {
-
-  final double _radius;
-  final width;
-  final height;
-  const GlassmorphicBorder({super.key,
-    required double strokeWidth,
-    required double radius,
-    required Gradient gradient,
-    this.height,
-    this.width,
-  })  :
-        this._radius = radius;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(_radius)),
-      ),
-      width: width,
-      height: height,
     );
   }
 }

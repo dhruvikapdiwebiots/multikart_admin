@@ -21,6 +21,6 @@ class IndexLayoutController extends GetxController{
     BannerPage(),
     StaticPage(),
     NotificationPage(),
-    Text("Logout")
+     Container()
   ];
 }

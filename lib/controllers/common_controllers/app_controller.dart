@@ -1,7 +1,4 @@
 
-
-
-import '../../common/theme/index.dart';
 import '../../config.dart';
 
 class AppController extends GetxController {
@@ -30,13 +27,6 @@ class AppController extends GetxController {
   updateTheme(theme) {
     _appTheme = theme;
     Get.forceAppUpdate();
-  }
-
-  @override
-  void onReady() {
-    // TODO: implement onReady
-
-    super.onReady();
   }
 
 }
