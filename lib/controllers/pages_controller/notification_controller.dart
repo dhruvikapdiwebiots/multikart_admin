@@ -48,6 +48,10 @@ class NotificationController extends GetxController {
             .post('https://fcm.googleapis.com/fcm/send', data: data);
 
         if (response.statusCode == 200) {
+          txtTitle.text = "";
+          txtContent.text = "";
+          txtProductCollectionId.text = "";
+          idType = "";
           log('Alert push notification send');
         } else {
           log('notification sending failed');

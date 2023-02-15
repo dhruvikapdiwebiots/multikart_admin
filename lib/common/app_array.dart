@@ -12,7 +12,6 @@ class AppArray{
 
   //bottom list
   var drawerList = [
-    {'icon': svgAssets.dashboard, 'title': "dashboard"},
     {'icon': svgAssets.banner, 'title': "banners"},
     {'icon': svgAssets.page, 'title': "staticPage"},
     {'icon': svgAssets.bell, 'title': "notification"},

@@ -111,6 +111,9 @@ class BannerController extends GetxController {
           isLoading = false;
           update();
           Get.back();
+          txtTitle.text = "";
+          txtId.text = "";
+          idType = "";
           initializeData();
         });
       } else {
@@ -134,6 +137,13 @@ class BannerController extends GetxController {
                       : false,
               "title": txtTitle.text,
               "isActive": true
+            }).then((value) {
+              isLoading = false;
+              update();
+              txtTitle.text = "";
+              txtId.text = "";
+              idType = "";
+              initializeData();
             });
           }
         });

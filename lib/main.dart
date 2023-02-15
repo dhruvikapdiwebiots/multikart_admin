@@ -45,7 +45,6 @@ class MyApp extends StatelessWidget {
         return StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
-              log("message : ${!snapshot.hasData}");
 
               return !snapshot.hasData ? MediaQuery(
               data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

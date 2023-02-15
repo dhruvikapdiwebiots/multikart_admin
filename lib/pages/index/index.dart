@@ -12,8 +12,10 @@ class IndexLayout extends StatelessWidget {
       return
         MaterialApp(
           debugShowCheckedModeBanner: false,
+
           home: Scaffold(
               key: indexCtrl.scaffoldKey,
+
               appBar: AppBar(
                   elevation: 0.0,
                   shadowColor: Colors.transparent,
@@ -29,6 +31,7 @@ class IndexLayout extends StatelessWidget {
               drawer: const IndexDrawer(),
               body: SafeArea(
                   child: Scaffold(
+                    backgroundColor: appCtrl.appTheme.whiteColor,
                       key: indexCtrl.scaffoldDrawerKey,
                       body: Row(
                           mainAxisSize: MainAxisSize.max,

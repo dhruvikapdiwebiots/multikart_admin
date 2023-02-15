@@ -38,8 +38,10 @@ class LoginController extends GetxController {
       Get.updateLocale(locale);
       Get.forceAppUpdate();
     } else {
+
       var locale = const Locale("ko", 'KR');
       Get.updateLocale(locale);
+      Get.forceAppUpdate();
     }
     update();
 

@@ -30,17 +30,14 @@ class SelectedIndexBodyLayout extends StatelessWidget {
                                   children: [
 
                                     Text(indexCtrl.pageName.tr,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .copyWith(fontWeight: FontWeight.bold)),
+                                        style: AppCss.nunitoblack18.textColor(appCtrl.appTheme.blackColor)),
                                     const VSpace(Sizes.s8),
                                     Row(children: [
                                        InkWell(
                                           mouseCursor: SystemMouseCursors.click,
-                                          child: Text(fonts.admin.tr)),
-                                      const Text('  /  '),
-                                      Text(indexCtrl.pageName.tr)
+                                          child: Text(fonts.admin.tr,style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.blackColor))),
+                                       Text('  /  ',style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.blackColor)),
+                                      Text(indexCtrl.pageName.tr,style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.blackColor),)
                                     ])
                                   ]),
                               GetBuilder<AppController>(

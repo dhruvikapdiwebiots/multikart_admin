@@ -8,8 +8,8 @@ class IndexLayoutController extends GetxController{
   GlobalKey<ScaffoldState>();
   final GlobalKey<ScaffoldState> scaffoldKey =
   GlobalKey<ScaffoldState>();
-  int selectedIndex = 1;
-  String pageName ="dashboard";
+  int selectedIndex = 0;
+  String pageName =fonts.addBanner.tr;
   bool isHover = false;
   int isSelectedHover = 0;
 
@@ -17,7 +17,7 @@ class IndexLayoutController extends GetxController{
 
   //list of bottommost page
   List<Widget> widgetOptions = <Widget>[
-    Dashboard(),
+
     BannerPage(),
     StaticPage(),
     NotificationPage(),
