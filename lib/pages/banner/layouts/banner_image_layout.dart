@@ -13,6 +13,7 @@ class BannerImageLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BannerController>(builder: (bannerCtrl) {
+      log("bannerCtrl.pickImage : ${bannerCtrl.imageUrl.isNotEmpty}");
       return Stack(alignment: Alignment.centerLeft, children: [
         DragDropLayout(
             onCreated: (ctrl) => bannerCtrl.controller1 = ctrl,
@@ -23,36 +24,27 @@ class BannerImageLayout extends StatelessWidget {
               final bytes = await bannerCtrl.controller1!.getFileData(ev);
               bannerCtrl.getImage(dropImage: bytes);
             }),
-        bannerCtrl.imageUrl.isNotEmpty ? CommonDottedBorder(child: Image.network(bannerCtrl.imageUrl)) .inkWell(
-            onTap: () =>
-                bannerCtrl.getImage(source: ImageSource.gallery,context: context)) :
-        bannerCtrl.pickImage == null
-            ? const ImagePickUp().inkWell(onTap: () => bannerCtrl.onImagePickUp(setState,context))
-            : kIsWeb
-                ? CommonDottedBorder(
-                        child:
-                            Image.memory(bannerCtrl.webImage, fit: BoxFit.fill))
+        bannerCtrl.imageUrl.isNotEmpty && bannerCtrl.pickImage != null
+            ? CommonDottedBorder(
+                    child: Image.memory(bannerCtrl.webImage, fit: BoxFit.fill))
+                .inkWell(
+                    onTap: () => bannerCtrl.getImage(
+                        source: ImageSource.gallery, context: context))
+            : bannerCtrl.imageUrl.isNotEmpty
+                ? CommonDottedBorder(child: Image.network(bannerCtrl.imageUrl))
                     .inkWell(
+                        onTap: () => bannerCtrl.getImage(
+                            source: ImageSource.gallery, context: context))
+                : bannerCtrl.pickImage == null
+                    ? const ImagePickUp().inkWell(
                         onTap: () =>
-                            bannerCtrl.getImage(source: ImageSource.gallery,context: context))
-                : CommonDottedBorder(
-                        child: Image.file(bannerCtrl.pickImage!,
-                            fit: BoxFit.fill, height: Sizes.s100))
-                    .inkWell(
-                        onTap: () => imagePickerOption(
-                            setState: setState,
-                            cameraTap: () {
-                              bannerCtrl.getImage(
-                                  source: ImageSource.camera,
-                                  setState: setState,context: context);
-                              Get.back();
-                            },
-                            galleryTap: () {
-                              bannerCtrl.getImage(
-                                  source: ImageSource.gallery,
-                                  setState: setState,context: context);
-                              Get.back();
-                            }))
+                            bannerCtrl.onImagePickUp(setState, context))
+                    : CommonDottedBorder(
+                            child: Image.memory(bannerCtrl.webImage,
+                                fit: BoxFit.fill))
+                        .inkWell(
+                            onTap: () => bannerCtrl.getImage(
+                                source: ImageSource.gallery, context: context))
       ])
           .height(bannerCtrl.isUploadSize ? Sizes.s40 : Sizes.s50)
           .paddingSymmetric(horizontal: Insets.i15);

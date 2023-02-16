@@ -27,7 +27,7 @@ class LoginController extends GetxController {
             if (value.docs[0].data()["password"] == txtPassword.text) {
               html.window.localStorage[session.isLogin] = "true";
               await appCtrl.storage.write(session.isLogin, true);
-              await appCtrl.storage.write(session.isLoginTest, true);
+              await appCtrl.storage.write(session.isLoginTest, false);
               txtName.text = "";
               txtPassword.text = "";
               update();

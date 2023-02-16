@@ -54,6 +54,7 @@ class BannerController extends GetxController {
     }
     // ignore: unused_local_variable
     for (var data in source) {
+      log.log("source : ${data["bannerId"]}");
       temps.add({
         "id": data["bannerId"],
         "image": data["image"],
@@ -91,7 +92,7 @@ class BannerController extends GetxController {
   saveBanner() async {
     isLoading = true;
     update();
-    log.log("imageUrlimageUrl : $imageUrl");
+    log.log("imageUrlimageUrl : $bannerId");
 
     try {
       if (bannerId == "") {
@@ -117,35 +118,27 @@ class BannerController extends GetxController {
           initializeData();
         });
       } else {
+        log.log("banner ");
         await FirebaseFirestore.instance
             .collection(collectionName.banner)
-            .where("bannerId", isEqualTo: bannerId)
             .get()
             .then((value) {
-          if (value.docs.isNotEmpty) {
-            FirebaseFirestore.instance
-                .collection(collectionName.banner)
-                .doc(value.docs[0].id)
-                .update({
-              "productCollectionId": txtId.text,
-              "image": imageUrl,
-              "bannerId": bannerId,
-              "isProduct": txtId.text.isEmpty
-                  ? false
-                  : idType == "product"
-                      ? true
-                      : false,
-              "title": txtTitle.text,
-              "isActive": true
-            }).then((value) {
-              isLoading = false;
-              update();
-              txtTitle.text = "";
-              txtId.text = "";
-              idType = "";
-              initializeData();
-            });
-          }
+          value.docs.asMap().entries.forEach((element) {
+            log.log("data : $bannerId");
+            log.log("bannerId : ${element.value.data()["bannerId"]}");
+            if (bannerId.toString() == element.value.data()["bannerId"].toString()) {
+              log.log("true : ${element.value.id}");
+              FirebaseFirestore.instance
+                  .collection(collectionName.banner).doc(element.value.id).update({
+                "productCollectionId": txtId.text,
+                "image": imageUrl,
+                "bannerId": bannerId,
+                "isProduct": element.value.data()["isProduct"],
+                "title": txtTitle.text,
+                "isActive": true
+              });
+            }
+          });
         });
       }
     } catch (e) {
@@ -189,7 +182,7 @@ class BannerController extends GetxController {
       txtId.text = data["productCollectionId"].toString();
       idType = data["isProduct"] == true ? "product" : "collection";
       imageUrl = data["image"];
-      bannerId = data["id"].toString();
+      bannerId = data["bannerId"].toString();
       update();
     } else {
       txtTitle.text = "";
@@ -199,6 +192,7 @@ class BannerController extends GetxController {
       bannerId = "";
       update();
     }
+    log.log("bannerIdbannerId : $bannerId");
     showDialog(
         context: Get.context!,
         builder: (BuildContext context) {
@@ -371,70 +365,68 @@ class BannerController extends GetxController {
 
 // GET IMAGE FROM GALLERY
   Future getImage({source, StateSetter? setState, dropImage, context}) async {
-    if (kDebugMode) {
-      if (dropImage != null) {
-        if (imageName.contains("png") ||
-            imageName.contains("jpg") ||
-            imageName.contains("jpeg")) {
-          var image = dropImage;
-          uploadWebImage = image;
-          Image image1 = Image.memory(uploadWebImage);
+    if (dropImage != null) {
+      if (imageName.contains("png") ||
+          imageName.contains("jpg") ||
+          imageName.contains("jpeg")) {
+        var image = dropImage;
+        uploadWebImage = image;
+        Image image1 = Image.memory(uploadWebImage);
 
-          ImageInfo info = await getImageInfo(image1);
+        ImageInfo info = await getImageInfo(image1);
 
-          if (info.image.width > 300 && info.image.height > 50) {
-            webImage = uploadWebImage;
-            pickImage = io.File("a");
-            isUploadSize = false;
-          } else {
-            isUploadSize = true;
-          }
-          isAlert = false;
+        if (info.image.width > 300 && info.image.height > 50) {
+          webImage = uploadWebImage;
+          pickImage = io.File("a");
+          isUploadSize = false;
         } else {
-          isAlert = true;
-          update();
-          await Future.delayed(Durations.s2);
-          isAlert = false;
-          update();
+          isUploadSize = true;
         }
+        isAlert = false;
       } else {
-        final ImagePicker picker = ImagePicker();
-        imageFile = (await picker.pickImage(source: source))!;
-        print("imageFile : $imageFile");
+        isAlert = true;
+        update();
+        await Future.delayed(Durations.s2);
+        isAlert = false;
+        update();
+      }
+    } else {
+      final ImagePicker picker = ImagePicker();
+      imageFile = (await picker.pickImage(source: ImageSource.gallery))!;
+      log.log("imageFile : $imageFile");
 
-        if (imageFile!.name.contains("png") ||
-            imageFile!.name.contains("jpg") ||
-            imageFile!.name.contains("jpeg")) {
-          var image = await imageFile!.readAsBytes();
-          uploadWebImage = image;
+      if (imageFile!.name.contains("png") ||
+          imageFile!.name.contains("jpg") ||
+          imageFile!.name.contains("jpeg")) {
+        var image = await imageFile!.readAsBytes();
+        uploadWebImage = image;
 
-          Image image1 = Image.memory(uploadWebImage);
-          log.log("image1 : $image1");
-          ImageInfo info = await getImageInfo(image1);
+        Image image1 = Image.memory(uploadWebImage);
+        log.log("image1 : $image1");
+        ImageInfo info = await getImageInfo(image1);
 
-          if (info.image.width > 300 && info.image.height > 50) {
-            webImage = uploadWebImage;
-            pickImage = io.File(imageFile!.path);
-            isUploadSize = false;
-          } else {
-            isUploadSize = true;
-          }
-          isAlert = false;
-          update();
+        if (info.image.width > 300 && info.image.height > 50) {
+          webImage = uploadWebImage;
+          pickImage = io.File(imageFile!.path);
+          isUploadSize = false;
         } else {
-          isAlert = true;
-          update();
-          await Future.delayed(Durations.s2);
-          isAlert = false;
-          update();
+          isUploadSize = true;
         }
+        isAlert = false;
+        update();
+      } else {
+        isAlert = true;
+        update();
+        await Future.delayed(Durations.s2);
+        isAlert = false;
+        update();
       }
     }
   }
 
 // UPLOAD SELECTED IMAGE TO FIREBASE
   Future uploadFile() async {
-    bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+    /*bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
     if (isLoginTest) {
       accessDenied(fonts.modification.tr);
     } else {
@@ -444,12 +436,7 @@ class BannerController extends GetxController {
       Reference reference = FirebaseStorage.instance.ref().child(fileName);
       log.log("reference : $webImage");
       UploadTask? uploadTask;
-      if (Responsive.isDesktop(Get.context!)) {
-        uploadTask = reference.putData(webImage);
-      } else {
-        var file = io.File(imageFile!.path);
-        uploadTask = reference.putFile(file);
-      }
+      uploadTask = reference.putData(webImage);
 
       uploadTask.then((res) async {
         log.log("res : $res");
@@ -463,7 +450,8 @@ class BannerController extends GetxController {
           //    Fluttertoast.showToast(msg: 'Image is Not Valid');
         });
       });
-    }
+    }*/
+    saveBanner();
   }
 
   //on sort
