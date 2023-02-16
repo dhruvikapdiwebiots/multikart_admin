@@ -49,7 +49,7 @@ final dynamic en = {
   "arabic": "arabic",
   "imageError": "Upload image more than 300p X 50px",
   "submit": "Submit",
-  "svgNotAllowed": "Svg Not Allowed",
+  "svgNotAllowed": "Only PNG, JPEG, JPG Allow",
   "accessDenied": "Not Allowed to @title in Test",
   "sendNotification": "Send Notification",
   "admin": "Admin",

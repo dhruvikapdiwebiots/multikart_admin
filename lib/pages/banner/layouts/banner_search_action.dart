@@ -30,7 +30,7 @@ class BannerSearchAction extends StatelessWidget {
                     })),
           if (!bannerCtrl.isSearch)
             IconButton(
-                icon: const Icon(Icons.search),
+                icon:  Icon(Icons.search,color: appCtrl.appTheme.blackColor1,),
                 onPressed: () {
                   bannerCtrl.isSearch = true;
                   bannerCtrl.update();

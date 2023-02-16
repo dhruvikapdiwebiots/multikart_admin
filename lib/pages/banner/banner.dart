@@ -17,11 +17,12 @@ class BannerPage extends StatelessWidget {
                   margin: const EdgeInsets.all(Insets.i10),
                   padding: const EdgeInsets.all(0),
                   constraints: const BoxConstraints(maxHeight: 700),
-                  child:  const Card(
-                      elevation: 1,
-                      shadowColor: Colors.black,
+                  child:   Card(
+                      elevation: 3,
+                      shadowColor: appCtrl.appTheme.blackColor,
+                      color: appCtrl.appTheme.whiteColor,
                       clipBehavior: Clip.none,
-                      child: BannerList()),
+                      child:const BannerList()),
                 ),
               ]))  : Center(child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

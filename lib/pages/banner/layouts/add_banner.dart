@@ -11,7 +11,16 @@ class AddBanner extends StatelessWidget {
         return Stack(alignment: Alignment.topCenter, children: [
           AlertDialog(
               contentPadding: EdgeInsets.zero,
-              content: SizedBox(
+              content: Container(
+                  decoration: BoxDecoration(
+                      color: appCtrl.appTheme.whiteColor,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: appCtrl.isTheme ?  1 :0,
+                          spreadRadius: appCtrl.isTheme ?  1 :0,
+                          color: appCtrl.appTheme.blackColor
+                        )
+                      ]),
                   width: Sizes.s500,
                   child:
                       Stack(alignment: Alignment.topRight, children: <Widget>[
@@ -32,7 +41,6 @@ class AddBanner extends StatelessWidget {
                                 const VSpace(Sizes.s15),
                                 const BannerProductCollection()
                               ])),
-
                       const BannerImageLayout(),
                       const VSpace(Sizes.s10),
                       if (bannerCtrl.isUploadSize)
@@ -44,15 +52,21 @@ class AddBanner extends StatelessWidget {
                         ]),
                       const VSpace(Sizes.s25),
                       CommonButton(
-                        icon: bannerCtrl.isLoading ? CircularProgressIndicator(color: appCtrl.appTheme.white).paddingSymmetric(vertical: Insets.i10): Container(),
-                          title:bannerCtrl.isLoading ? "loading.." : bannerCtrl.bannerId != ""  ?"Update" :fonts.submit.tr,
+                          icon: bannerCtrl.isLoading
+                              ? CircularProgressIndicator(
+                                      color: appCtrl.appTheme.white)
+                                  .paddingSymmetric(vertical: Insets.i10)
+                              : Container(),
+                          title: bannerCtrl.isLoading
+                              ? "loading.."
+                              : bannerCtrl.bannerId != ""
+                                  ? "Update"
+                                  : fonts.submit.tr,
                           onTap: () => bannerCtrl.uploadFile(),
                           style: AppCss.nunitoblack14
                               .textColor(appCtrl.appTheme.white)),
                       const VSpace(Sizes.s15)
                     ]),
-
-
                     Positioned(
                         right: 15.0,
                         top: 15.0,

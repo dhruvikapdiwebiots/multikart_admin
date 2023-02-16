@@ -80,7 +80,7 @@ showAlert({title, context}) async {
                 content: Text(title.toString().tr,
                     textAlign: TextAlign.center,
                     style: AppCss.nunitoMedium14
-                        .textColor(appCtrl.appTheme.white)),
+                        .textColor(appCtrl.appTheme.whiteColor)),
                 showProgressIndicator: false));
       });
 }

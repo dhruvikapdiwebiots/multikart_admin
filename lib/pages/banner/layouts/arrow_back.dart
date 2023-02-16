@@ -10,7 +10,7 @@ class ArrowBack extends StatelessWidget {
     return  GetBuilder<BannerController>(
       builder: (bannerCtrl) {
         return IconButton(
-          icon: const Icon(Icons.arrow_back_ios, size: 16),
+          icon:  Icon(Icons.arrow_back_ios, size: 16,color: appCtrl.appTheme.gray,),
           onPressed: bannerCtrl.currentPage == 1
               ? null
               : () {

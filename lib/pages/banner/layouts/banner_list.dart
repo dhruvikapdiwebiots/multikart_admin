@@ -12,12 +12,14 @@ class BannerList extends StatelessWidget {
     return GetBuilder<BannerController>(builder: (bannerCtrl) {
       return bannerCtrl.headers!.isNotEmpty
           ? ResponsiveDatatable(
+
               title: TextButton.icon(
                   onPressed: () => bannerCtrl.addBannerDialog(),
-                  icon: const Icon(Icons.add),
-                  label: Text(fonts.signIn.tr)),
+                  icon:  Icon(Icons.add,color: appCtrl.appTheme.primary,),
+                  label: Text(fonts.signIn.tr,style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.primary),)),
               reponseScreenSizes: const [ScreenSize.xs],
               actions: const [BannerSearchAction()],
+
               headers:
                   bannerCtrl.headers!.isNotEmpty ? bannerCtrl.headers! : [],
               source: bannerCtrl.source,
@@ -66,21 +68,22 @@ class BannerList extends StatelessWidget {
               },
               footers: [
                 Container(
+                  
                     padding: const EdgeInsets.symmetric(horizontal: Insets.i15),
-                    child: Text(fonts.rowPerPage.tr)),
+                    child: Text(fonts.rowPerPage.tr,style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.primary),)),
                 if (bannerCtrl.perPages.isNotEmpty) const PageDropDown(),
                 Container(
                     padding: const EdgeInsets.symmetric(horizontal: Insets.i15),
                     child: Text(
-                        "${bannerCtrl.currentPage} - ${bannerCtrl.currentPerPage} of ${bannerCtrl.total}")),
+                        "${bannerCtrl.currentPage} - ${bannerCtrl.currentPerPage} of ${bannerCtrl.total}",style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.blackColor),)),
                 const ArrowBack(),
                 const ArrowForward()
               ],
               headerDecoration: BannerCommonClass().headerDecoration(),
               selectedDecoration: BannerCommonClass().selectedDecoration(),
-              headerTextStyle: TextStyle(color: appCtrl.appTheme.whiteColor),
+              headerTextStyle: TextStyle(color: appCtrl.appTheme.blackColor),
               rowTextStyle: TextStyle(color: appCtrl.appTheme.greenColor),
-              selectedTextStyle: TextStyle(color: appCtrl.appTheme.whiteColor),
+              selectedTextStyle: TextStyle(color: appCtrl.appTheme.blackColor),
             )
           : Container();
     });

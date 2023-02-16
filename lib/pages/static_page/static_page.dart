@@ -1,5 +1,3 @@
-
-
 import '../../config.dart';
 
 class StaticPage extends StatelessWidget {
@@ -14,15 +12,15 @@ class StaticPage extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Card(
-              elevation: 5,
+              elevation: 3,
+              shadowColor: appCtrl.appTheme.blackColor,
+              color: appCtrl.appTheme.whiteColor,
               child: Responsive.isDesktop(context)
                   ? const StaticDesktopLayout()
                   : const StaticMobileLayout().paddingSymmetric(
                       horizontal: Insets.i15, vertical: Insets.i20)),
           if (staticCtrl.isLoading)
-            const Center(
-              child: CircularProgressIndicator(),
-            )
+            const Center(child: CircularProgressIndicator())
         ],
       );
     });

@@ -49,7 +49,7 @@ final dynamic hi = {
   "arabic": "अरबी",
   "imageError": "300p X 50px से अधिक की छवि अपलोड करें",
   "submit": "जमा करना",
-  "svgNotAllowed": "एसवीजी की अनुमति नहीं है",
+  "svgNotAllowed": "केवल पीएनजी (PNG), जेपीईजी (JPEG), जेपीजी (JPG) की अनुमति है",
   "accessDenied": "टेस्ट में @title की अनुमति नहीं है",
   "sendNotification": "अधिसूचना भेजें",
   "admin": "व्यवस्थापक",

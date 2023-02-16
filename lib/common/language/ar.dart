@@ -49,7 +49,7 @@ final dynamic ar = {
   "arabic": "عربي",
   "imageError": "تحميل الصورة أكثر من 300 بكسل × 50 بكسل",
   "submit": "يُقدِّم",
-  "svgNotAllowed": "Svg غير مسموح به",
+  "svgNotAllowed": "يسمح فقط بتنسيق PNG و JPEG و JPG",
   "accessDenied": "غير مسموح بـ @title في الاختبار إرسال الإخطار",
   "sendNotification": "إرسال الإخطار",
   "admin": "مسؤل",

@@ -58,9 +58,7 @@ class LoginBodyLayout extends StatelessWidget {
                 padding: 0,
                 height: Sizes.s35,
                 style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.white)),
-            const VSpace(Sizes.s12),
-            LoginCommonClass().forgotPassword(),
-            const VSpace(Sizes.s30)
+            const VSpace(Sizes.s40)
           ]));
     });
   }

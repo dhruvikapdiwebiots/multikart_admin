@@ -49,7 +49,7 @@ final dynamic kr = {
   "arabic": "아라비아 말",
   "imageError": "300p X 50px 이상의 이미지 업로드",
   "submit": "제출하다",
-  "svgNotAllowed": "허용되지 않음",
+  "svgNotAllowed": "PNG, JPEG, JPG 만 허용",
   "accessDenied": "테스트에서 @title 에 허용되지 않음",
   "sendNotification": "알림 보내기",
   "admin": "관리자",

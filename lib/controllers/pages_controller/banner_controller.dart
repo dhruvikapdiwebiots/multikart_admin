@@ -396,7 +396,6 @@ class BannerController extends GetxController {
           await Future.delayed(Durations.s2);
           isAlert = false;
           update();
-          // showAlert(context: Get.context!, title: "No Svg Allow");
         }
       } else {
         final ImagePicker picker = ImagePicker();
@@ -428,7 +427,6 @@ class BannerController extends GetxController {
           await Future.delayed(Durations.s2);
           isAlert = false;
           update();
-          //showAlert(context: Get.context!, title: "No Svg Allow");
         }
       }
     }

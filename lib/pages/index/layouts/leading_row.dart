@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import '../../../config.dart';
 
 class LeadingRow extends StatelessWidget {
-  const LeadingRow({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState>? scaffoldDrawerKey;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
+  const LeadingRow({Key? key,this.scaffoldKey,this.scaffoldDrawerKey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +26,13 @@ class LeadingRow extends StatelessWidget {
               }
               return InkWell(
                   onTap: () {
-                    indexCtrl.scaffoldDrawerKey.currentState?.closeDrawer();
+                    log("message : ${indexCtrl.scaffoldDrawerKey}");
+                    scaffoldDrawerKey!.currentState?.closeDrawer();
                   },
                   child: Responsive.isDesktop(context)
                       ? Container(
                           width: Sizes.s70,
-                          color: appCtrl.appTheme.blackColor,
+                          color: appCtrl.appTheme.blackColor1,
                           padding: const EdgeInsets.all(Insets.i15),
                           height: double.infinity,
                           child: Image.asset(imageAssets.logo1,
@@ -38,16 +43,17 @@ class LeadingRow extends StatelessWidget {
             height: double.infinity,
             hoverColor: Colors.transparent,
             onPressed: () async {
+              log("message : ${scaffoldDrawerKey}");
               if (Responsive.isMobile(context) ||
                   Responsive.isTablet(context)) {
-                if (indexCtrl.scaffoldKey.currentState!.isDrawerOpen) {
-                  indexCtrl.scaffoldKey.currentState!.closeDrawer();
+                if (scaffoldKey!.currentState!.isDrawerOpen) {
+                  scaffoldKey!.currentState!.closeDrawer();
                 } else {
-                  indexCtrl.scaffoldKey.currentState!.openDrawer();
+                  scaffoldKey!.currentState!.openDrawer();
                 }
               } else if (Responsive.isDesktop(context)) {
-                //indexCtrl.scaffoldDrawerKey.currentState!.closeDrawer();
-                indexCtrl.scaffoldKey.currentState!.closeDrawer();
+
+                scaffoldKey!.currentState!.closeDrawer();
                 indexCtrl.isOpen.value = !indexCtrl.isOpen.value;
               }
             },

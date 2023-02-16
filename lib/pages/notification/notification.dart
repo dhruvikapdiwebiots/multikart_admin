@@ -11,7 +11,9 @@ class NotificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<NotificationController>(builder: (_) {
       return Card(
-        elevation: 5,
+        elevation: 3,
+        shadowColor: appCtrl.appTheme.blackColor,
+        color: appCtrl.appTheme.whiteColor,
         child: Responsive.isDesktop(context)
             ? const DesktopNotificationLayout()
             : const MobileNotificationLayout()

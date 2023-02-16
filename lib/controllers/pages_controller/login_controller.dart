@@ -3,50 +3,16 @@ import 'dart:html' as html;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:multikart_admin/config.dart';
+import 'package:multikart_admin/pages/index/index.dart';
 import '../../common/theme/index.dart';
 
 class LoginController extends GetxController {
   TextEditingController txtName = TextEditingController();
   TextEditingController txtPassword = TextEditingController();
   bool obscureText = true;
-  final formKey = GlobalKey<FormState>();
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-
-    bool isTheme = appCtrl.storage.read(session.isDarkMode) ?? false;
-    log("isTheme : $isTheme");
-
-    update();
-    appCtrl.isTheme = isTheme;
-    ThemeService().switchTheme(appCtrl.isTheme);
-    appCtrl.update();
-
-
-
-    appCtrl.languageVal = appCtrl.storage.read(session.languageCode) ?? "en";
-    log("language : ${appCtrl.languageVal}");
-    if (appCtrl.languageVal == "en") {
-      var locale = const Locale("en", 'US');
-      Get.updateLocale(locale);
-    } else if (appCtrl.languageVal == "ar") {
-      var locale = const Locale("ar", 'AE');
-      Get.updateLocale(locale);
-    } else if (appCtrl.languageVal == "hi") {
-      var locale = const Locale("hi", 'IN');
-      Get.updateLocale(locale);
-      Get.forceAppUpdate();
-    } else {
-
-      var locale = const Locale("ko", 'KR');
-      Get.updateLocale(locale);
-      Get.forceAppUpdate();
-    }
-    update();
-
-    super.onInit();
-  }
+  final formKey = GlobalKey<FormState>(debugLabel: "Key1");
+  var scaffoldDrawerKey = GlobalKey<ScaffoldState>(debugLabel: "drawer");
+  var scaffoldKey = GlobalKey<ScaffoldState>(debugLabel: "key2");
 
   //login
   signIn(context) async {
@@ -61,12 +27,11 @@ class LoginController extends GetxController {
             if (value.docs[0].data()["password"] == txtPassword.text) {
               html.window.localStorage[session.isLogin] = "true";
               await appCtrl.storage.write(session.isLogin, true);
-              await appCtrl.storage.write(session.isLoginTest, false);
+              await appCtrl.storage.write(session.isLoginTest, true);
               txtName.text = "";
               txtPassword.text = "";
               update();
-              Get.offAllNamed(routeName.index);
-
+              Get.offAll(() => IndexLayout(scaffoldDrawerKey: scaffoldDrawerKey,scaffoldKey: scaffoldKey,));
             } else {
               showAlert(context: context, title: "Invalid Password");
             }
@@ -83,7 +48,7 @@ class LoginController extends GetxController {
   @override
   void onReady() {
     // TODO: implement onReady
-
+    appCtrl.getStorageData();
     super.onReady();
   }
 }

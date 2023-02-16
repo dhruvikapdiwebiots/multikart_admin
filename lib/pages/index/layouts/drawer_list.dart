@@ -49,7 +49,10 @@ class DrawerList extends StatelessWidget {
                     }
                     if (indexCtrl.selectedIndex == 3) {
                       FirebaseAuth.instance.signOut();
+                      indexCtrl.selectedIndex == 0;
                       html.window.localStorage[session.isLogin] = "false";
+                      appCtrl.storage.remove(session.isDarkMode);
+                      appCtrl.storage.remove(session.languageCode);
                       Get.offAll(() => Login());
                     }
                     indexCtrl.update();

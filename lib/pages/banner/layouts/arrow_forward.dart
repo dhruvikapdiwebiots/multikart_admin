@@ -9,7 +9,7 @@ class ArrowForward extends StatelessWidget {
     return GetBuilder<BannerController>(
       builder: (bannerCtrl) {
         return IconButton(
-          icon: const Icon(Icons.arrow_forward_ios, size: 16),
+          icon: Icon(Icons.arrow_forward_ios, size: 16,color: appCtrl.appTheme.gray),
           onPressed: bannerCtrl.currentPage + bannerCtrl.currentPerPage! - 1 >
               bannerCtrl.total
               ? null

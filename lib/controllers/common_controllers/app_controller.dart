@@ -1,4 +1,7 @@
 
+import 'dart:developer';
+
+import '../../common/theme/index.dart';
 import '../../config.dart';
 
 class AppController extends GetxController {
@@ -29,5 +32,37 @@ class AppController extends GetxController {
     Get.forceAppUpdate();
   }
 
+  //get storage data
+  getStorageData(){
+
+    bool isTheme = appCtrl.storage.read(session.isDarkMode) ?? false;
+    log("isTheme : $isTheme");
+    update();
+    appCtrl.isTheme = isTheme;
+    ThemeService().switchTheme(appCtrl.isTheme);
+    appCtrl.update();
+
+
+    appCtrl.languageVal = appCtrl.storage.read(session.languageCode) ?? "en";
+    log("language : ${appCtrl.languageVal}");
+    if (appCtrl.languageVal == "en") {
+      var locale = const Locale("en", 'US');
+      Get.updateLocale(locale);
+    } else if (appCtrl.languageVal == "ar") {
+      var locale = const Locale("ar", 'AE');
+      Get.updateLocale(locale);
+    } else if (appCtrl.languageVal == "hi") {
+      var locale = const Locale("hi", 'IN');
+      Get.updateLocale(locale);
+      Get.forceAppUpdate();
+    } else {
+
+      var locale = const Locale("ko", 'KR');
+      Get.updateLocale(locale);
+      Get.forceAppUpdate();
+    }
+    update();
+
+  }
 }
 

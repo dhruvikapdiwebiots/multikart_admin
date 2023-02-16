@@ -1,15 +1,11 @@
-
-
 import '../../config.dart';
 
-class IndexLayoutController extends GetxController{
+class IndexLayoutController extends GetxController {
   ValueNotifier<bool> isOpen = ValueNotifier(true);
-  final GlobalKey<ScaffoldState> scaffoldDrawerKey =
-  GlobalKey<ScaffoldState>();
-  final GlobalKey<ScaffoldState> scaffoldKey =
-  GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState>? scaffoldDrawerKey;
+  GlobalKey<ScaffoldState>? scaffoldKey;
   int selectedIndex = 0;
-  String pageName =fonts.addBanner.tr;
+  String pageName = fonts.addBanner.tr;
   bool isHover = false;
   int isSelectedHover = 0;
 
@@ -17,10 +13,28 @@ class IndexLayoutController extends GetxController{
 
   //list of bottommost page
   List<Widget> widgetOptions = <Widget>[
-
     BannerPage(),
     StaticPage(),
     NotificationPage(),
-     Container()
+    Container()
   ];
+
+  @override
+  void onReady() {
+    // TODO: implement onReady
+    appCtrl.getStorageData();
+    super.onReady();
+  }
+
+  setKey({GlobalKey<ScaffoldState>? scaffoldDrawerKey1,GlobalKey<ScaffoldState>? scaffoldKey1}){
+    scaffoldDrawerKey = scaffoldDrawerKey1;
+    scaffoldKey = scaffoldKey1;
+    update();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 }
