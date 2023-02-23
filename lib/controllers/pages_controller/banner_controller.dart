@@ -92,7 +92,7 @@ class BannerController extends GetxController {
   saveBanner() async {
     isLoading = true;
     update();
-    log.log("imageUrlimageUrl : $bannerId");
+    log.log("imageUrlimageUrl : $imageUrl");
 
     try {
       if (bannerId == "") {
@@ -126,10 +126,13 @@ class BannerController extends GetxController {
           value.docs.asMap().entries.forEach((element) {
             log.log("data : $bannerId");
             log.log("bannerId : ${element.value.data()["bannerId"]}");
-            if (bannerId.toString() == element.value.data()["bannerId"].toString()) {
+            if (bannerId.toString() ==
+                element.value.data()["bannerId"].toString()) {
               log.log("true : ${element.value.id}");
               FirebaseFirestore.instance
-                  .collection(collectionName.banner).doc(element.value.id).update({
+                  .collection(collectionName.banner)
+                  .doc(element.value.id)
+                  .update({
                 "productCollectionId": txtId.text,
                 "image": imageUrl,
                 "bannerId": bannerId,
@@ -351,6 +354,8 @@ class BannerController extends GetxController {
           },
           textAlign: TextAlign.center),
     ];
+    isLoading = false;
+    update();
   }
 
   @override
@@ -371,6 +376,7 @@ class BannerController extends GetxController {
           imageName.contains("jpeg")) {
         var image = dropImage;
         uploadWebImage = image;
+        log.log("uploadWebImage : $uploadWebImage");
         Image image1 = Image.memory(uploadWebImage);
 
         ImageInfo info = await getImageInfo(image1);
@@ -382,7 +388,9 @@ class BannerController extends GetxController {
         } else {
           isUploadSize = true;
         }
+
         isAlert = false;
+        update();
       } else {
         isAlert = true;
         update();
@@ -426,32 +434,36 @@ class BannerController extends GetxController {
 
 // UPLOAD SELECTED IMAGE TO FIREBASE
   Future uploadFile() async {
-    /*bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+    bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
     if (isLoginTest) {
       accessDenied(fonts.modification.tr);
     } else {
       isLoading = true;
-      update();
-      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-      Reference reference = FirebaseStorage.instance.ref().child(fileName);
-      log.log("reference : $webImage");
-      UploadTask? uploadTask;
-      uploadTask = reference.putData(webImage);
+      if (pickImage != null) {
+        update();
+        String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+        Reference reference = FirebaseStorage.instance.ref().child(fileName);
+        log.log("reference : $webImage");
+        UploadTask? uploadTask;
+        uploadTask = reference.putData(webImage);
 
-      uploadTask.then((res) async {
-        log.log("res : $res");
-        res.ref.getDownloadURL().then((downloadUrl) async {
-          imageUrl = downloadUrl;
-          log.log("imageUrl : $imageUrl");
-          await Future.delayed(Durations.s3);
-          saveBanner();
-        }, onError: (err) {
-          update();
-          //    Fluttertoast.showToast(msg: 'Image is Not Valid');
+        uploadTask.then((res) async {
+          log.log("res : $res");
+          res.ref.getDownloadURL().then((downloadUrl) async {
+            imageUrl = downloadUrl;
+            log.log("imageUrl : $imageUrl");
+            update();
+            await Future.delayed(Durations.s3);
+
+            saveBanner();
+          }, onError: (err) {
+            update();
+          });
         });
-      });
-    }*/
-    saveBanner();
+      } else {
+        saveBanner();
+      }
+    }
   }
 
   //on sort

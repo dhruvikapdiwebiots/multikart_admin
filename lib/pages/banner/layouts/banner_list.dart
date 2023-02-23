@@ -16,7 +16,7 @@ class BannerList extends StatelessWidget {
               title: TextButton.icon(
                   onPressed: () => bannerCtrl.addBannerDialog(),
                   icon:  Icon(Icons.add,color: appCtrl.appTheme.primary,),
-                  label: Text(fonts.signIn.tr,style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.primary),)),
+                  label: Text(fonts.addBanner.tr,style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.primary),)),
               reponseScreenSizes: const [ScreenSize.xs],
               actions: const [BannerSearchAction()],
 
@@ -68,7 +68,6 @@ class BannerList extends StatelessWidget {
               },
               footers: [
                 Container(
-                  
                     padding: const EdgeInsets.symmetric(horizontal: Insets.i15),
                     child: Text(fonts.rowPerPage.tr,style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.primary),)),
                 if (bannerCtrl.perPages.isNotEmpty) const PageDropDown(),

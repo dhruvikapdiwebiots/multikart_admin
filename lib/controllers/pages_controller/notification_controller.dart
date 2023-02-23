@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:multikart_admin/config.dart';
@@ -20,46 +21,53 @@ class NotificationController extends GetxController {
     if (isLoginTest) {
       accessDenied(fonts.modification.tr);
     }else {
-      final data = {
-        "notification": {"body": txtContent.text, "title": txtTitle.text,},
-        "priority": "high",
-        "data": {
-          "click_action": "FLUTTER_NOTIFICATION_CLICK",
-          "alertMessage": 'true',
-          "title": txtTitle.text,
-        },
-        "to": "eS1UT5AyT8SGh0GWh1x69R:APA91bE344mt0TzcWxHIYypx2I4-zbeOD-ntaTEhaRpmfU-jjz5cfiUAg5XCM1iXuxsXLMy2R59FfzanwQexkMF0_rBxAkQcsE_0iBRj51IzSkIGMechyGJaXRi3lD5FRBpJg-WyqvGf"
-      };
 
-      final headers = {
-        'content-type': 'application/json',
-        'Authorization':
-        'key=AAAAphwmbKY:APA91bGHsxPDGQmFD1XKbx3BKGmjFZTjBy3VXHIKVZ4HJVr0wYuG7c-7FOQGI6rrdR8ahTKkyv8yAso-PZXDZ00unk0rnJXq_Y1V-R1GH7omkP6hEzaydYlZAbIx48VofT831bpe_nLR'
-      };
+      FirebaseFirestore.instance.collection(collectionName.users).get().then((value) {
+        value.docs.asMap().entries.forEach((element)async {
+          final data = {
+            "notification": {"body": txtContent.text, "title": txtTitle.text,},
+            "priority": "high",
+            "data": {
+              "click_action": "FLUTTER_NOTIFICATION_CLICK",
+              "alertMessage": 'true',
+              "title": txtTitle.text,
+              "isProduct":idType == ""? "" : idType == "product" ? true : false,
+              "productCollectionId": txtProductCollectionId.text,
+            },
+            "to": element.value.data()["pushToken"]
+          };
 
-      BaseOptions options = BaseOptions(
-        connectTimeout: 5000,
-        receiveTimeout: 3000,
-        headers: headers,
-      );
+          final headers = {
+            'content-type': 'application/json',
+            'Authorization':
+            'key=AAAAphwmbKY:APA91bGHsxPDGQmFD1XKbx3BKGmjFZTjBy3VXHIKVZ4HJVr0wYuG7c-7FOQGI6rrdR8ahTKkyv8yAso-PZXDZ00unk0rnJXq_Y1V-R1GH7omkP6hEzaydYlZAbIx48VofT831bpe_nLR'
+          };
 
-      try {
-        final response = await Dio(options)
-            .post('https://fcm.googleapis.com/fcm/send', data: data);
+          BaseOptions options = BaseOptions(
+            connectTimeout: 5000,
+            receiveTimeout: 3000,
+            headers: headers,
+          );
 
-        if (response.statusCode == 200) {
-          txtTitle.text = "";
-          txtContent.text = "";
-          txtProductCollectionId.text = "";
-          idType = "";
-          log('Alert push notification send');
-        } else {
-          log('notification sending failed');
-          // on failure do sth
-        }
-      } catch (e) {
-        log('exception $e');
-      }
+          try {
+            final response = await Dio(options)
+                .post('https://fcm.googleapis.com/fcm/send', data: data);
+
+            if (response.statusCode == 200) {
+              txtTitle.text = "";
+              txtContent.text = "";
+              txtProductCollectionId.text = "";
+              idType = "";
+              log('Alert push notification send');
+            } else {
+              log('notification sending failed');
+              // on failure do sth
+            }
+          } catch (e) {
+            log('exception $e');
+          }
+        });
+      });
     }
   }
 }

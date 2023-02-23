@@ -1,4 +1,5 @@
 final dynamic en = {
+  "appName": "Multikart Admin",
   "banners": "Banners",
   "logout": "Logout",
   "signIn": "Sign In",

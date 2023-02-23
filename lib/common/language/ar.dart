@@ -1,4 +1,5 @@
 final dynamic ar = {
+  "appName": "إدارة Multikart",
   "banners": "لافتات",
   "logout": "تسجيل خروج",
   "signIn": "تسجيل الدخول",

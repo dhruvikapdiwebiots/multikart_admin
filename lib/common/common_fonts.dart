@@ -3,7 +3,7 @@
 import 'package:get/get.dart';
 
 class Fonts{
-  final multiKartAdmin = "multiKartAdmin";
+  final appName = "appName";
   final selectLanguage = "selectLanguage";
   final lightMode = "lightMode";
   final darkMode = "darkMode";

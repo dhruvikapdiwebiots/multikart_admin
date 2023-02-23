@@ -3,7 +3,7 @@ import '../../../config.dart';
 class BannerCommonClass {
   //header decoration
   BoxDecoration headerDecoration() => BoxDecoration(
-      color: appCtrl.appTheme.gray,
+      color: appCtrl.appTheme.whiteColor,
       border: Border(
           bottom: BorderSide(color: appCtrl.appTheme.redColor, width: 1)));
 

@@ -4,7 +4,6 @@ import 'dart:html' as html;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:multikart_admin/config.dart';
 import 'package:multikart_admin/pages/index/index.dart';
-import '../../common/theme/index.dart';
 
 class LoginController extends GetxController {
   TextEditingController txtName = TextEditingController();
@@ -27,7 +26,7 @@ class LoginController extends GetxController {
             if (value.docs[0].data()["password"] == txtPassword.text) {
               html.window.localStorage[session.isLogin] = "true";
               await appCtrl.storage.write(session.isLogin, true);
-              await appCtrl.storage.write(session.isLoginTest, false);
+              await appCtrl.storage.write(session.isLoginTest, true);
               txtName.text = "";
               txtPassword.text = "";
               update();
@@ -48,7 +47,16 @@ class LoginController extends GetxController {
   @override
   void onReady() {
     // TODO: implement onReady
+    getAdminCredential();
     appCtrl.getStorageData();
     super.onReady();
+  }
+
+  getAdminCredential()async{
+    await FirebaseFirestore.instance.collection("admin").get().then((value) {
+      txtName.text = value.docs[0].data()["userName"];
+      txtPassword.text = value.docs[0].data()["password"];
+      update();
+    });
   }
 }

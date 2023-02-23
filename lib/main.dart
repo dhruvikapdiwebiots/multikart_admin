@@ -1,8 +1,8 @@
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:multikart_admin/pages/index/index.dart';
 
 import 'common/language/index.dart';
@@ -24,10 +24,9 @@ void main() async {
         projectId: "multikart-e57bb",
         storageBucket: "multikart-e57bb.appspot.com",
         messagingSenderId: "713436851366",
-        appId: "1:713436851366:web:a732769651136370391867",
-        measurementId: "G-W6GMZ16VRT"),
+        appId: "1:713436851366:web:da1d1501e3f51350391867",
+        measurementId: "G-V3ZDT8X04V"),
   );
-
 
   runApp(const MyApp());
 }
@@ -35,22 +34,31 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     appCtrl.isLogin = html.window.localStorage[session.isLogin] ?? "false";
+    SystemChrome.setApplicationSwitcherDescription(
+        ApplicationSwitcherDescription(
+      label: fonts.appName.tr,
+      primaryColor: Theme.of(context).primaryColor.value,
+    ));
     return GetMaterialApp(
       builder: (context, widget) {
-        return StreamBuilder<User?>(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
-
-              return !snapshot.hasData ? MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-              child: widget!,
-            ) : Login();
-          }
+        return Title(
+          title: fonts.appName.tr,
+          color: appCtrl.appTheme.blackColor,
+          child: StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+                return !snapshot.hasData
+                    ? MediaQuery(
+                        data: MediaQuery.of(context)
+                            .copyWith(textScaleFactor: 1.0),
+                        child: widget!,
+                      )
+                    : Login();
+              }),
         );
       },
       debugShowCheckedModeBanner: false,
@@ -58,8 +66,13 @@ class MyApp extends StatelessWidget {
       locale: const Locale('en', 'US'),
       fallbackLocale: const Locale('en', 'US'),
       // tran
-      title: "Multikart Admin",
-      home: appCtrl.isLogin == "true" ?IndexLayout() : Login(),
+      title: fonts.appName.tr,
+      home: appCtrl.isLogin == "true"
+          ? Title(
+              title: fonts.appName.tr,
+              color: appCtrl.appTheme.blackColor,
+              child: const IndexLayout())
+          : Login(),
       getPages: appRoute.getPages,
       theme: AppTheme.fromType(ThemeType.light).themeData,
       darkTheme: AppTheme.fromType(ThemeType.dark).themeData,

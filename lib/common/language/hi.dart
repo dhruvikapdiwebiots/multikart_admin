@@ -1,4 +1,5 @@
 final dynamic hi = {
+  "appName": "मल्टीकार्ट एडमिन",
   "banners": "बैनर",
   "logout": "लॉग आउट",
   "signIn": "दाखिल करना",

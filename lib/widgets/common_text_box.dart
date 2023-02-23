@@ -66,7 +66,7 @@ class CommonTextBox extends StatelessWidget {
           onFieldSubmitted: onFieldSubmitted,
           onTap: onTap,
           readOnly: readOnly,
-          style: AppCss.nunitoSemiBold12.textColor(appCtrl.appTheme.contentColor).letterSpace(.2) ,
+          style: AppCss.nunitoSemiBold12.textColor(appCtrl.appTheme.blackColor).letterSpace(.2) ,
           maxLength: maxLength,
           decoration: InputDecoration(
               filled: filled,

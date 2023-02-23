@@ -43,7 +43,7 @@ class LeadingRow extends StatelessWidget {
             height: double.infinity,
             hoverColor: Colors.transparent,
             onPressed: () async {
-              log("message : ${scaffoldDrawerKey}");
+              log("message : $scaffoldDrawerKey");
               if (Responsive.isMobile(context) ||
                   Responsive.isTablet(context)) {
                 if (scaffoldKey!.currentState!.isDrawerOpen) {
@@ -52,7 +52,6 @@ class LeadingRow extends StatelessWidget {
                   scaffoldKey!.currentState!.openDrawer();
                 }
               } else if (Responsive.isDesktop(context)) {
-
                 scaffoldKey!.currentState!.closeDrawer();
                 indexCtrl.isOpen.value = !indexCtrl.isOpen.value;
               }

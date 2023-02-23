@@ -1,4 +1,5 @@
 final dynamic kr = {
+  "appName": "멀티카트 관리자",
   "banners": "배너",
   "logout": "로그 아웃",
   "signIn": "로그인",
