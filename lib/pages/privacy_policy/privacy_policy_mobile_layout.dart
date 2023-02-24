@@ -1,15 +1,17 @@
 
 
+import 'package:multikart_admin/controllers/pages_controller/contact_us_controller.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../config.dart';
+import '../../controllers/pages_controller/privacy_policy_controller.dart';
 
-class AboutUsMobileLayout extends StatelessWidget {
-  const AboutUsMobileLayout({Key? key}) : super(key: key);
+class PrivacyPolicyMobileLayout extends StatelessWidget {
+  const PrivacyPolicyMobileLayout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<StaticController>(
+    return GetBuilder<PrivacyPolicyController>(
       builder: (staticCtrl) {
         return Column(children: [
           CommonButton(

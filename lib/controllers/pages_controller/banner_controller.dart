@@ -80,6 +80,7 @@ class BannerController extends GetxController {
         banner.add(element.value.data());
       });
     });
+
     update();
     return banner;
   }
@@ -115,6 +116,9 @@ class BannerController extends GetxController {
           txtTitle.text = "";
           txtId.text = "";
           idType = "";
+          imageFile =null;
+          webImage = Uint8List(8);
+          imageUrl ="";
           initializeData();
         });
       } else {
@@ -139,6 +143,13 @@ class BannerController extends GetxController {
                 "isProduct": element.value.data()["isProduct"],
                 "title": txtTitle.text,
                 "isActive": true
+              }).then((value) {
+                txtTitle.text = "";
+                txtId.text = "";
+                idType = "";
+                imageFile =null;
+                webImage = Uint8List(8);
+                imageUrl ="";
               });
             }
           });
@@ -195,7 +206,7 @@ class BannerController extends GetxController {
       bannerId = "";
       update();
     }
-    log.log("bannerIdbannerId : $bannerId");
+    log.log("bannerId : $bannerId");
     showDialog(
         context: Get.context!,
         builder: (BuildContext context) {
@@ -334,20 +345,25 @@ class BannerController extends GetxController {
                   OutlinedButton(
                       onPressed: () async {
                         log.log("vad L ${row["id"]}");
-                        await FirebaseFirestore.instance
-                            .collection(collectionName.banner)
-                            .where("bannerId", isEqualTo: row["id"])
-                            .get()
-                            .then((value) {
-                          if (value.docs.isNotEmpty) {
-                            FirebaseFirestore.instance
-                                .collection(collectionName.banner)
-                                .doc(value.docs[0].id)
-                                .delete();
-                          }
-                        });
-                        initialSetUi();
-                        initializeData();
+                        bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+                        if (isLoginTest) {
+                          accessDenied(fonts.modification.tr);
+                        }else {
+                          await FirebaseFirestore.instance
+                              .collection(collectionName.banner)
+                              .where("bannerId", isEqualTo: row["id"])
+                              .get()
+                              .then((value) {
+                            if (value.docs.isNotEmpty) {
+                              FirebaseFirestore.instance
+                                  .collection(collectionName.banner)
+                                  .doc(value.docs[0].id)
+                                  .delete();
+                            }
+                          });
+                          initialSetUi();
+                          initializeData();
+                        }
                       },
                       child: const Icon(Icons.delete, size: Sizes.s18))
                 ]);

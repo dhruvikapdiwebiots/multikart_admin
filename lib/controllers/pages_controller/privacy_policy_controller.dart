@@ -1,16 +1,13 @@
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 import '../../config.dart';
 
-class StaticController extends GetxController {
-  TextEditingController txtAboutUs = TextEditingController();
+class PrivacyPolicyController extends GetxController {
+  TextEditingController txtPrivacy = TextEditingController();
   String id = "";
-  TextEditingController txtContactUs = TextEditingController();
-  TextEditingController txtTermsCondition = TextEditingController();
-  TextEditingController txtPrivacyPolicy = TextEditingController();
   bool isLoading = false;
-
 
   final QuillEditorController controller = QuillEditorController();
 
@@ -24,7 +21,7 @@ class StaticController extends GetxController {
   ];
 
   final backgroundColor = Colors.white70;
-  final toolbarIconColor = Colors.black87;
+
   final editorTextStyle = const TextStyle(
       fontSize: 18, color: Colors.black54, fontWeight: FontWeight.normal);
   final hintTextStyle = const TextStyle(
@@ -37,6 +34,7 @@ class StaticController extends GetxController {
     controller.onTextChanged((text) {
       debugPrint('listening to $text');
     });
+
     update();
     super.onReady();
   }
@@ -48,11 +46,10 @@ class StaticController extends GetxController {
         .get()
         .then((value) {
       id = value.docs[0].id;
-      txtAboutUs.text = value.docs[0].data()["aboutUs"];
-      txtContactUs.text = value.docs[0].data()["contactUs"];
-      txtTermsCondition.text = value.docs[0].data()["termsCondition"];
-      txtPrivacyPolicy.text = value.docs[0].data()["privacyPolicy"];
+      txtPrivacy.text = value.docs[0].data()["privacyPolicy"];
+      controller.setText(txtPrivacy.text);
       update();
+      log("About : ${controller.getText()}");
     });
     update();
   }
@@ -62,17 +59,16 @@ class StaticController extends GetxController {
     bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
     if (isLoginTest) {
       accessDenied(fonts.modification.tr);
-    }else {
+    } else {
+      var selectedText = await controller.getText();
+      await controller.setText(selectedText);
       isLoading = true;
       update();
       await FirebaseFirestore.instance
           .collection(collectionName.static)
           .doc(id)
           .update({
-        "aboutUs": txtAboutUs.text,
-        "contactUs": txtContactUs.text,
-        "termsCondition": txtTermsCondition.text,
-        "privacyPolicy": txtPrivacyPolicy.text
+        "privacyPolicy": selectedText,
       }).then((value) {
         isLoading = false;
         update();

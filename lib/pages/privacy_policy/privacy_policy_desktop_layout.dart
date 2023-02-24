@@ -1,15 +1,17 @@
 
 
+import 'package:multikart_admin/controllers/pages_controller/contact_us_controller.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../config.dart';
+import '../../controllers/pages_controller/privacy_policy_controller.dart';
 
-class AboutUsDesktopLayout extends StatelessWidget {
-  const AboutUsDesktopLayout({Key? key}) : super(key: key);
+class PrivacyPolicyDesktopLayout extends StatelessWidget {
+  const PrivacyPolicyDesktopLayout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<StaticController>(
+    return GetBuilder<PrivacyPolicyController>(
       builder: (staticCtrl) {
         return SingleChildScrollView(
           child: Column(children: [

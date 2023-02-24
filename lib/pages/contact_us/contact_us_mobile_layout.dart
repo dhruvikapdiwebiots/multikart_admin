@@ -1,15 +1,16 @@
 
 
+import 'package:multikart_admin/controllers/pages_controller/contact_us_controller.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../config.dart';
 
-class AboutUsMobileLayout extends StatelessWidget {
-  const AboutUsMobileLayout({Key? key}) : super(key: key);
+class ContactUsMobileLayout extends StatelessWidget {
+  const ContactUsMobileLayout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<StaticController>(
+    return GetBuilder<ContactUsController>(
       builder: (staticCtrl) {
         return Column(children: [
           CommonButton(

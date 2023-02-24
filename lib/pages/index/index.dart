@@ -52,7 +52,7 @@ class _IndexLayoutState extends State<IndexLayout> {
                                 builder: (context, value, child) {
                                   return Responsive.isDesktop(context)
                                       ? Container(
-                                    padding: EdgeInsets.symmetric(vertical: Insets.i25),
+                                    padding: const EdgeInsets.symmetric(vertical: Insets.i25),
                                           height:
                                               MediaQuery.of(context).size.height,
                                           width: value ? Sizes.s240 : Sizes.s70,

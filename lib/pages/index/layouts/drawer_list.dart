@@ -36,12 +36,41 @@ class DrawerList extends StatelessWidget {
                       ? Container()
                       : otherList.isNotEmpty
                           ? ExpansionTile(
+                              onExpansionChanged: (val) {
+                                indexCtrl.selectedIndex = 1;
+                                indexCtrl.update();
+                              },
                               iconColor: appCtrl.appTheme.white,
                               collapsedIconColor: appCtrl.appTheme.white,
                               tilePadding: EdgeInsets.zero,
                               title: Text(e.value["title"].toString().tr,
-                                  style: AppCss.nunitoMedium14
-                                      .textColor(appCtrl.appTheme.white)),
+                                      style: AppCss.nunitoMedium14
+                                          .textColor(appCtrl.appTheme.white))
+                                  .inkWell(onTap: () {
+                                indexCtrl.selectedIndex = e.key;
+                                indexCtrl.pageName =
+                                    e.value["title"].toString();
+                                if (!Responsive.isDesktop(context)) {
+                                  Get.back();
+                                }
+                                if (indexCtrl.selectedIndex == 1) {
+                                  final staticCtrl =
+                                      Get.isRegistered<StaticController>()
+                                          ? Get.find<StaticController>()
+                                          : Get.put(StaticController());
+                                  staticCtrl.getData();
+                                }
+                                if (indexCtrl.selectedIndex == 3) {
+                                  FirebaseAuth.instance.signOut();
+                                  indexCtrl.selectedIndex == 0;
+                                  html.window.localStorage[session.isLogin] =
+                                      "false";
+                                  appCtrl.storage.remove(session.isDarkMode);
+                                  appCtrl.storage.remove(session.languageCode);
+                                  Get.offAll(() => Login());
+                                }
+                                indexCtrl.update();
+                              }),
                               children: [
                                 ...otherList.asMap().entries.map((other) {
                                   return MouseRegion(
@@ -60,22 +89,20 @@ class DrawerList extends StatelessWidget {
                                         title: Responsive.isDesktop(context) &&
                                                 value == false
                                             ? Container()
-                                            : Text(
-                                                other.value["title"]
-                                                    .toString()
-                                                    .tr,
-                                                style: AppCss.nunitoMedium14
-                                                    .textColor(appCtrl
-                                                        .appTheme.white)),
+                                            : Text(other.value["title"].toString().tr,
+                                                style: AppCss.nunitoMedium14.textColor(
+                                                    appCtrl.appTheme.white)),
                                         onTap: () {
                                           indexCtrl.subSelectIndex = other.key;
 
                                           indexCtrl.update();
                                         }).decorated(
-                                      color: (indexCtrl.isSubHover &&
-                                          indexCtrl.isSubSelectedHover == other.key)
-                                          ? appCtrl.appTheme.gray.withOpacity(.2)
-                                          : appCtrl.appTheme.bgColor,
+                                        color: (indexCtrl.isSubHover &&
+                                                indexCtrl.isSubSelectedHover ==
+                                                    other.key)
+                                            ? appCtrl.appTheme.gray
+                                                .withOpacity(.2)
+                                            : appCtrl.appTheme.bgColor,
                                         border: Border(
                                             left: BorderSide(
                                                 width: 5,
@@ -84,13 +111,10 @@ class DrawerList extends StatelessWidget {
                                                         other.key
                                                     ? appCtrl.appTheme.primary
                                                     : indexCtrl.isSubHover &&
-                                                            indexCtrl
-                                                                    .isSubSelectedHover ==
+                                                            indexCtrl.isSubSelectedHover ==
                                                                 other.key
-                                                        ? appCtrl
-                                                            .appTheme.primary
-                                                        : appCtrl.appTheme
-                                                            .bgColor))),
+                                                        ? appCtrl.appTheme.primary
+                                                        : appCtrl.appTheme.bgColor))),
                                   );
                                 }).toList()
                               ],
