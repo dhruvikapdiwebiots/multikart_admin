@@ -2,8 +2,8 @@
 
 import '../../config.dart';
 
-class StaticMobileLayout extends StatelessWidget {
-  const StaticMobileLayout({Key? key}) : super(key: key);
+class AboutUsMobileLayout extends StatelessWidget {
+  const AboutUsMobileLayout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

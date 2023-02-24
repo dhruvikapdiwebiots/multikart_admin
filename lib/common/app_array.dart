@@ -1,7 +1,6 @@
-
 import '../config.dart';
 
-class AppArray{
+class AppArray {
   //language list
   var languageList = [
     {'name': 'english', 'locale': const Locale('en', 'US')},
@@ -12,10 +11,19 @@ class AppArray{
 
   //bottom list
   var drawerList = [
-    {'icon': svgAssets.banner, 'title': "banners"},
-    {'icon': svgAssets.page, 'title': "staticPage"},
-    {'icon': svgAssets.bell, 'title': "notification"},
-    {'icon': svgAssets.logout, 'title': "logout"},
+    {'icon': svgAssets.banner, 'title': "banners", "otherList": []},
+    {
+      'icon': svgAssets.page,
+      'title': "staticPage",
+      "otherList": [
+        {"title": "aboutUs"},
+        {"title": "contactUs"},
+        {"title": "termsCondition"},
+        {"title": "privacyPolicy"},
+      ]
+    },
+    {'icon': svgAssets.bell, 'title': "notification", "otherList": []},
+    {'icon': svgAssets.logout, 'title': "logout", "otherList": []},
   ];
 
   //action list
@@ -26,16 +34,13 @@ class AppArray{
     {'title': "arabic"},
   ];
 
-
   //statusAction list
   var statusAction = [
-
     {'title': "setting"},
   ];
 
   //callAction list
   var callsAction = [
-
     {'title': "clearLogs"},
     {'title': "setting"}
   ];

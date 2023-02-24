@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:quill_html_editor/quill_html_editor.dart';
 import '../../config.dart';
 
 class StaticController extends GetxController {
@@ -10,10 +11,33 @@ class StaticController extends GetxController {
   TextEditingController txtPrivacyPolicy = TextEditingController();
   bool isLoading = false;
 
+
+  final QuillEditorController controller = QuillEditorController();
+
+  ///[customToolBarList] pass the custom toolbarList to show only selected styles in the editor
+
+  final customToolBarList = [
+    ToolBarStyle.bold,
+    ToolBarStyle.italic,
+    ToolBarStyle.align,
+    ToolBarStyle.color,
+  ];
+
+  final backgroundColor = Colors.white70;
+  final toolbarIconColor = Colors.black87;
+  final editorTextStyle = const TextStyle(
+      fontSize: 18, color: Colors.black54, fontWeight: FontWeight.normal);
+  final hintTextStyle = const TextStyle(
+      fontSize: 18, color: Colors.teal, fontWeight: FontWeight.normal);
+
   @override
   void onReady() {
     // TODO: implement onReady
     getData();
+    controller.onTextChanged((text) {
+      debugPrint('listening to $text');
+    });
+    update();
     super.onReady();
   }
 

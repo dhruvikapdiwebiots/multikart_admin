@@ -1,9 +1,9 @@
 import '../../config.dart';
 
-class StaticPage extends StatelessWidget {
+class AboutUsPage extends StatelessWidget {
   final staticCtrl = Get.put(StaticController());
 
-  StaticPage({Key? key}) : super(key: key);
+  AboutUsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,8 @@ class StaticPage extends StatelessWidget {
               shadowColor: appCtrl.appTheme.blackColor,
               color: appCtrl.appTheme.whiteColor,
               child: Responsive.isDesktop(context)
-                  ? const StaticDesktopLayout()
-                  : const StaticMobileLayout().paddingSymmetric(
+                  ? const AboutUsDesktopLayout()
+                  : const AboutUsMobileLayout().paddingSymmetric(
                       horizontal: Insets.i15, vertical: Insets.i20)),
           if (staticCtrl.isLoading)
             const Center(child: CircularProgressIndicator())

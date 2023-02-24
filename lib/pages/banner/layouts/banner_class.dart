@@ -5,7 +5,7 @@ class BannerCommonClass {
   BoxDecoration headerDecoration() => BoxDecoration(
       color: appCtrl.appTheme.whiteColor,
       border: Border(
-          bottom: BorderSide(color: appCtrl.appTheme.redColor, width: 1)));
+          bottom: BorderSide(color: appCtrl.appTheme.gray.withOpacity(0.3), width: 1)));
 
   //selected decoration
   BoxDecoration selectedDecoration() => BoxDecoration(

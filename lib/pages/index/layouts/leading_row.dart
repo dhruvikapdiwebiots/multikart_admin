@@ -5,7 +5,9 @@ import '../../../config.dart';
 class LeadingRow extends StatelessWidget {
   final GlobalKey<ScaffoldState>? scaffoldDrawerKey;
   final GlobalKey<ScaffoldState>? scaffoldKey;
-  const LeadingRow({Key? key,this.scaffoldKey,this.scaffoldDrawerKey}) : super(key: key);
+
+  const LeadingRow({Key? key, this.scaffoldKey, this.scaffoldDrawerKey})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +21,29 @@ class LeadingRow extends StatelessWidget {
                     onTap: () {},
                     child: Container(
                         width: Sizes.s240,
-                        padding: const EdgeInsets.symmetric(horizontal: 61),
+
                         height: double.infinity,
-                        color: appCtrl.appTheme.blackColor1,
-                        child: Image.asset(imageAssets.logo2)));
+                        decoration: BoxDecoration(
+                          color: appCtrl.appTheme.bgColor
+
+                        ),
+                        child: Container(
+                            width: Sizes.s240,
+
+                            margin: const EdgeInsets.only(bottom: Insets.i1),
+                            padding: const EdgeInsets.all(Insets.i20),
+                            decoration: BoxDecoration(
+                                color: appCtrl.appTheme.bgColor,
+                                boxShadow: [
+                                  const BoxShadow(
+                                      color: Colors.white12 ,
+                                      blurRadius: 2,
+                                      spreadRadius: 2)
+                                ]
+                            ),
+
+                            height: double.infinity,
+                            child: Image.asset(imageAssets.logo2))));
               }
               return InkWell(
                   onTap: () {
@@ -56,7 +77,10 @@ class LeadingRow extends StatelessWidget {
                 indexCtrl.isOpen.value = !indexCtrl.isOpen.value;
               }
             },
-            child:  Icon(Icons.menu,color: appCtrl.appTheme.blackColor,))
+            child: Icon(
+              Icons.menu,
+              color: appCtrl.appTheme.blackColor,
+            ))
       ]);
     });
   }

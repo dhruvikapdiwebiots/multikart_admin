@@ -5,8 +5,9 @@ export 'index/layouts/selected_body_layout.dart';
 export 'index/layouts/drawer.dart';
 export 'index/layouts/leading_row.dart';
 export 'notification/layouts/common_input_layout.dart';
-export 'static_page/static_desktop_layout.dart';
-export 'static_page/static_mobile_layout.dart';
+
+export 'abouts_us_page/about_us_desktop_layout.dart';
+export 'abouts_us_page/about_us_mobile_layout.dart';
 export 'notification/layouts/desktop_notification_layout.dart';
 export 'notification/layouts/mobile_notification_layout.dart';
 export 'index/layouts/drawer_list.dart';
@@ -38,5 +39,5 @@ export '/widgets/custom_snack_bar.dart';
 export '/pages/banner/banner.dart';
 export '/pages/dashboard/dashboard.dart';
 export '/pages/notification/notification.dart';
-export '/pages/static_page/static_page.dart';
+export '/pages/abouts_us_page/abouts_us_page.dart';
 export 'auth/login/layouts/glass_morphic_border.dart';

@@ -27,6 +27,7 @@ class _IndexLayoutState extends State<IndexLayout> {
               key: widget.scaffoldKey,
               appBar: AppBar(
                   elevation: 0.0,
+                  toolbarHeight: Sizes.s70,
                   shadowColor: Colors.transparent,
                   centerTitle: false,
                   backgroundColor: appCtrl.appTheme.whiteColor,
@@ -51,10 +52,11 @@ class _IndexLayoutState extends State<IndexLayout> {
                                 builder: (context, value, child) {
                                   return Responsive.isDesktop(context)
                                       ? Container(
+                                    padding: EdgeInsets.symmetric(vertical: Insets.i25),
                                           height:
                                               MediaQuery.of(context).size.height,
                                           width: value ? Sizes.s240 : Sizes.s70,
-                                          color: appCtrl.appTheme.blackColor1,
+                                          color: appCtrl.appTheme.bgColor,
                                           child: SingleChildScrollView(
                                               controller: ScrollController(),
                                               child: Column(
