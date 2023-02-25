@@ -1,6 +1,4 @@
 
-
-import 'package:multikart_admin/controllers/pages_controller/contact_us_controller.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../config.dart';
@@ -30,19 +28,17 @@ class PrivacyPolicyDesktopLayout extends StatelessWidget {
             ToolBar(
               toolBarColor: appCtrl.appTheme.blackColor,
               padding: const EdgeInsets.all(8),
-              iconSize: 25,
+              iconSize: 20,
               iconColor: appCtrl.appTheme.whiteColor,
 
               activeIconColor: appCtrl.appTheme.whiteColor,
               controller: staticCtrl.controller,
             ),
             QuillHtmlEditor(
-
-              text: "<h1>Hello</h1>This is a quill html editor example 😊",
               hintText: 'Hint text goes here',
               controller: staticCtrl.controller,
               isEnabled: true,
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height /2,
               textStyle: staticCtrl.editorTextStyle,
               hintTextStyle: staticCtrl.hintTextStyle,
               hintTextAlign: TextAlign.start,

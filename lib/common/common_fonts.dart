@@ -18,6 +18,7 @@ class Fonts{
   final welcomeBack = "welcomeBack";
   final helloAgain = "helloAgain";
   final addBanner = "addBanner";
+  final staticPage = "staticPage";
   final showLanguage = "showLanguage";
   final rowPerPage = "rowPerPage";
   final title = "title";
@@ -47,5 +48,7 @@ class Fonts{
   final admin = "admin";
   final modification = "modification";
   final noBanner = "noBanner";
+  final notification = "notification";
+  final logout = "logout";
   String accessDenied(val) => "accessDenied".trParams({'title':val});
 }

@@ -8,6 +8,7 @@ class StaticController extends GetxController {
   TextEditingController txtAboutUs = TextEditingController();
   String id = "";
   bool isLoading = false;
+  bool isAlert = false;
 
   final QuillEditorController controller = QuillEditorController();
 
@@ -50,6 +51,7 @@ class StaticController extends GetxController {
       controller.setText(txtAboutUs.text);
       update();
       log("About : ${controller.getText()}");
+      log("About : ${txtAboutUs.text}");
     });
     update();
   }
@@ -58,7 +60,11 @@ class StaticController extends GetxController {
   updateData() async {
     bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
     if (isLoginTest) {
-      accessDenied(fonts.modification.tr);
+      isAlert =true;
+      update();
+      await Future.delayed(Durations.s2);
+      isAlert = false;
+      update();
     } else {
       var selectedText = await controller.getText();
       await controller.setText(selectedText);

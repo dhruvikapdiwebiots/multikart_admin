@@ -16,4 +16,6 @@ class Session {
   String agoraToken = 'agoraToken';
   String contactList = 'contactList';
   String isLoginTest = 'isLoginTest';
+  String scaffoldDrawerKey = 'scaffoldDrawerKey';
+  String scaffoldKey = 'scaffoldKey';
 }

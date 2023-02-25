@@ -86,13 +86,19 @@ showAlert({title, context}) async {
 }
 
 //test user not allow dialog
-accessDenied(String content){
+accessDenied(String content) {
   Get.dialog(
     AlertDialog(
       title: const Text("Alert!"),
       content: Text(content.tr),
+
       actions: <Widget>[
-        CommonButton(title: "Close",width: Sizes.s80,style: AppCss.nunitoMedium16.textColor(appCtrl.appTheme.white),onTap: ()=> Get.back(),)
+        CommonButton(
+          title: "Close",
+          width: Sizes.s80,
+          style: AppCss.nunitoMedium16.textColor(appCtrl.appTheme.white),
+          onTap: () => Get.back(),
+        )
       ],
     ),
     barrierDismissible: false,

@@ -1,10 +1,11 @@
+
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../config.dart';
 
-class DrawerList extends StatelessWidget {
+class MobileDrawerList extends StatelessWidget {
   final bool? value;
 
-  const DrawerList({Key? key, this.value}) : super(key: key);
+  const MobileDrawerList({Key? key, this.value}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class DrawerList extends StatelessWidget {
                 onExit: (exit) {
                   indexCtrl.isHover = false;
                   indexCtrl.update();
+
                 },
                 child: Card(
                   color: Colors.transparent,
@@ -32,20 +34,10 @@ class DrawerList extends StatelessWidget {
                   margin: EdgeInsets.zero,
                   clipBehavior: Clip.antiAlias,
                   child: ListTile(
-                    title: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SvgPicture.asset(
-                          menu.value.icon,
-                          color: appCtrl.appTheme.white,
-                          height: Sizes.s20,
-                        ),
-                        const SizedBox(width: 16 * 0.5),
-                        Text(
-                          menu.value.title.tr,
-                          style: AppCss.nunitoMedium16,
-                        ),
-                      ],
+                    leading: SvgPicture.asset(
+                      menu.value.icon,
+                      color: appCtrl.appTheme.white,
+                      height: Sizes.s20,
                     ),
                     onTap: () => indexCtrl.drawerTap(
                       menu.key,
@@ -63,9 +55,9 @@ class DrawerList extends StatelessWidget {
                               color: indexCtrl.selectedIndex == menu.key
                                   ? appCtrl.appTheme.primary
                                   : indexCtrl.isHover &&
-                                          indexCtrl.isSelectedHover == menu.key
-                                      ? appCtrl.appTheme.primary
-                                      : appCtrl.appTheme.bgColor))),
+                                  indexCtrl.isSelectedHover == menu.key
+                                  ? appCtrl.appTheme.primary
+                                  : appCtrl.appTheme.bgColor))),
                 ),
               );
             } else {
@@ -80,23 +72,18 @@ class DrawerList extends StatelessWidget {
                   key: UniqueKey(),
                   textColor: appCtrl.appTheme.white,
                   collapsedTextColor: appCtrl.appTheme.white,
+
                   iconColor: appCtrl.appTheme.white,
                   collapsedIconColor: appCtrl.appTheme.white,
                   backgroundColor: appCtrl.appTheme.bgColor,
                   childrenPadding:
-                      const EdgeInsets.symmetric(horizontal: Insets.i15),
-                  title: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SvgPicture.asset(
-                        menu.value.icon,
-                        height: Sizes.s20,
-                        color: appCtrl.appTheme.white,
-                      ),
-                      const SizedBox(width: 16 * 0.5),
-                      Text(menu.value.title.tr, style: AppCss.nunitoMedium16),
-                    ],
+                  const EdgeInsets.symmetric(horizontal: Insets.i15),
+                  leading:SvgPicture.asset(
+                    menu.value.icon,
+                    height: Sizes.s20,
+                    color: appCtrl.appTheme.white,
                   ),
+                  title: Container(width: Sizes.s2,),
                   children: menu.value.children
                       .asMap()
                       .entries
@@ -109,30 +96,19 @@ class DrawerList extends StatelessWidget {
                       margin: EdgeInsets.zero,
                       clipBehavior: Clip.antiAlias,
                       child: ListTile(
-                        dense: true,
                         contentPadding:
-                            const EdgeInsets.symmetric(horizontal: Insets.i15),
-                        title: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              childMenu.value.icon,
-                              color: appCtrl.appTheme.white,
-                              height: Sizes.s20,
-                            ),
-                            const SizedBox(width: 16 * 0.5),
-                            Text(
-                              childMenu.value.title.tr,
-                              style: AppCss.nunitoMedium14,
-                            ),
-                          ],
+                        const EdgeInsets.symmetric(horizontal: Insets.i15),
+                        title: SvgPicture.asset(
+                          childMenu.value.icon,
+                          color: appCtrl.appTheme.white,
+                          height: Sizes.s20,
                         ),
                         onTap: () {
                           indexCtrl.subSelectIndex = childMenu.key;
                           indexCtrl.update();
-
                         },
                         selected: indexCtrl.subSelectIndex == childMenu.key,
+                        selectedTileColor: appCtrl.appTheme.primary,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(AppRadius.r8)),
                         textColor: appCtrl.appTheme.white,
@@ -153,9 +129,9 @@ class DrawerList extends StatelessWidget {
                             color: indexCtrl.selectedIndex == menu.key
                                 ? appCtrl.appTheme.primary
                                 : indexCtrl.isHover &&
-                                        indexCtrl.isSelectedHover == menu.key
-                                    ? appCtrl.appTheme.primary
-                                    : appCtrl.appTheme.bgColor))),
+                                indexCtrl.isSelectedHover == menu.key
+                                ? appCtrl.appTheme.primary
+                                : appCtrl.appTheme.bgColor))),
               ).decorated(
                   border: Border(
                       left: BorderSide(
@@ -163,9 +139,9 @@ class DrawerList extends StatelessWidget {
                           color: indexCtrl.selectedIndex == menu.key
                               ? appCtrl.appTheme.primary
                               : indexCtrl.isHover &&
-                                      indexCtrl.isSelectedHover == menu.key
-                                  ? appCtrl.appTheme.primary
-                                  : appCtrl.appTheme.bgColor)));
+                              indexCtrl.isSelectedHover == menu.key
+                              ? appCtrl.appTheme.primary
+                              : appCtrl.appTheme.bgColor)));
             }
           }).toList(growable: false)
         ]),

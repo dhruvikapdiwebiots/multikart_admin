@@ -27,11 +27,11 @@ class IndexDrawer extends StatelessWidget {
                     indexCtrl.update();
                   },
                   child: Drawer(
-                      backgroundColor: appCtrl.appTheme.blackColor1,
+                      backgroundColor: appCtrl.appTheme.bgColor,
                       elevation: 2,
                       child: ListView(children: [
                         Image.asset(imageAssets.logo2, height: Sizes.s100)
-                            .backgroundColor(appCtrl.appTheme.blackColor1),
+                            .backgroundColor(appCtrl.appTheme.bgColor),
                         const VSpace(Sizes.s20),
                          DrawerList(value:value)
                       ])),

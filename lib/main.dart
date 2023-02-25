@@ -31,8 +31,17 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  var scaffoldDrawerKey = GlobalKey<ScaffoldState>(debugLabel: "drawer");
+  var scaffoldKey = GlobalKey<ScaffoldState>(debugLabel: "key2");
+
 
   // This widget is the root of your application.
   @override
@@ -71,7 +80,7 @@ class MyApp extends StatelessWidget {
           ? Title(
               title: fonts.appName.tr,
               color: appCtrl.appTheme.blackColor,
-              child: const IndexLayout())
+              child:  IndexLayout(scaffoldDrawerKey: scaffoldDrawerKey,scaffoldKey: scaffoldKey,))
           : Login(),
       getPages: appRoute.getPages,
       theme: AppTheme.fromType(ThemeType.light).themeData,

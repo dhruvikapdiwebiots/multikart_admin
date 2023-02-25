@@ -20,13 +20,13 @@ class LoginController extends GetxController {
           .collection(collectionName.admin)
           .get()
           .then((value) async {
-        log("value : #$value");
+
         if (value.docs[0].data().isNotEmpty) {
           if (value.docs[0].data()["userName"] == txtName.text) {
             if (value.docs[0].data()["password"] == txtPassword.text) {
               html.window.localStorage[session.isLogin] = "true";
               await appCtrl.storage.write(session.isLogin, true);
-              await appCtrl.storage.write(session.isLoginTest, false);
+              await appCtrl.storage.write(session.isLoginTest, true);
               txtName.text = "";
               txtPassword.text = "";
               update();

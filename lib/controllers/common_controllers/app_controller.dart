@@ -1,5 +1,4 @@
 
-import 'dart:developer';
 
 import '../../common/theme/index.dart';
 import '../../config.dart';
@@ -36,7 +35,6 @@ class AppController extends GetxController {
   getStorageData(){
 
     bool isTheme = appCtrl.storage.read(session.isDarkMode) ?? false;
-    log("isTheme : $isTheme");
     update();
     appCtrl.isTheme = isTheme;
     ThemeService().switchTheme(appCtrl.isTheme);
@@ -44,7 +42,7 @@ class AppController extends GetxController {
 
 
     appCtrl.languageVal = appCtrl.storage.read(session.languageCode) ?? "en";
-    log("language : ${appCtrl.languageVal}");
+
     if (appCtrl.languageVal == "en") {
       var locale = const Locale("en", 'US');
       Get.updateLocale(locale);

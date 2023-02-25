@@ -54,7 +54,7 @@ class BannerController extends GetxController {
     }
     // ignore: unused_local_variable
     for (var data in source) {
-      log.log("source : ${data["bannerId"]}");
+
       temps.add({
         "id": data["bannerId"],
         "image": data["image"],
@@ -93,7 +93,6 @@ class BannerController extends GetxController {
   saveBanner() async {
     isLoading = true;
     update();
-    log.log("imageUrlimageUrl : $imageUrl");
 
     try {
       if (bannerId == "") {
@@ -122,17 +121,17 @@ class BannerController extends GetxController {
           initializeData();
         });
       } else {
-        log.log("banner ");
+
         await FirebaseFirestore.instance
             .collection(collectionName.banner)
             .get()
             .then((value) {
           value.docs.asMap().entries.forEach((element) {
-            log.log("data : $bannerId");
-            log.log("bannerId : ${element.value.data()["bannerId"]}");
+
+
             if (bannerId.toString() ==
                 element.value.data()["bannerId"].toString()) {
-              log.log("true : ${element.value.id}");
+
               FirebaseFirestore.instance
                   .collection(collectionName.banner)
                   .doc(element.value.id)

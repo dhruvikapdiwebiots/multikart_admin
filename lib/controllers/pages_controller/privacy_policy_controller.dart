@@ -8,6 +8,7 @@ class PrivacyPolicyController extends GetxController {
   TextEditingController txtPrivacy = TextEditingController();
   String id = "";
   bool isLoading = false;
+  bool isAlert = false;
 
   final QuillEditorController controller = QuillEditorController();
 
@@ -58,7 +59,11 @@ class PrivacyPolicyController extends GetxController {
   updateData() async {
     bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
     if (isLoginTest) {
-      accessDenied(fonts.modification.tr);
+      isAlert =true;
+      update();
+      await Future.delayed(Durations.s2);
+      isAlert = false;
+      update();
     } else {
       var selectedText = await controller.getText();
       await controller.setText(selectedText);

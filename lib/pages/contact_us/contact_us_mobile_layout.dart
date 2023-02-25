@@ -28,15 +28,13 @@ class ContactUsMobileLayout extends StatelessWidget {
           ToolBar(
             toolBarColor: appCtrl.appTheme.blackColor,
             padding: const EdgeInsets.all(8),
-            iconSize: 25,
+            iconSize: 20,
             iconColor: appCtrl.appTheme.whiteColor,
 
             activeIconColor: appCtrl.appTheme.whiteColor,
             controller: staticCtrl.controller,
           ),
           QuillHtmlEditor(
-
-            text: "<h1>Hello</h1>This is a quill html editor example 😊",
             hintText: 'Hint text goes here',
             controller: staticCtrl.controller,
             isEnabled: true,

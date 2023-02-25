@@ -12,12 +12,12 @@ class AboutUsDesktopLayout extends StatelessWidget {
     return GetBuilder<StaticController>(
       builder: (staticCtrl) {
         return SingleChildScrollView(
-          child: Column(children: [
+          child:  Column(children: [
             CommonButton(
                 title: fonts.update.tr,
                 width: Sizes.s100,
-                //onTap: ()=>staticCtrl.updateData(),
-                onTap: ()async{
+
+                onTap: (){
                   staticCtrl.updateData();
 
                 },
@@ -28,19 +28,17 @@ class AboutUsDesktopLayout extends StatelessWidget {
             ToolBar(
               toolBarColor: appCtrl.appTheme.blackColor,
               padding: const EdgeInsets.all(8),
-              iconSize: 25,
+              iconSize: 20,
               iconColor: appCtrl.appTheme.whiteColor,
 
-              activeIconColor: appCtrl.appTheme.whiteColor,
+              activeIconColor: appCtrl.appTheme.primary,
               controller: staticCtrl.controller,
             ),
             QuillHtmlEditor(
-
-              text: "<h1>Hello</h1>This is a quill html editor example 😊",
               hintText: 'Hint text goes here',
               controller: staticCtrl.controller,
               isEnabled: true,
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height /2,
               textStyle: staticCtrl.editorTextStyle,
               hintTextStyle: staticCtrl.hintTextStyle,
               hintTextAlign: TextAlign.start,

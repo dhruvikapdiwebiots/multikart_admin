@@ -1,4 +1,8 @@
+
+
 import 'package:multikart_admin/config.dart';
+
+import 'layouts/mobile_drawer.dart';
 
 class IndexLayout extends StatefulWidget {
   final GlobalKey<ScaffoldState>? scaffoldDrawerKey;
@@ -16,8 +20,15 @@ class _IndexLayoutState extends State<IndexLayout> {
 
 
   @override
+  void initState() {
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GetBuilder<IndexLayoutController>(builder: (_) {
+
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Title(
@@ -67,7 +78,7 @@ class _IndexLayoutState extends State<IndexLayout> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   children: [
-                                                    DrawerList(value: value)
+                                                value ?    DrawerList(value: value) : MobileDrawerList(value: value,)
                                                   ])))
                                       : const SizedBox.shrink();
                                 }),

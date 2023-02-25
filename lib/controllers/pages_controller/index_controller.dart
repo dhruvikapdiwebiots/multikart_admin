@@ -1,3 +1,8 @@
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:multikart_admin/pages/index/side_bar_menu_model.dart';
+
+import 'dart:html' as html;
 import '../../config.dart';
 
 class IndexLayoutController extends GetxController {
@@ -13,6 +18,50 @@ class IndexLayoutController extends GetxController {
   int isSelectedHover = 1;
   int isSubSelectedHover = 1;
 
+  final sidebarMenuConfigs = [
+    SidebarMenuConfig(
+      uri: routeName.banner,
+      icon: svgAssets.banner,
+      title: fonts.addBanner,
+    ),
+    SidebarMenuConfig(
+      uri: '',
+      icon: svgAssets.page,
+      title: fonts.staticPage,
+      children: [
+        SidebarChildMenuConfig(
+          uri: routeName.aboutsUs,
+          icon: svgAssets.page,
+          title: fonts.aboutUs,
+        ),
+        SidebarChildMenuConfig(
+          uri: routeName.contactUs,
+          icon: svgAssets.page,
+          title: fonts.contactUs,
+        ),SidebarChildMenuConfig(
+          uri: routeName.termsCondition,
+          icon: svgAssets.page,
+          title: fonts.termsCondition,
+        ),
+        SidebarChildMenuConfig(
+          uri: routeName.privacyPolicy,
+          icon: svgAssets.page,
+          title: fonts.privacyPolicy,
+        ),
+      ],
+    ),
+    SidebarMenuConfig(
+      uri: routeName.notification,
+      icon: svgAssets.bell,
+      title: fonts.notification,
+    ),
+    SidebarMenuConfig(
+      uri: '',
+      icon: svgAssets.logout,
+      title: fonts.logout,
+    ),
+  ];
+
   final ScrollController scrollController = ScrollController();
 
   //list of bottommost page
@@ -23,6 +72,8 @@ class IndexLayoutController extends GetxController {
     Container()
   ];
 
+
+
   @override
   void onReady() {
     // TODO: implement onReady
@@ -30,7 +81,9 @@ class IndexLayoutController extends GetxController {
     super.onReady();
   }
 
-  setKey({GlobalKey<ScaffoldState>? scaffoldDrawerKey1,GlobalKey<ScaffoldState>? scaffoldKey1}){
+  setKey(
+      {GlobalKey<ScaffoldState>? scaffoldDrawerKey1,
+      GlobalKey<ScaffoldState>? scaffoldKey1}) {
     scaffoldDrawerKey = scaffoldDrawerKey1;
     scaffoldKey = scaffoldKey1;
     update();
@@ -40,5 +93,33 @@ class IndexLayoutController extends GetxController {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+  }
+
+  drawerTap(index, context, {SidebarMenuConfig? value}) async {
+    subSelectIndex = null;
+    selectedIndex = index;
+
+    pageName = value!.title.toString();
+    if (!Responsive.isDesktop(context)) {
+      Get.back();
+
+    }
+    if (selectedIndex == 1) {
+      final staticCtrl = Get.isRegistered<StaticController>()
+          ? Get.find<StaticController>()
+          : Get.put(StaticController());
+      staticCtrl.getData();
+    }
+    if (selectedIndex == 3) {
+      FirebaseAuth.instance.signOut();
+
+      selectedIndex == 0;
+      html.window.localStorage[session.isLogin] = "false";
+      appCtrl.storage.remove(session.isDarkMode);
+      appCtrl.storage.remove(session.languageCode);
+      Get.offAll(() => Login());
+    }
+
+    update();
   }
 }

@@ -1,6 +1,6 @@
-import 'dart:developer';
 
-import 'package:multikart_admin/pages/contact_us/abouts_us.dart';
+
+import 'package:multikart_admin/pages/contact_us/contact_us.dart';
 import 'package:multikart_admin/pages/privacy_policy/privacy_policy.dart';
 import 'package:multikart_admin/pages/terms_condition/terms_condition.dart';
 
@@ -12,8 +12,6 @@ class SelectedIndexBodyLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<IndexLayoutController>(builder: (indexCtrl) {
-      log("index : ${indexCtrl.subSelectIndex}");
-      log("index : ${indexCtrl.selectedIndex}");
       return Expanded(
           child: SelectionArea(
               child: CustomScrollView(
@@ -35,9 +33,21 @@ class SelectedIndexBodyLayout extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
+                                    if (indexCtrl.subSelectIndex == null)
                                     Text(indexCtrl.pageName.tr,
                                         style: AppCss.nunitoblack18.textColor(
                                             appCtrl.appTheme.blackColor)),
+                                    if (indexCtrl.subSelectIndex != null)
+                                      Text(  indexCtrl.subSelectIndex == 0
+                                          ? fonts.aboutUs.tr
+                                          : indexCtrl.subSelectIndex == 1
+                                          ? fonts.contactUs.tr
+                                          : indexCtrl.subSelectIndex ==
+                                          2
+                                          ? fonts.termsCondition.tr
+                                          : fonts.privacyPolicy.tr,
+                                          style: AppCss.nunitoblack18.textColor(
+                                              appCtrl.appTheme.blackColor)),
                                     const VSpace(Sizes.s8),
                                     Row(children: [
                                       InkWell(
@@ -50,11 +60,27 @@ class SelectedIndexBodyLayout extends StatelessWidget {
                                           style: AppCss.nunitoMedium14
                                               .textColor(
                                                   appCtrl.appTheme.blackColor)),
-                                      Text(
-                                        indexCtrl.pageName.tr,
-                                        style: AppCss.nunitoMedium14.textColor(
-                                            appCtrl.appTheme.blackColor),
-                                      )
+                                      if (indexCtrl.subSelectIndex == null)
+                                        Text(
+                                          indexCtrl.pageName.tr,
+                                          style: AppCss.nunitoMedium14
+                                              .textColor(
+                                                  appCtrl.appTheme.blackColor),
+                                        ),
+                                      if (indexCtrl.subSelectIndex != null)
+                                        Text(
+                                          indexCtrl.subSelectIndex == 0
+                                              ? fonts.aboutUs.tr
+                                              : indexCtrl.subSelectIndex == 1
+                                                  ? fonts.contactUs.tr
+                                                  : indexCtrl.subSelectIndex ==
+                                                          2
+                                                      ? fonts.termsCondition.tr
+                                                      : fonts.privacyPolicy.tr,
+                                          style: AppCss.nunitoMedium14
+                                              .textColor(
+                                                  appCtrl.appTheme.blackColor),
+                                        )
                                     ])
                                   ]),
                               GetBuilder<AppController>(builder: (context) {
@@ -63,18 +89,17 @@ class SelectedIndexBodyLayout extends StatelessWidget {
                             ],
                           ).marginOnly(top: Insets.i20),
                         const VSpace(Sizes.s20),
-                        if (indexCtrl.selectedIndex != 1)
+                        if (indexCtrl.subSelectIndex == null)
                           indexCtrl.widgetOptions
                               .elementAt(indexCtrl.selectedIndex),
-                        if (indexCtrl.selectedIndex == 1 &&
-                            indexCtrl.subSelectIndex != null)
+                        if (indexCtrl.subSelectIndex != null)
                           indexCtrl.subSelectIndex == 0
                               ? AboutUsPage()
                               : indexCtrl.subSelectIndex == 1
                                   ? ContactUs()
-                                  :indexCtrl.subSelectIndex == 2
-                                  ? TermsCondition()
-                                  : PrivacyPolicy()
+                                  : indexCtrl.subSelectIndex == 2
+                                      ? TermsCondition()
+                                      : PrivacyPolicy()
                       ]))
             ])),
             SliverFillRemaining(

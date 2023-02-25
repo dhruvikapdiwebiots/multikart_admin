@@ -34,8 +34,8 @@ class LeadingRow extends StatelessWidget {
                             padding: const EdgeInsets.all(Insets.i20),
                             decoration: BoxDecoration(
                                 color: appCtrl.appTheme.bgColor,
-                                boxShadow: [
-                                  const BoxShadow(
+                                boxShadow: const [
+                                  BoxShadow(
                                       color: Colors.white12 ,
                                       blurRadius: 2,
                                       spreadRadius: 2)
@@ -53,7 +53,7 @@ class LeadingRow extends StatelessWidget {
                   child: Responsive.isDesktop(context)
                       ? Container(
                           width: Sizes.s70,
-                          color: appCtrl.appTheme.blackColor1,
+                          color: appCtrl.appTheme.bgColor,
                           padding: const EdgeInsets.all(Insets.i15),
                           height: double.infinity,
                           child: Image.asset(imageAssets.logo1,
