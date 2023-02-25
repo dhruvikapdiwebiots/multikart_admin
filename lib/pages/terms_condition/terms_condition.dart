@@ -33,7 +33,6 @@ class TermsCondition extends StatelessWidget {
                     const Center(child: CircularProgressIndicator())
                 ],
               ),
-              CustomSnackBar(isAlert: termsCtrl.isAlert,text: fonts.modification.tr,)
             ],
           ),
         ],

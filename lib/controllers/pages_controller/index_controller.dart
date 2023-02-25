@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:multikart_admin/pages/index/side_bar_menu_model.dart';
 
@@ -101,8 +103,8 @@ class IndexLayoutController extends GetxController {
 
     pageName = value!.title.toString();
     if (!Responsive.isDesktop(context)) {
+      log("MOBILE");
       Get.back();
-
     }
     if (selectedIndex == 1) {
       final staticCtrl = Get.isRegistered<StaticController>()

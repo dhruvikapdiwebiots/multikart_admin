@@ -1,3 +1,4 @@
+
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../config.dart';
 
@@ -77,14 +78,13 @@ class DrawerList extends StatelessWidget {
                 margin: EdgeInsets.zero,
                 clipBehavior: Clip.antiAlias,
                 child: ExpansionTile(
-                  key: UniqueKey(),
+                  collapsedIconColor: appCtrl.appTheme.white,
                   textColor: appCtrl.appTheme.white,
                   collapsedTextColor: appCtrl.appTheme.white,
                   iconColor: appCtrl.appTheme.white,
-                  collapsedIconColor: appCtrl.appTheme.white,
+
                   backgroundColor: appCtrl.appTheme.bgColor,
-                  childrenPadding:
-                      const EdgeInsets.symmetric(horizontal: Insets.i15),
+                  childrenPadding:EdgeInsets.zero,
                   title: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -106,12 +106,12 @@ class DrawerList extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(AppRadius.r8)),
                       elevation: 0.0,
-                      margin: EdgeInsets.zero,
+                      margin: const EdgeInsets.symmetric(horizontal: Insets.i20),
                       clipBehavior: Clip.antiAlias,
                       child: ListTile(
                         dense: true,
                         contentPadding:
-                            const EdgeInsets.symmetric(horizontal: Insets.i15),
+                        const EdgeInsets.symmetric(horizontal: Insets.i15),
                         title: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -146,6 +146,8 @@ class DrawerList extends StatelessWidget {
                                       : appCtrl.appTheme.bgColor))),
                     );
                   }).toList(growable: false),
+                  onExpansionChanged: (bool expanded) {
+                  },
                 ).decorated(
                     border: Border(
                         left: BorderSide(
@@ -153,9 +155,9 @@ class DrawerList extends StatelessWidget {
                             color: indexCtrl.selectedIndex == menu.key
                                 ? appCtrl.appTheme.primary
                                 : indexCtrl.isHover &&
-                                        indexCtrl.isSelectedHover == menu.key
-                                    ? appCtrl.appTheme.primary
-                                    : appCtrl.appTheme.bgColor))),
+                                indexCtrl.isSelectedHover == menu.key
+                                ? appCtrl.appTheme.primary
+                                : appCtrl.appTheme.bgColor))),
               ).decorated(
                   border: Border(
                       left: BorderSide(

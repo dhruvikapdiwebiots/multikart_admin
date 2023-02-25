@@ -58,11 +58,13 @@ class ContactUsController extends GetxController {
   updateData() async {
     bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
     if (isLoginTest) {
-      isAlert =true;
-      update();
+      appCtrl.isAlert =true;
+      appCtrl.isStaticPage =true;
+      appCtrl.update();
       await Future.delayed(Durations.s2);
-      isAlert = false;
-      update();
+      appCtrl.isAlert = false;
+      appCtrl.isStaticPage =false;
+      appCtrl.update();
     } else {
       var selectedText = await controller.getText();
       await controller.setText(selectedText);

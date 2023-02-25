@@ -31,7 +31,7 @@ class AboutUsPage extends StatelessWidget {
 
                   ],
                 ),
-                CustomSnackBar(isAlert: staticCtrl.isAlert,text: fonts.modification.tr,)
+
               ],
             ),
           ]

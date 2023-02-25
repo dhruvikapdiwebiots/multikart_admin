@@ -84,7 +84,7 @@ class SelectedIndexBodyLayout extends StatelessWidget {
                                     ])
                                   ]),
                               GetBuilder<AppController>(builder: (context) {
-                                return CustomSnackBar(isAlert: appCtrl.isAlert);
+                                return CustomSnackBar(isAlert: appCtrl.isAlert,isStaticPage: appCtrl.isStaticPage,);
                               })
                             ],
                           ).marginOnly(top: Insets.i20),

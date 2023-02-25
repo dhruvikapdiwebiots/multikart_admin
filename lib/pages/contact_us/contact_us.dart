@@ -33,7 +33,6 @@ class ContactUs extends StatelessWidget {
                     const Center(child: CircularProgressIndicator())
                 ],
               ),
-              CustomSnackBar(isAlert: staticCtrl.isAlert,text: fonts.modification.tr,)
             ],
           ),
         ],

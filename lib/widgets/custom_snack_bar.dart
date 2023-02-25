@@ -1,9 +1,9 @@
 import '../config.dart';
 
 class CustomSnackBar extends StatelessWidget {
-  final bool isAlert;
+  final bool isAlert,isStaticPage;
 final String? text;
-  const CustomSnackBar({Key? key, this.isAlert = false,this.text}) : super(key: key);
+  const CustomSnackBar({Key? key, this.isAlert = false, this.isStaticPage = false,this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ final String? text;
       child: FittedBox(
         child: Container(
           height: Sizes.s50,
-          width:  isAlert ? text != null ?Sizes.s300 : Sizes.s200 :0,
+          width:  isAlert ? isStaticPage ?Sizes.s300 : Sizes.s200 :0,
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: appCtrl.appTheme.blackColor,
@@ -32,7 +32,7 @@ final String? text;
                 size: Sizes.s15
               ),
               const HSpace(Sizes.s8),
-              Text(text ?? fonts.svgNotAllowed.tr,
+              Text(isStaticPage ?fonts.modification.tr : fonts.svgNotAllowed.tr,
                   style:text != null ?  AppCss.nunitoMedium16
                       .textColor(appCtrl.appTheme.whiteColor)
                       .textDecoration(TextDecoration.none):  AppCss.nunitoMedium14

@@ -11,6 +11,7 @@ class AppController extends GetxController {
   int selectedIndex = 0;
   bool isTheme = false;
   bool isAlert = false;
+  bool isStaticPage = false;
   bool isRTL = false;
   String isLogin = "false";
   String languageVal = "in";
