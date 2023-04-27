@@ -18,6 +18,7 @@ class Fonts{
   final welcomeBack = "welcomeBack";
   final helloAgain = "helloAgain";
   final addBanner = "addBanner";
+  final setVarient = "setVarient";
   final staticPage = "staticPage";
   final showLanguage = "showLanguage";
   final rowPerPage = "rowPerPage";

@@ -23,6 +23,7 @@ final dynamic hi = {
   "helloAgain": "फिर से हैलो! कृपया अपना विवरण दर्ज करें",
   "showLanguage": "भाषा दिखाएँ",
   "addBanner": "बैनर जोड़ें",
+  "setVarient": "वेरिएंट सेट करें",
   "rowPerPage": "पंक्तियाँ प्रति पृष्ठ:",
   "title": "शीर्षक",
   "enterNotificationTitle": "अधिसूचना शीर्षक दर्ज करें",

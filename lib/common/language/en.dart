@@ -23,6 +23,7 @@ final dynamic en = {
   "helloAgain": "Hello Again! Please enter your details",
   "showLanguage": "Show Language",
   "addBanner": "Add Banner",
+  "setVarient": "Set Varient",
   "rowPerPage": "Rows per page:",
   "title": "Title",
   "enterNotificationTitle": "Enter notification Title",

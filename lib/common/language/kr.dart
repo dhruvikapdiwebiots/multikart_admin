@@ -23,6 +23,7 @@ final dynamic kr = {
   "helloAgain": "안녕하세요 다시! 귀하의 세부 정보를 입력하십시오",
   "showLanguage": "언어 표시",
   "addBanner": "배너 추가",
+  "setVarient": "변형 설정",
   "rowPerPage": "페이지당 행 수:",
   "title": "제목",
   "enterNotificationTitle": "알림 제목 입력",

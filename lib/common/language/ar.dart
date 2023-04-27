@@ -23,6 +23,7 @@ final dynamic ar = {
   "helloAgain": "مرحبا مجددا! الرجاء إدخال التفاصيل الخاصة بك",
   "showLanguage": "إظهار اللغة",
   "addBanner": "أضف بانر",
+  "setVarient": "تعيين البديل",
   "rowPerPage": "عدد الصفوف في الصفحة:",
   "title": "عنوان",
   "enterNotificationTitle": "أدخل عنوان الإخطار",

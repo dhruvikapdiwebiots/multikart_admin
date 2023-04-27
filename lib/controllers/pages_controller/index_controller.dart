@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,6 +26,11 @@ class IndexLayoutController extends GetxController {
       title: fonts.addBanner,
     ),
     SidebarMenuConfig(
+      uri: routeName.variant,
+      icon: svgAssets.variant,
+      title: fonts.setVarient,
+    ),
+    SidebarMenuConfig(
       uri: '',
       icon: svgAssets.page,
       title: fonts.staticPage,
@@ -40,7 +44,8 @@ class IndexLayoutController extends GetxController {
           uri: routeName.contactUs,
           icon: svgAssets.page,
           title: fonts.contactUs,
-        ),SidebarChildMenuConfig(
+        ),
+        SidebarChildMenuConfig(
           uri: routeName.termsCondition,
           icon: svgAssets.page,
           title: fonts.termsCondition,
@@ -73,8 +78,6 @@ class IndexLayoutController extends GetxController {
     NotificationPage(),
     Container()
   ];
-
-
 
   @override
   void onReady() {
