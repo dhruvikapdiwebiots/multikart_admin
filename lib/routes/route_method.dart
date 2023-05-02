@@ -1,5 +1,6 @@
 //app file
 
+import 'package:multikart_admin/pages/about_app_page/AboutApp.dart';
 import 'package:multikart_admin/pages/contact_us/contact_us.dart';
 import 'package:multikart_admin/pages/privacy_policy/privacy_policy.dart';
 import 'package:multikart_admin/pages/terms_condition/terms_condition.dart';
@@ -21,6 +22,7 @@ class AppRoute {
     GetPage(name: _routeName.termsCondition, page: () => TermsCondition()),
     GetPage(name: _routeName.privacyPolicy, page: () => PrivacyPolicy()),
     GetPage(name: _routeName.notification, page: () => NotificationPage()),
-    GetPage(name: _routeName.variant, page: () => Variant()),
+    GetPage(name: _routeName.variant, page: () => VariantScreen()),
+    GetPage(name: _routeName.aboutApp, page: () => AboutApp()),
   ];
 }

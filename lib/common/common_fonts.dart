@@ -1,8 +1,6 @@
-
-
 import 'package:get/get.dart';
 
-class Fonts{
+class Fonts {
   final appName = "appName";
   final selectLanguage = "selectLanguage";
   final lightMode = "lightMode";
@@ -19,6 +17,7 @@ class Fonts{
   final helloAgain = "helloAgain";
   final addBanner = "addBanner";
   final setVarient = "setVarient";
+  final aboutApp = "aboutApp";
   final staticPage = "staticPage";
   final showLanguage = "showLanguage";
   final rowPerPage = "rowPerPage";
@@ -30,7 +29,15 @@ class Fonts{
   final addImage = "addImage";
   final productCollectionId = "productCollectionId";
   final productCollection = "productCollection";
+  final homeVariant = "homeVariant";
   final product = "product";
+  final productVariant = "productVariant";
+  final productVariant1 = "productVariant1";
+  final productVariant2 = "productVariant2";
+  final productVariant3 = "productVariant3";
+  final homeVariant1 = "homeVariant1";
+  final homeVariant2 = "homeVariant2";
+  final homeVariant3 = "homeVariant3";
   final collection = "collection";
   final update = "update";
   final aboutUsLink = "aboutUsLink";
@@ -51,5 +58,5 @@ class Fonts{
   final noBanner = "noBanner";
   final notification = "notification";
   final logout = "logout";
-  String accessDenied(val) => "accessDenied".trParams({'title':val});
+  String accessDenied(val) => "accessDenied".trParams({'title': val});
 }

@@ -9,4 +9,5 @@ class RouteName {
   final String privacyPolicy = '/privacyPolicy';
   final String notification = '/notification';
   final String variant = '/variant';
+  final String aboutApp = '/aboutApp';
 }

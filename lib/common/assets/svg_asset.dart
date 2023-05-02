@@ -1,4 +1,4 @@
-class SvgAssets{
+class SvgAssets {
   final String banner = 'assets/svg/banner.svg';
   final String bell = 'assets/svg/bell.svg';
   final String dashboard = 'assets/svg/dashboard.svg';
@@ -9,5 +9,6 @@ class SvgAssets{
   final String sun = 'assets/svg/sun.svg';
   final String orders = 'assets/svg/orders.svg';
   final String variant = 'assets/svg/variant.svg';
+  final String aboutApp = 'assets/svg/aboutApp.svg';
   /*final String twitter = "assets/common/svg/twitter.svg";*/
 }
