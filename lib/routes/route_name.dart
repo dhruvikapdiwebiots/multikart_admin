@@ -10,4 +10,5 @@ class RouteName {
   final String notification = '/notification';
   final String variant = '/variant';
   final String aboutApp = '/aboutApp';
+  final String onBoarding = '/onBoarding';
 }

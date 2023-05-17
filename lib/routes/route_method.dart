@@ -2,6 +2,7 @@
 
 import 'package:multikart_admin/pages/about_app_page/AboutApp.dart';
 import 'package:multikart_admin/pages/contact_us/contact_us.dart';
+import 'package:multikart_admin/pages/onboard_screen/onboard_screen.dart';
 import 'package:multikart_admin/pages/privacy_policy/privacy_policy.dart';
 import 'package:multikart_admin/pages/terms_condition/terms_condition.dart';
 import 'package:multikart_admin/pages/variant/variant.dart';
@@ -24,5 +25,6 @@ class AppRoute {
     GetPage(name: _routeName.notification, page: () => NotificationPage()),
     GetPage(name: _routeName.variant, page: () => VariantScreen()),
     GetPage(name: _routeName.aboutApp, page: () => AboutApp()),
+    GetPage(name: _routeName.onBoarding, page: () => OnboardScreen()),
   ];
 }

@@ -25,14 +25,13 @@ class AboutApp extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Logo",
+                    Text(fonts.logo.tr,
                         style: AppCss.nunitoBold20
                             .textColor(appCtrl.appTheme.blackColor)
                             .textHeight(1.5)),
                     const VSpace(Sizes.s25),
                     const AboutUsLogo(
-                      image:
-                          "https://cdn.pixabay.com/photo/2015/09/16/08/55/online-942406_960_720.jpg",
+                      image: "",
                     ).height(Sizes.s200).width(Sizes.s200),
                   ],
                 ),
@@ -40,14 +39,13 @@ class AboutApp extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Drawer Logo",
+                    Text(fonts.drawerLogo.tr,
                         style: AppCss.nunitoBold20
                             .textColor(appCtrl.appTheme.blackColor)
                             .textHeight(1.5)),
                     const VSpace(Sizes.s25),
                     const DrawerLogo(
-                      image:
-                          "https://cdn.pixabay.com/photo/2015/09/16/08/55/online-942406_960_720.jpg",
+                      image: "",
                     ).height(Sizes.s200).width(Sizes.s200),
                   ],
                 ),
@@ -55,14 +53,13 @@ class AboutApp extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Home Logo",
+                    Text(fonts.homeLogo.tr,
                         style: AppCss.nunitoBold20
                             .textColor(appCtrl.appTheme.blackColor)
                             .textHeight(1.5)),
                     const VSpace(Sizes.s25),
                     const HomeLogo(
-                      image:
-                          "https://cdn.pixabay.com/photo/2015/09/16/08/55/online-942406_960_720.jpg",
+                      image: "",
                     ).height(Sizes.s200).width(Sizes.s200),
                   ],
                 ),

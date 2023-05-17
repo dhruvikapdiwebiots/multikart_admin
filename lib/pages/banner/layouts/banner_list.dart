@@ -12,14 +12,19 @@ class BannerList extends StatelessWidget {
     return GetBuilder<BannerController>(builder: (bannerCtrl) {
       return bannerCtrl.headers!.isNotEmpty
           ? ResponsiveDatatable(
-
               title: TextButton.icon(
                   onPressed: () => bannerCtrl.addBannerDialog(),
-                  icon:  Icon(Icons.add,color: appCtrl.appTheme.primary,),
-                  label: Text(fonts.addBanner.tr,style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.primary),)),
+                  icon: Icon(
+                    Icons.add,
+                    color: appCtrl.appTheme.primary,
+                  ),
+                  label: Text(
+                    fonts.addBanner.tr,
+                    style: AppCss.nunitoMedium14
+                        .textColor(appCtrl.appTheme.primary),
+                  )),
               reponseScreenSizes: const [ScreenSize.xs],
               actions: const [BannerSearchAction()],
-
               headers:
                   bannerCtrl.headers!.isNotEmpty ? bannerCtrl.headers! : [],
               source: bannerCtrl.source,
@@ -38,7 +43,7 @@ class BannerList extends StatelessWidget {
                   print(" dhfgdf : $data");
                 }
               },
-              onSort: (value)=> bannerCtrl.onSort(value),
+              onSort: (value) => bannerCtrl.onSort(value),
               expanded: bannerCtrl.expanded,
               sortAscending: bannerCtrl.sortAscending,
               sortColumn: bannerCtrl.sortColumn,
@@ -69,12 +74,19 @@ class BannerList extends StatelessWidget {
               footers: [
                 Container(
                     padding: const EdgeInsets.symmetric(horizontal: Insets.i15),
-                    child: Text(fonts.rowPerPage.tr,style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.primary),)),
+                    child: Text(
+                      fonts.rowPerPage.tr,
+                      style: AppCss.nunitoMedium14
+                          .textColor(appCtrl.appTheme.primary),
+                    )),
                 if (bannerCtrl.perPages.isNotEmpty) const PageDropDown(),
                 Container(
                     padding: const EdgeInsets.symmetric(horizontal: Insets.i15),
                     child: Text(
-                        "${bannerCtrl.currentPage} - ${bannerCtrl.currentPerPage} of ${bannerCtrl.total}",style: AppCss.nunitoMedium14.textColor(appCtrl.appTheme.blackColor),)),
+                      "${bannerCtrl.currentPage} - ${bannerCtrl.currentPerPage} of ${bannerCtrl.total}",
+                      style: AppCss.nunitoMedium14
+                          .textColor(appCtrl.appTheme.blackColor),
+                    )),
                 const ArrowBack(),
                 const ArrowForward()
               ],

@@ -54,7 +54,6 @@ class BannerController extends GetxController {
     }
     // ignore: unused_local_variable
     for (var data in source) {
-
       temps.add({
         "id": data["bannerId"],
         "image": data["image"],
@@ -115,23 +114,19 @@ class BannerController extends GetxController {
           txtTitle.text = "";
           txtId.text = "";
           idType = "";
-          imageFile =null;
+          imageFile = null;
           webImage = Uint8List(8);
-          imageUrl ="";
+          imageUrl = "";
           initializeData();
         });
       } else {
-
         await FirebaseFirestore.instance
             .collection(collectionName.banner)
             .get()
             .then((value) {
           value.docs.asMap().entries.forEach((element) {
-
-
             if (bannerId.toString() ==
                 element.value.data()["bannerId"].toString()) {
-
               FirebaseFirestore.instance
                   .collection(collectionName.banner)
                   .doc(element.value.id)
@@ -146,9 +141,9 @@ class BannerController extends GetxController {
                 txtTitle.text = "";
                 txtId.text = "";
                 idType = "";
-                imageFile =null;
+                imageFile = null;
                 webImage = Uint8List(8);
-                imageUrl ="";
+                imageUrl = "";
               });
             }
           });
@@ -313,7 +308,7 @@ class BannerController extends GetxController {
           },
           textAlign: TextAlign.center),
       DatatableHeader(
-          text: "Name",
+          text: fonts.name,
           value: "name",
           show: true,
           sortable: true,
@@ -344,10 +339,11 @@ class BannerController extends GetxController {
                   OutlinedButton(
                       onPressed: () async {
                         log.log("vad L ${row["id"]}");
-                        bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+                        bool isLoginTest =
+                            appCtrl.storage.read(session.isLoginTest);
                         if (isLoginTest) {
                           accessDenied(fonts.modification.tr);
-                        }else {
+                        } else {
                           await FirebaseFirestore.instance
                               .collection(collectionName.banner)
                               .where("bannerId", isEqualTo: row["id"])

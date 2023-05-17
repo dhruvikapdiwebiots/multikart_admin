@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:multikart_admin/config.dart';
 
 class Fonts {
   final appName = "appName";
@@ -22,6 +23,7 @@ class Fonts {
   final showLanguage = "showLanguage";
   final rowPerPage = "rowPerPage";
   final title = "title";
+  final description = "description";
   final enterNotificationTitle = "enterNotificationTitle";
   final content = "content";
   final enterNotificationContent = "enterNotificationContent";
@@ -58,5 +60,14 @@ class Fonts {
   final noBanner = "noBanner";
   final notification = "notification";
   final logout = "logout";
+  final pleaseEnterValue = "EnterValue";
+  final onBoardScreen = "onBoardScreen";
+  final isActive = "isActive";
+  final actions = "Actions";
+  final id = "Id";
+  final logo = "logo";
+  final drawerLogo = "drawerLogo";
+  final homeLogo = "homeLogo";
+  final deleteCharacterConfirmation = "deleteCharacterConfirmation";
   String accessDenied(val) => "accessDenied".trParams({'title': val});
 }

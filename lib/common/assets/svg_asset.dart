@@ -10,5 +10,6 @@ class SvgAssets {
   final String orders = 'assets/svg/orders.svg';
   final String variant = 'assets/svg/variant.svg';
   final String aboutApp = 'assets/svg/aboutApp.svg';
+  final String onBoard = 'assets/svg/onBoard.svg';
   /*final String twitter = "assets/common/svg/twitter.svg";*/
 }

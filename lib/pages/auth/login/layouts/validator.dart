@@ -1,5 +1,6 @@
-class LoginValidator{
+import 'package:multikart_admin/config.dart';
 
+class LoginValidator {
   // Check user name Validation
   String? checkNameValidation(value) {
     if (value.isEmpty) {
@@ -16,5 +17,12 @@ class LoginValidator{
     } else {
       return null;
     }
+  }
+
+  statusValidation(status) {
+    if (status.isEmpty) {
+      return fonts.pleaseEnterValue.tr;
+    }
+    return null;
   }
 }

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:multikart_admin/pages/about_app_page/AboutApp.dart';
 import 'package:multikart_admin/pages/index/side_bar_menu_model.dart';
+import 'package:multikart_admin/pages/onboard_screen/onboard_screen.dart';
 import 'package:multikart_admin/pages/variant/variant.dart';
 
 import 'dart:html' as html;
@@ -66,6 +67,11 @@ class IndexLayoutController extends GetxController {
     ),
     SidebarMenuConfig(
       uri: routeName.notification,
+      icon: svgAssets.onBoard,
+      title: fonts.onBoardScreen,
+    ),
+    SidebarMenuConfig(
+      uri: routeName.notification,
       icon: svgAssets.bell,
       title: fonts.notification,
     ),
@@ -84,6 +90,7 @@ class IndexLayoutController extends GetxController {
     VariantScreen(),
     Container(),
     AboutApp(),
+    OnboardScreen(),
     NotificationPage(),
     Container()
   ];
@@ -124,7 +131,7 @@ class IndexLayoutController extends GetxController {
           : Get.put(StaticController());
       staticCtrl.getData();
     }
-    if (selectedIndex == 5) {
+    if (selectedIndex == 6) {
       FirebaseAuth.instance.signOut();
 
       selectedIndex == 0;
