@@ -37,7 +37,7 @@ class PrivacyPolicyMobileLayout extends StatelessWidget {
             hintText: 'Hint text goes here',
             controller: staticCtrl.controller,
             isEnabled: true,
-            height: MediaQuery.of(context).size.height,
+            minHeight: MediaQuery.of(context).size.height,
             textStyle: staticCtrl.editorTextStyle,
             hintTextStyle: staticCtrl.hintTextStyle,
             hintTextAlign: TextAlign.start,

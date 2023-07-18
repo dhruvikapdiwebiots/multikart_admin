@@ -40,7 +40,7 @@ class ContactUsDesktopLayout extends StatelessWidget {
               hintText: 'Hint text goes here',
               controller: staticCtrl.controller,
               isEnabled: true,
-              height: MediaQuery.of(context).size.height  /2,
+              minHeight: MediaQuery.of(context).size.height  /2,
               textStyle: staticCtrl.editorTextStyle,
               hintTextStyle: staticCtrl.hintTextStyle,
               hintTextAlign: TextAlign.start,
