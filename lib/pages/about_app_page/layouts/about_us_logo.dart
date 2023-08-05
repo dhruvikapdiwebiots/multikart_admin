@@ -14,7 +14,7 @@ class AboutUsLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AboutAppController>(builder: (aboutUsCtrl) {
-      log("aboutUsCtrl.pickImage : ${image!.isNotEmpty && aboutUsCtrl.pickImage != null && aboutUsCtrl.webImage.isNotEmpty}");
+
       return Stack(children: [
         DragDropLayout(
             onCreated: (ctrl) => aboutUsCtrl.controller1 = ctrl,

@@ -90,73 +90,85 @@ class BannerController extends GetxController {
 
   //add banner
   saveBanner() async {
-    isLoading = true;
-    update();
-
-    try {
-      if (bannerId == "") {
-        int id = DateTime.now().millisecondsSinceEpoch;
-        await FirebaseFirestore.instance.collection(collectionName.banner).add({
-          "productCollectionId": txtId.text,
-          "image": imageUrl,
-          "bannerId": id,
-          "isProduct": txtId.text.isEmpty
-              ? false
-              : idType == "product"
-                  ? true
-                  : false,
-          "title": txtTitle.text,
-          "isActive": true
-        }).then((value) {
-          isLoading = false;
-          update();
-          Get.back();
-          txtTitle.text = "";
-          txtId.text = "";
-          idType = "";
-          imageFile = null;
-          webImage = Uint8List(8);
-          imageUrl = "";
-          initializeData();
-        });
-      } else {
-        await FirebaseFirestore.instance
-            .collection(collectionName.banner)
-            .get()
-            .then((value) {
-          value.docs.asMap().entries.forEach((element) {
-            if (bannerId.toString() ==
-                element.value.data()["bannerId"].toString()) {
-              FirebaseFirestore.instance
-                  .collection(collectionName.banner)
-                  .doc(element.value.id)
-                  .update({
-                "productCollectionId": txtId.text,
-                "image": imageUrl,
-                "bannerId": bannerId,
-                "isProduct": element.value.data()["isProduct"],
-                "title": txtTitle.text,
-                "isActive": true
-              }).then((value) {
-                txtTitle.text = "";
-                txtId.text = "";
-                idType = "";
-                imageFile = null;
-                webImage = Uint8List(8);
-                imageUrl = "";
-              });
-            }
-          });
-        });
-      }
-    } catch (e) {
-      log.log("save error: $e");
-    } finally {
-      isLoading = false;
-      Get.back();
-      initialSetUi();
-      initializeData();
+    bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+    if (isLoginTest) {
+      accessDenied(fonts.modification.tr);
+    } else {
+      isLoading = true;
       update();
+
+      try {
+        if (bannerId == "") {
+          int id = DateTime
+              .now()
+              .millisecondsSinceEpoch;
+          await FirebaseFirestore.instance.collection(collectionName.banner)
+              .add({
+            "productCollectionId": txtId.text,
+            "image": imageUrl,
+            "bannerId": id,
+            "isProduct": txtId.text.isEmpty
+                ? false
+                : idType == "product"
+                ? true
+                : false,
+            "title": txtTitle.text,
+            "isActive": true
+          })
+              .then((value) {
+            isLoading = false;
+            update();
+            Get.back();
+            txtTitle.text = "";
+            txtId.text = "";
+            idType = "";
+            imageFile = null;
+            webImage = Uint8List(8);
+            imageUrl = "";
+            initializeData();
+          });
+        } else {
+          await FirebaseFirestore.instance
+              .collection(collectionName.banner)
+              .get()
+              .then((value) {
+            value.docs
+                .asMap()
+                .entries
+                .forEach((element) {
+              if (bannerId.toString() ==
+                  element.value.data()["bannerId"].toString()) {
+                FirebaseFirestore.instance
+                    .collection(collectionName.banner)
+                    .doc(element.value.id)
+                    .update({
+                  "productCollectionId": txtId.text,
+                  "image": imageUrl,
+                  "bannerId": bannerId,
+                  "isProduct": element.value.data()["isProduct"],
+                  "title": txtTitle.text,
+                  "isActive": true
+                }).then((value) {
+                  txtTitle.text = "";
+                  txtId.text = "";
+                  idType = "";
+                  imageFile = null;
+                  webImage = Uint8List(8);
+                  imageUrl = "";
+                });
+              }
+            });
+          });
+        }
+      } catch (e) {
+        log.log("save error: $e");
+      } finally {
+        isLoading = false;
+        Get.back();
+        initialSetUi();
+        initializeData();
+        update();
+      }
     }
   }
 

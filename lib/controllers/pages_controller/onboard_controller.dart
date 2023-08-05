@@ -63,27 +63,33 @@ class OnboardController extends GetxController {
 
   //on click Image
   onImagePickUp(setState, context, title) {
-    if (kIsWeb) {
-      getImage(source: ImageSource.gallery, context: context, title: title);
+    bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+    log("imageUrl : $isLoginTest");
+    if (isLoginTest) {
+      accessDenied(fonts.modification.tr);
     } else {
-      imagePickerOption(
-          setState: setState,
-          cameraTap: () {
-            getImage(
-                source: ImageSource.camera,
-                setState: setState,
-                context: context,
-                title: title);
-            Get.back();
-          },
-          galleryTap: () {
-            getImage(
-                source: ImageSource.gallery,
-                setState: setState,
-                context: context,
-                title: title);
-            Get.back();
-          });
+      if (kIsWeb) {
+        getImage(source: ImageSource.gallery, context: context, title: title);
+      } else {
+        imagePickerOption(
+            setState: setState,
+            cameraTap: () {
+              getImage(
+                  source: ImageSource.camera,
+                  setState: setState,
+                  context: context,
+                  title: title);
+              Get.back();
+            },
+            galleryTap: () {
+              getImage(
+                  source: ImageSource.gallery,
+                  setState: setState,
+                  context: context,
+                  title: title);
+              Get.back();
+            });
+      }
     }
   }
 
@@ -95,30 +101,36 @@ class OnboardController extends GetxController {
       context,
       uploadFile,
       title}) async {
-    if (title == "image1") {
-      onboard1Upload(
-          setState: setState,
-          source: source,
-          dropImage: dropImage,
-          title: title,
-          context: context,
-          uploadFile: uploadFile);
-    } else if (title == "image2") {
-      onboard2Upload(
-          setState: setState,
-          source: source,
-          dropImage: dropImage,
-          title: title,
-          context: context,
-          uploadFile: uploadFile);
+    bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+    log("imageUrl : $isLoginTest");
+    if (isLoginTest) {
+      accessDenied(fonts.modification.tr);
     } else {
-      drawerLogoUpload(
-          setState: setState,
-          source: source,
-          dropImage: dropImage,
-          title: title,
-          context: context,
-          uploadFile: uploadFile);
+      if (title == "image1") {
+        onboard1Upload(
+            setState: setState,
+            source: source,
+            dropImage: dropImage,
+            title: title,
+            context: context,
+            uploadFile: uploadFile);
+      } else if (title == "image2") {
+        onboard2Upload(
+            setState: setState,
+            source: source,
+            dropImage: dropImage,
+            title: title,
+            context: context,
+            uploadFile: uploadFile);
+      } else {
+        drawerLogoUpload(
+            setState: setState,
+            source: source,
+            dropImage: dropImage,
+            title: title,
+            context: context,
+            uploadFile: uploadFile);
+      }
     }
   }
 
@@ -306,27 +318,34 @@ class OnboardController extends GetxController {
   }
 
   updateData() async {
-    isLoading = true;
-    update();
+    bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+    log("imageUrl : $isLoginTest");
+    if (isLoginTest) {
+      accessDenied(fonts.modification.tr);
+    } else {
+      isLoading = true;
+      update();
 
-    if (formKey.currentState!.validate()) {
-      if (imageUrl.isNotEmpty && imageUrl2.isNotEmpty && imageUrl3.isNotEmpty) {
-        await FirebaseFirestore.instance
-            .collection(collectionName.onBoardScreen)
-            .doc(id)
-            .update({
-          "images": [imageUrl, imageUrl2, imageUrl3],
-          "title": txtEngTitle.text,
-          "description": txtEngDesc.text,
-          "language": "en"
-        }).then((value) {
-          appCtrl.isAlert = false;
-          isLoading = false;
+      if (formKey.currentState!.validate()) {
+        if (imageUrl.isNotEmpty && imageUrl2.isNotEmpty &&
+            imageUrl3.isNotEmpty) {
+          await FirebaseFirestore.instance
+              .collection(collectionName.onBoardScreen)
+              .doc(id)
+              .update({
+            "images": [imageUrl, imageUrl2, imageUrl3],
+            "title": txtEngTitle.text,
+            "description": txtEngDesc.text,
+            "language": "en"
+          }).then((value) {
+            appCtrl.isAlert = false;
+            isLoading = false;
+            update();
+          });
+        } else {
+          appCtrl.isAlert = true;
           update();
-        });
-      } else {
-        appCtrl.isAlert = true;
-        update();
+        }
       }
     }
   }
@@ -334,9 +353,9 @@ class OnboardController extends GetxController {
 // UPLOAD SELECTED IMAGE TO FIREBASE
   Future uploadLogoFile() async {
     bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
-    // if (isLoginTest) {
-    //   accessDenied(fonts.modification.tr);
-    // } else {
+    if (isLoginTest) {
+      accessDenied(fonts.modification.tr);
+    } else {
     isLoading = true;
     if (pickImage != null) {
       update();
@@ -400,31 +419,37 @@ class OnboardController extends GetxController {
           update();
         });
       });
-    }
-    // }
+    }}
   }
 
   addData() async {
-    isLoading = true;
-    if (formKey.currentState!.validate()) {
-      log("message ${imageUrl.isNotEmpty}");
-      log("message ${imageUrl2.isNotEmpty}");
-      log("message ${imageUrl3.isNotEmpty}");
-      if (imageUrl.isNotEmpty && imageUrl2.isNotEmpty && imageUrl3.isNotEmpty) {
-        update();
-        await FirebaseFirestore.instance
-            .collection(collectionName.onBoardScreen)
-            .add({
-          "images": [imageUrl, imageUrl2, imageUrl3],
-          "title": txtEngTitle.text,
-          "description": txtEngDesc.text,
-        }).then((value) {
-          appCtrl.isAlert = false;
-          isLoading = false;
+    bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+    log("imageUrl : $isLoginTest");
+    if (isLoginTest) {
+      accessDenied(fonts.modification.tr);
+    } else {
+      isLoading = true;
+      if (formKey.currentState!.validate()) {
+        log("message ${imageUrl.isNotEmpty}");
+        log("message ${imageUrl2.isNotEmpty}");
+        log("message ${imageUrl3.isNotEmpty}");
+        if (imageUrl.isNotEmpty && imageUrl2.isNotEmpty &&
+            imageUrl3.isNotEmpty) {
           update();
-        });
-      } else {
-        appCtrl.isAlert = true;
+          await FirebaseFirestore.instance
+              .collection(collectionName.onBoardScreen)
+              .add({
+            "images": [imageUrl, imageUrl2, imageUrl3],
+            "title": txtEngTitle.text,
+            "description": txtEngDesc.text,
+          }).then((value) {
+            appCtrl.isAlert = false;
+            isLoading = false;
+            update();
+          });
+        } else {
+          appCtrl.isAlert = true;
+        }
       }
     }
   }

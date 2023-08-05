@@ -10,7 +10,7 @@ class AboutApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BannerController>(builder: (_) {
+    return GetBuilder<AboutAppController>(builder: (_) {
       return Container(
           margin: const EdgeInsets.all(Insets.i10),
           padding: const EdgeInsets.all(0),
@@ -30,8 +30,8 @@ class AboutApp extends StatelessWidget {
                             .textColor(appCtrl.appTheme.blackColor)
                             .textHeight(1.5)),
                     const VSpace(Sizes.s25),
-                    const AboutUsLogo(
-                      image: "",
+                     AboutUsLogo(
+                      image: aboutAppCtrl.imageUrl,
                     ).height(Sizes.s200).width(Sizes.s200),
                   ],
                 ),
@@ -44,8 +44,8 @@ class AboutApp extends StatelessWidget {
                             .textColor(appCtrl.appTheme.blackColor)
                             .textHeight(1.5)),
                     const VSpace(Sizes.s25),
-                    const DrawerLogo(
-                      image: "",
+                     DrawerLogo(
+                      image: aboutAppCtrl.drawerImageUrl,
                     ).height(Sizes.s200).width(Sizes.s200),
                   ],
                 ),
@@ -58,8 +58,8 @@ class AboutApp extends StatelessWidget {
                             .textColor(appCtrl.appTheme.blackColor)
                             .textHeight(1.5)),
                     const VSpace(Sizes.s25),
-                    const HomeLogo(
-                      image: "",
+                     HomeLogo(
+                      image: aboutAppCtrl.homeImageUrl,
                     ).height(Sizes.s200).width(Sizes.s200),
                   ],
                 ),

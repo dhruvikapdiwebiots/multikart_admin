@@ -32,7 +32,7 @@ class AboutAppController extends GetxController {
   var random = math.Random();
 
   String imageName = "",
-      imageUrl = "",
+      imageUrl = "",homeImageUrl = "",drawerImageUrl = "",
       homeImageName = "",
       drawerImageName = "";
   Uint8List webImage = Uint8List(8);
@@ -46,36 +46,45 @@ class AboutAppController extends GetxController {
         .get()
         .then((value) {
       if (value.docs.isNotEmpty) {
-        log("VALUE : ${value.docs.length}");
+        log("VALUE : ${value.docs[0].data()}");
         id = value.docs[0].id;
+        imageUrl = value.docs[0].data()["splashLogo"];
+        homeImageUrl = value.docs[0].data()["homeLogo"];
+        drawerImageUrl = value.docs[0].data()["drawerLogo"];
       }
     });
     update();
   }
-  
+
   //on click Image
   onImagePickUp(setState, context, title) {
-    if (kIsWeb) {
-      getImage(source: ImageSource.gallery, context: context, title: title);
+    bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+    log("imageUrl : $isLoginTest");
+    if (isLoginTest) {
+      accessDenied(fonts.modification.tr);
     } else {
-      imagePickerOption(
-          setState: setState,
-          cameraTap: () {
-            getImage(
-                source: ImageSource.camera,
-                setState: setState,
-                context: context,
-                title: title);
-            Get.back();
-          },
-          galleryTap: () {
-            getImage(
-                source: ImageSource.gallery,
-                setState: setState,
-                context: context,
-                title: title);
-            Get.back();
-          });
+      if (kIsWeb) {
+        getImage(source: ImageSource.gallery, context: context, title: title);
+      } else {
+        imagePickerOption(
+            setState: setState,
+            cameraTap: () {
+              getImage(
+                  source: ImageSource.camera,
+                  setState: setState,
+                  context: context,
+                  title: title);
+              Get.back();
+            },
+            galleryTap: () {
+              getImage(
+                  source: ImageSource.gallery,
+                  setState: setState,
+                  context: context,
+                  title: title);
+              Get.back();
+            });
+      }
     }
   }
 
@@ -87,30 +96,36 @@ class AboutAppController extends GetxController {
       context,
       uploadFile,
       title}) async {
-    if (title == "splashLogo") {
-      splashLogoUpload(
-          setState: setState,
-          source: source,
-          dropImage: dropImage,
-          title: title,
-          context: context,
-          uploadFile: uploadFile);
-    } else if (title == "homeLogo") {
-      homeLogoUpload(
-          setState: setState,
-          source: source,
-          dropImage: dropImage,
-          title: title,
-          context: context,
-          uploadFile: uploadFile);
+    bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
+    log("imageUrl : $isLoginTest");
+    if (isLoginTest) {
+      accessDenied(fonts.modification.tr);
     } else {
-      drawerLogoUpload(
-          setState: setState,
-          source: source,
-          dropImage: dropImage,
-          title: title,
-          context: context,
-          uploadFile: uploadFile);
+      if (title == "splashLogo") {
+        splashLogoUpload(
+            setState: setState,
+            source: source,
+            dropImage: dropImage,
+            title: title,
+            context: context,
+            uploadFile: uploadFile);
+      } else if (title == "homeLogo") {
+        homeLogoUpload(
+            setState: setState,
+            source: source,
+            dropImage: dropImage,
+            title: title,
+            context: context,
+            uploadFile: uploadFile);
+      } else {
+        drawerLogoUpload(
+            setState: setState,
+            source: source,
+            dropImage: dropImage,
+            title: title,
+            context: context,
+            uploadFile: uploadFile);
+      }
     }
   }
 
@@ -299,10 +314,10 @@ class AboutAppController extends GetxController {
   Future uploadLogoFile(title) async {
     bool isLoginTest = appCtrl.storage.read(session.isLoginTest);
     log("imageUrl : $isLoginTest");
-    // if (isLoginTest) {
-    //   uploadImage(title, imageUrl);
-    //   accessDenied(fonts.modification.tr);
-    // } else {
+    if (isLoginTest) {
+
+      accessDenied(fonts.modification.tr);
+    } else {
     isLoading = true;
     if (pickImage != null || homePickImage != null || drawerPickImage != null) {
       update();
@@ -326,7 +341,7 @@ class AboutAppController extends GetxController {
           update();
         });
       });
-      // }
+    }
     }
   }
 

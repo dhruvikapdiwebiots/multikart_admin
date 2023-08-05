@@ -101,6 +101,6 @@ accessDenied(String content) {
         )
       ],
     ),
-    barrierDismissible: false,
+    barrierDismissible: true,
   );
 }
