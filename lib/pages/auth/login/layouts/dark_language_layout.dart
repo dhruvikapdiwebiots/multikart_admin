@@ -7,9 +7,9 @@ class DarkLanguageLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return const SizedBox(
         height: Sizes.s55,
-        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: const[
+        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           DarkModeLayout(),
            Padding(
               padding: EdgeInsets.symmetric(horizontal: Insets.i4),

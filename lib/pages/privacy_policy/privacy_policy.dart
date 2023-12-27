@@ -23,6 +23,7 @@ class PrivacyPolicy extends StatelessWidget {
                 children: [
                   Card(
                       elevation: 3,
+                      surfaceTintColor: appCtrl.appTheme.whiteColor,
                       shadowColor: appCtrl.appTheme.blackColor,
                       color: appCtrl.appTheme.whiteColor,
                       child: Responsive.isDesktop(context)

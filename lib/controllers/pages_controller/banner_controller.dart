@@ -301,6 +301,7 @@ class BannerController extends GetxController {
     getData();
     headers = [
       DatatableHeader(
+
           text: "ID",
           value: "productCollectionId",
           show: true,
@@ -417,7 +418,7 @@ class BannerController extends GetxController {
       } else {
         isAlert = true;
         update();
-        await Future.delayed(Durations.s2);
+        await Future.delayed(DurationClass.s2);
         isAlert = false;
         update();
       }
@@ -448,7 +449,7 @@ class BannerController extends GetxController {
       } else {
         isAlert = true;
         update();
-        await Future.delayed(Durations.s2);
+        await Future.delayed(DurationClass.s2);
         isAlert = false;
         update();
       }
@@ -476,7 +477,7 @@ class BannerController extends GetxController {
             imageUrl = downloadUrl;
             log.log("imageUrl : $imageUrl");
             update();
-            await Future.delayed(Durations.s3);
+            await Future.delayed(DurationClass.s3);
 
             saveBanner();
           }, onError: (err) {

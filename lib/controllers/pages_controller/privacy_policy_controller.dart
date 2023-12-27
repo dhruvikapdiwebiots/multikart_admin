@@ -62,7 +62,7 @@ class PrivacyPolicyController extends GetxController {
       appCtrl.isAlert =true;
       appCtrl.isStaticPage =true;
       appCtrl.update();
-      await Future.delayed(Durations.s2);
+      await Future.delayed(DurationClass.s2);
       appCtrl.isAlert = false;
       appCtrl.isStaticPage =false;
       appCtrl.update();

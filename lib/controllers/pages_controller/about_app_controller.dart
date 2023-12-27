@@ -153,7 +153,7 @@ class AboutAppController extends GetxController {
       } else {
         isAlert = true;
         update();
-        await Future.delayed(Durations.s2);
+        await Future.delayed(DurationClass.s2);
         isAlert = false;
         update();
       }
@@ -178,7 +178,7 @@ class AboutAppController extends GetxController {
       } else {
         isAlert = true;
         update();
-        await Future.delayed(Durations.s2);
+        await Future.delayed(DurationClass.s2);
         isAlert = false;
         update();
       }
@@ -212,7 +212,7 @@ class AboutAppController extends GetxController {
       } else {
         isAlert = true;
         update();
-        await Future.delayed(Durations.s2);
+        await Future.delayed(DurationClass.s2);
         isAlert = false;
         update();
       }
@@ -241,7 +241,7 @@ class AboutAppController extends GetxController {
       } else {
         isAlert = true;
         update();
-        await Future.delayed(Durations.s2);
+        await Future.delayed(DurationClass.s2);
         isAlert = false;
         update();
       }
@@ -274,7 +274,7 @@ class AboutAppController extends GetxController {
       } else {
         isAlert = true;
         update();
-        await Future.delayed(Durations.s2);
+        await Future.delayed(DurationClass.s2);
         isAlert = false;
         update();
       }
@@ -303,7 +303,7 @@ class AboutAppController extends GetxController {
       } else {
         isAlert = true;
         update();
-        await Future.delayed(Durations.s2);
+        await Future.delayed(DurationClass.s2);
         isAlert = false;
         update();
       }
@@ -335,7 +335,7 @@ class AboutAppController extends GetxController {
           imageUrl = downloadUrl;
           log("imageUrl : $imageUrl");
           update();
-          await Future.delayed(Durations.s3);
+          await Future.delayed(DurationClass.s3);
           uploadImage(title, imageUrl);
         }, onError: (err) {
           update();

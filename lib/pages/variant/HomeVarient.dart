@@ -17,7 +17,7 @@ class HomeVariant extends StatelessWidget {
           color: appCtrl.appTheme.greyLight25,
           child: Text(fonts.homeVariant.tr)
               .fontWeight(FontWeight.bold)
-              .fontSize(FontSizes.f16),
+              .fontSize(FontSizes.f16).textColor(appCtrl.isTheme ? appCtrl.appTheme.gray:appCtrl.appTheme.blackColor1),
         ),
         const VSpace(Sizes.s20),
         Row(children: [

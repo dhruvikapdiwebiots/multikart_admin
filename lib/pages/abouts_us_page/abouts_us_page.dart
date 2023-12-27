@@ -20,6 +20,7 @@ class AboutUsPage extends StatelessWidget {
                   children: [
                     Card(
                         elevation: 2,
+                        surfaceTintColor: appCtrl.appTheme.whiteColor,
                         shadowColor: appCtrl.appTheme.blackColor,
                         color: appCtrl.appTheme.whiteColor,
                         child: Responsive.isDesktop(context)

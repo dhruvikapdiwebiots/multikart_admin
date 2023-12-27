@@ -54,8 +54,8 @@ class NotificationController extends GetxController {
         };
 
         BaseOptions options = BaseOptions(
-          connectTimeout: 5000,
-          receiveTimeout: 3000,
+          connectTimeout: const Duration(milliseconds: 5000),
+          receiveTimeout: const Duration(milliseconds: 3000),
           headers: headers,
         );
 

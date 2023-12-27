@@ -17,6 +17,7 @@ class AboutApp extends StatelessWidget {
           constraints: const BoxConstraints(maxHeight: 1000),
           child: Card(
             elevation: 3,
+            surfaceTintColor: appCtrl.appTheme.whiteColor,
             shadowColor: appCtrl.appTheme.blackColor,
             color: appCtrl.appTheme.whiteColor,
             clipBehavior: Clip.none,

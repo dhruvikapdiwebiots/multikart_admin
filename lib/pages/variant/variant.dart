@@ -17,11 +17,12 @@ class VariantScreen extends StatelessWidget {
           child: Card(
             elevation: 3,
             shadowColor: appCtrl.appTheme.blackColor,
+            surfaceTintColor: appCtrl.appTheme.whiteColor,
             color: appCtrl.appTheme.whiteColor,
             clipBehavior: Clip.none,
             child: SingleChildScrollView(
-              child: Column(
-                children: const [
+              child: const Column(
+                children: [
                   HomeVariant(),
                   VSpace(Sizes.s22),
                   ProductVariant()

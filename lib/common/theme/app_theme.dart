@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multikart_admin/config.dart';
 
 enum ThemeType {
   light,
@@ -175,6 +176,8 @@ class AppTheme {
         onPrimary: accentTxt,
         onSecondary: accentTxt,
         error: error,
+        surfaceTint: whiteColor,
+
       ),
     );
     return t.copyWith(
@@ -186,6 +189,7 @@ class AppTheme {
       ),
       buttonTheme: ButtonThemeData(buttonColor: primary),
       highlightColor: primary,
+
       radioTheme: RadioThemeData(
         fillColor: MaterialStateProperty.resolveWith<Color?>(
             (Set<MaterialState> states) {

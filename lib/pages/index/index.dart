@@ -40,6 +40,7 @@ class _IndexLayoutState extends State<IndexLayout> {
                   elevation: 0.0,
                   toolbarHeight: Sizes.s70,
                   shadowColor: Colors.transparent,
+                  surfaceTintColor: appCtrl.appTheme.whiteColor,
                   centerTitle: false,
                   backgroundColor: appCtrl.appTheme.whiteColor,
                   leadingWidth: Responsive.isDesktop(context) ? 392 : 100,

@@ -1,6 +1,6 @@
 part of 'app_css.dart';
 
-class Durations {
+class DurationClass {
   static const Duration ms150 = Duration(milliseconds: 150);
   static const Duration s2 = Duration(seconds: 2);
   static const Duration s1 = Duration(seconds: 1);

@@ -44,7 +44,7 @@ class DrawerList extends StatelessWidget {
                         const SizedBox(width: 16 * 0.5),
                         Text(
                           menu.value.title.tr,
-                          style: AppCss.nunitoMedium16,
+                          style: AppCss.nunitoMedium16.textColor(appCtrl.appTheme.white),
                         ),
                       ],
                     ),
@@ -94,7 +94,7 @@ class DrawerList extends StatelessWidget {
                         color: appCtrl.appTheme.white,
                       ),
                       const SizedBox(width: 16 * 0.5),
-                      Text(menu.value.title.tr, style: AppCss.nunitoMedium16),
+                      Text(menu.value.title.tr,   style: AppCss.nunitoMedium16.textColor(appCtrl.appTheme.white),),
                     ],
                   ),
                   children: menu.value.children
@@ -123,7 +123,7 @@ class DrawerList extends StatelessWidget {
                             const SizedBox(width: 16 * 0.5),
                             Text(
                               childMenu.value.title.tr,
-                              style: AppCss.nunitoMedium14,
+                              style: AppCss.nunitoMedium16.textColor(appCtrl.appTheme.white),
                             ),
                           ],
                         ),

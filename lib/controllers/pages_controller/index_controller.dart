@@ -39,6 +39,7 @@ class IndexLayoutController extends GetxController {
       title: fonts.staticPage,
       children: [
         SidebarChildMenuConfig(
+
           uri: routeName.aboutsUs,
           icon: svgAssets.page,
           title: fonts.aboutUs,
