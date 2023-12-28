@@ -20,8 +20,38 @@ class LoginController extends GetxController {
           .collection(collectionName.admin)
           .get()
           .then((value) async {
+        value.docs
+            .asMap()
+            .entries
+            .forEach((e) async {
+          log("DATA : ${e.value.data()}");
+          if (e.value.data()["userName"] == txtName.text) {
+            if (e.value.data()["password"] == txtPassword.text) {
+              html.window.localStorage[session.isLogin] == "true";
+              await appCtrl.storage.write(session.isLogin, true);
+              if (txtName.text == "admin@gmail.com" &&
+                  txtPassword.text == "Admin1234") {
+                await appCtrl.storage.write(session.isLoginTest, true);
+              } else {
+                await appCtrl.storage.write(session.isLoginTest, false);
+              }
+              html.window.localStorage[session.isLogin] = "true";
+              await appCtrl.storage.write(session.isLogin, true);
+              await appCtrl.storage.write(session.isLoginTest, true);
+              txtName.text = "";
+              txtPassword.text = "";
+              update();
+              Get.offAll(() => IndexLayout(scaffoldDrawerKey: scaffoldDrawerKey,scaffoldKey: scaffoldKey,));
+            } else {
 
-        if (value.docs[0].data().isNotEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Invalid Password")));
+            }
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Invalid Email or Password")));
+
+          }
+        });
+        /*if (value.docs[0].data().isNotEmpty) {
           if (value.docs[0].data()["userName"] == txtName.text) {
             if (value.docs[0].data()["password"] == txtPassword.text) {
               html.window.localStorage[session.isLogin] = "true";
@@ -40,7 +70,8 @@ class LoginController extends GetxController {
           }
         } else {
           log("Invalid Credential");
-        }
+        }*/
+
       });
     }
   }
